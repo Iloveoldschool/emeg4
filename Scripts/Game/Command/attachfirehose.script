@@ -9,6 +9,9 @@
 const char DUMMY_EQUIPMENT[] 			= "DummyEquipmentCommands";
 const char DUMMY_HOSESON[] 			= "DummyHosesAreOn";
 const char VO_SQUAD[]				= "fire_station_squad";
+const char PROTO_ENGINE11[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine11.e4p";
+const char PROTO_ENGINE21[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine21.e4p";
+const char PROTO_ENGINE31[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine31.e4p";
 const char PROTO_ENGINE01[]			= "mod:Prototypes/Vehicles/02 LA Fire Department/fire_engine1.e4p";
 const char PROTO_ENGINE02[]			= "mod:Prototypes/Vehicles/02 LA Fire Department/fire_engine2.e4p";
 const char PROTO_WATERTENDER[]			= "mod:Prototypes/Vehicles/02 LA Fire Department/water_tender.e4p";
@@ -61,28 +64,28 @@ object AttachFireHose : CommandScript
 
 		return Caller->GetFirehoseID() == 0;
 	}
-	
+
 	bool CheckTarget(GameObject *Caller, Actor *Target, int childID)
 	{
 		if(!Caller->IsValid() || !Target->IsValid() || (Caller->GetID()==Target->GetID()))
 			return false;
-			
+
 		if(Caller->GetFirehoseID())
 			return false;
-			
+
 		if(Caller->GetType()!=ACTOR_PERSON)
 			return false;
 		Person p(Caller);
 		if (p.GetEnteredCarID() != -1)
 			return false;
-			
+
 		if(Caller->GetEquipment()==EQUIP_FIREHOSE && Target->GetType() == ACTOR_VEHICLE)
 		{
  			Vehicle v(Target);
-			if((StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE01) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE02) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_WATERTENDER) == 0 || v.GetVehicleType() == VT_FIREFIGHTERS_GTF) && v.GetEnergy() > 0.1f * v.GetMaxEnergy())
+			if((StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE01) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE11) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE21) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE31) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE02) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_WATERTENDER) == 0 || v.GetVehicleType() == VT_FIREFIGHTERS_GTF) && v.GetEnergy() > 0.1f * v.GetMaxEnergy())
 				return true;
 
-			if((StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE01) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE02) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_WATERTENDER) == 0) && v.HasCommand(DUMMY_HOSESON))
+			if((StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE01) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE11) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE21) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE31) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE02) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_WATERTENDER) == 0) && v.HasCommand(DUMMY_HOSESON))
 			{
 				int UnitID = v.GetID();
 				VehicleList list(NAME_CONNECTORS);
@@ -151,7 +154,7 @@ object AttachFireHose : CommandScript
        					float r[9];
         			v.GetRotation(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8]);
 
-				if (StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE01) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE02) == 0)
+				if (StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE01) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE11) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE21) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE31) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE02) == 0)
                 			Vehicle o = Game::CreateVehicle(OBJ_ENGINE_CONN, NAME_CONNECTORS);
 				else if (StrCompare(v.GetPrototypeFileName(), PROTO_WATERTENDER) == 0)
                 			Vehicle o = Game::CreateVehicle(OBJ_WATERTENDER_CONN, NAME_CONNECTORS);
@@ -185,9 +188,9 @@ object AttachFireHose : CommandScript
 					p.PushActionMove(ACTION_NEWLIST, &o, TARGET_FREE_CONNECTOR);
 					//p.PushActionCheckFreeConnector(ACTION_APPEND, &o);
 					p.PushActionUseEquipment(ACTION_APPEND, &o, childID, 1.0f);
-					
+
 					//if (v.HasCommand("Extinguish") && v.HasCommand("Cool") && v.HasCommand(CMD_WATER_OFF))
-					//	v.PushActionExecuteCommand(ACTION_APPEND, CMD_WATER_OFF, Caller, 0, false);					
+					//	v.PushActionExecuteCommand(ACTION_APPEND, CMD_WATER_OFF, Caller, 0, false);
 				}
 			} else
 				p.PushActionExecuteCommand(ACTION_NEWLIST, "AttachFireHose", Target, 2, false);
@@ -227,7 +230,7 @@ object AttachFireHose : CommandScript
 				}
 				v.PushActionWait(ACTION_NEWLIST, 0.1f);
 				v.PushActionDeleteOwner(ACTION_APPEND);
-			
+
 			} else
 				return;
 		}

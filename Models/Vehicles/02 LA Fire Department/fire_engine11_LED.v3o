@@ -8,8 +8,8 @@
 [NUMMUSCLEANIMS=0]
 [NUMMUSCLEFRAMES=0]
 
-SRF, fire_engine1, 0, 0, 0, fire_engine1.dds, 517, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0
-SRF, fire_engine1_2, 0, 0, 0, fire_engine1_2.dds, 517, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0
+SRF, fire_engine11, 0, 0, 0, fire_engine11.dds, 517, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0
+SRF, fire_engine11_2, 0, 0, 0, fire_engine11_2.dds, 517, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0
 SRF, LED_lightbar, 0, 0, 0, ledlightbar.dds, 517, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0
 D, 3087, 3860, 2563, 0, 0, 256, 583, 612, 0, 0, 0, 0
 D, -2825, 3860, 2563, 0, 0, 256, 418, 612, 0, 0, 0, 0

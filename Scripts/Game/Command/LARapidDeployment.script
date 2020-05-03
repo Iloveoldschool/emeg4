@@ -6,7 +6,7 @@
 //	- VcmdRapidDeployment
 //
 //		Script by Hoppah
-//		
+//
 //		Usage of this script in other mods is NOT allowed without permission of Hoppah
 //
 //******************************************************************************************
@@ -15,6 +15,9 @@ const char DUMMY_EQUIPMENT[] 			= "DummyEquipmentCommands";
 const char DUMMY_HOSESON[] 			= "DummyHosesAreOn";
 const char VO_SQUAD01[]				= "fs_squad01";
 const char VO_SQUAD02[]				= "fs_squad02";
+const char PROTO_ENGINE11[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine11.e4p";
+const char PROTO_ENGINE21[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine21.e4p";
+const char PROTO_ENGINE31[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine31.e4p";
 const char PROTO_ENGINE01[]			= "mod:Prototypes/Vehicles/02 LA Fire Department/fire_engine1.e4p";
 const char PROTO_ENGINE02[]			= "mod:Prototypes/Vehicles/02 LA Fire Department/fire_engine2.e4p";
 const char PROTO_USFS_ENGINE[]			= "mod:Prototypes/Vehicles/02 LA Fire Department/usfs_engine.e4p";
@@ -53,12 +56,12 @@ object VcmdRapidDeployment : CommandScript
 				return false;
 
 			if(v.GetVehicleType() != VT_FIREFIGHTERS_GTF && v.GetNumPassengers() == 0 && !v.HasCommand(DUMMY_HOSESON))
-				return false;	
+				return false;
 		}
 
 		return true;
  	}
- 
+
  	bool CheckTarget(GameObject *Caller, Actor *Target, int childID)
  	{
 		if (!Caller->IsValid() || !Target->IsValid() || (Caller->GetID() != Target->GetID()))
@@ -67,7 +70,7 @@ object VcmdRapidDeployment : CommandScript
 		if (Caller->GetType()==ACTOR_VEHICLE)
 		{
 			Vehicle v(Caller);
-			if(StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE01) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE02) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_WATERTENDER) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_USFS_ENGINE) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_BRUSH) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE01) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE11) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE21) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE31) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE02) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_WATERTENDER) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_USFS_ENGINE) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_BRUSH) == 0)
 				return true;
 		}
 
@@ -117,8 +120,8 @@ object VcmdRapidDeployment : CommandScript
 					}
 				}
 			}
-		
-		} 
+
+		}
 		else if (v.GetVehicleType() != VT_FIREFIGHTERS_GTF && v.HasCommand(DUMMY_HOSESON))
 		{
 			//v.PushActionWait(ACTION_NEWLIST, 0.1f);
@@ -201,7 +204,7 @@ object VcmdRapidDeployment : CommandScript
 					}
 				}
 			}
-		} 
+		}
 		else if (v.GetVehicleType() == VT_FIREFIGHTERS_GTF && v.IsInstalled())
 		{
 			PersonList Pconnected(ROLE_SQUAD);

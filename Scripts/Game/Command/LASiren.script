@@ -1,17 +1,17 @@
 //******************************************************************************************
-// #Version 2.7#										
-//												
-// 		Includes: All Sirens Commands								
-//												
-//	- VcmdSiren										
-//	- DummyUpdatePos									
-//	- DummyDisableSiren									
-//	- DummyFindPath									
-//	- DummyHasSiren									
-//												
-// 		Script by Bass-Ti	
-//		Modified by Hoppah																		
-//												
+// #Version 2.7#
+//
+// 		Includes: All Sirens Commands
+//
+//	- VcmdSiren
+//	- DummyUpdatePos
+//	- DummyDisableSiren
+//	- DummyFindPath
+//	- DummyHasSiren
+//
+// 		Script by Bass-Ti
+//		Modified by Hoppah
+//
 //******************************************************************************************
 
 const char CMD_AUTOSIREN_OFF[]		= "VcmdAutoSirenOff";
@@ -23,6 +23,13 @@ const char DUMMY_FINDPATH[] 		= "DummyFindPath";
 const char DUMMY_HOSESON[] 			= "DummyHosesAreOn";
 const char NAME_DUMMYOBJECT[] 		= "HelpingObjekt_Hoppah";
 const char DUMMY_GETTIL[] 			= "DummyGetTiller";
+
+const char PROTO_ENGINE11[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine11.e4p";
+const char PROTO_ENGINE21[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine21.e4p";
+const char PROTO_ENGINE31[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine31.e4p";
+
+const char PROTO_RESCUE11[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_11.e4p";
+const char PROTO_RESCUE12[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_12.e4p";
 
 const char PROTO_ENGINE01[] = "mod:Prototypes/Vehicles/02 LA Fire Department/fire_engine1.e4p";
 const char PROTO_ENGINE02[] = "mod:Prototypes/Vehicles/02 LA Fire Department/fire_engine2.e4p";
@@ -97,7 +104,7 @@ object VcmdSiren : CommandScript
 			SetIcon("sirenson");
 
 		if(Caller->HasCommand(DUMMY_HOSESON))
-			return false;	
+			return false;
 
 		return true;
 	}
@@ -124,6 +131,9 @@ object VcmdSiren : CommandScript
 			Vector CarPos = v.GetPosition();
  			if (StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE01) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE02) == 0 ||
+			StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE11) == 0 ||
+			StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE21) == 0 ||
+			StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE31) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_WATERTENDER) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_LADDER) == 0 ||
 			StrCompare(v.GetPrototypeFileName(), PROTO_TILLER) == 0 ||
@@ -152,6 +162,8 @@ object VcmdSiren : CommandScript
  			StrCompare(v.GetPrototypeFileName(), PROTO_USFS01) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_EMS) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_EMS2) == 0 ||
+			StrCompare(v.GetPrototypeFileName(), PROTO_RESCUE11) == 0 ||
+			StrCompare(v.GetPrototypeFileName(), PROTO_RESCUE12) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_AMBULANCE01) == 0 ||
   			StrCompare(v.GetPrototypeFileName(), PROTO_AMBULANCE02) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_AMBULANCE03) == 0 ||

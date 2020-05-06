@@ -27,9 +27,12 @@ const char DUMMY_GETTIL[] 			= "DummyGetTiller";
 const char PROTO_ENGINE11[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine11.e4p";
 const char PROTO_ENGINE21[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine21.e4p";
 const char PROTO_ENGINE31[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine31.e4p";
+const char PROTO_SQUAD1[] = "mod:Prototypes/Vehicles/02 RC Fire Department/squad_1.e4p";
+const char PROTO_WOODS32[] = "mod:Prototypes/Vehicles/02 RC Fire Department/woods_32.e4p";
 
 const char PROTO_RESCUE11[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_11.e4p";
 const char PROTO_RESCUE12[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_12.e4p";
+const char PROTO_RESCUE21[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_21.e4p";
 
 const char PROTO_ENGINE01[] = "mod:Prototypes/Vehicles/02 LA Fire Department/fire_engine1.e4p";
 const char PROTO_ENGINE02[] = "mod:Prototypes/Vehicles/02 LA Fire Department/fire_engine2.e4p";
@@ -134,6 +137,7 @@ object VcmdSiren : CommandScript
 			StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE11) == 0 ||
 			StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE21) == 0 ||
 			StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE31) == 0 ||
+			StrCompare(v.GetPrototypeFileName(), PROTO_SQUAD1) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_WATERTENDER) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_LADDER) == 0 ||
 			StrCompare(v.GetPrototypeFileName(), PROTO_TILLER) == 0 ||
@@ -157,6 +161,7 @@ object VcmdSiren : CommandScript
 				}
  			}
  			else if (StrCompare(v.GetPrototypeFileName(), PROTO_BCV) == 0 ||
+			StrCompare(v.GetPrototypeFileName(), PROTO_WOODS32) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_HES) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_BRUSH) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_USFS01) == 0 ||
@@ -164,6 +169,7 @@ object VcmdSiren : CommandScript
  			StrCompare(v.GetPrototypeFileName(), PROTO_EMS2) == 0 ||
 			StrCompare(v.GetPrototypeFileName(), PROTO_RESCUE11) == 0 ||
 			StrCompare(v.GetPrototypeFileName(), PROTO_RESCUE12) == 0 ||
+			StrCompare(v.GetPrototypeFileName(), PROTO_RESCUE21) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_AMBULANCE01) == 0 ||
   			StrCompare(v.GetPrototypeFileName(), PROTO_AMBULANCE02) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_AMBULANCE03) == 0 ||

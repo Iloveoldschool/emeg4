@@ -18,6 +18,7 @@ const char VO_SQUAD02[]				= "fs_squad02";
 const char PROTO_ENGINE11[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine11.e4p";
 const char PROTO_ENGINE21[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine21.e4p";
 const char PROTO_ENGINE31[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine31.e4p";
+const char PROTO_WOODS32[] = "mod:Prototypes/Vehicles/02 RC Fire Department/woods_32.e4p";
 const char PROTO_ENGINE01[]			= "mod:Prototypes/Vehicles/02 LA Fire Department/fire_engine1.e4p";
 const char PROTO_ENGINE02[]			= "mod:Prototypes/Vehicles/02 LA Fire Department/fire_engine2.e4p";
 const char PROTO_USFS_ENGINE[]			= "mod:Prototypes/Vehicles/02 LA Fire Department/usfs_engine.e4p";
@@ -70,7 +71,7 @@ object VcmdRapidDeployment : CommandScript
 		if (Caller->GetType()==ACTOR_VEHICLE)
 		{
 			Vehicle v(Caller);
-			if(StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE01) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE11) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE21) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE31) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE02) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_WATERTENDER) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_USFS_ENGINE) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_BRUSH) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE01) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE11) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE21) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE31) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_WOODS32) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE02) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_WATERTENDER) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_USFS_ENGINE) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_BRUSH) == 0)
 				return true;
 		}
 
@@ -177,7 +178,7 @@ object VcmdRapidDeployment : CommandScript
 			{
 				for(int i=0; i<passengers.GetNumPersons(); i++)
 				{
-					if (StrCompare(v.GetPrototypeFileName(), PROTO_BRUSH) == 0)
+					if (StrCompare(v.GetPrototypeFileName(), PROTO_WOODS32) == 0 || StrCompare(v.GetPrototypeFileName(), PROTO_BRUSH) == 0)
 						MAXCONNECTORS = 1;
 					else
 						MAXCONNECTORS = 4;

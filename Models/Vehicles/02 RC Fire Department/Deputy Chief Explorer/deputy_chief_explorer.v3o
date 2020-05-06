@@ -8,12 +8,12 @@
 [NUMMUSCLEANIMS=0]
 [NUMMUSCLEFRAMES=0]
 
-SRF, ford_explorer, 0, 0, 0, chief1.png, 517, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0
+SRF, ford_explorer, 0, 0, 0, deputy_chief_explorer.png, 517, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0
 SRF, headlight, 0, 0, 0, 2011-ford-explorer-fwd-4-door-xlt-headlight_100343546_l.jpg, 517, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0
 SRF, taillight, 0, 0, 0, 2011-ford-explorer-fwd-4-door-xlt-tail-light_100343541_l.jpg, 517, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0
 SRF, interior, 0, 0, 0, interior.png, 517, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0
 SRF, WhelenLiberty, 0, 0, 0, whelenliberty.png, 517, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0
-SRF, WhelenL32, 0, 0, 0, whelenl32.png, 517, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0
+SRF, WhelenL32, 0, 0, 0, whelenl32_red.png, 517, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0
 SRF, Default Material, 0, 0, 0, , 517, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0
 SRF, WhelenM4, 0, 0, 0, whelenm4.jpg, 517, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0
 SRF, WhelenLIN3, 0, 0, 0, whelenlin3.png, 517, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0

@@ -29,6 +29,6 @@ Anybody who wants to help out can do so, either by submitting bug and feature re
 ## Credits
 As such this mod contains content made by:
 
-Hoppah (Los Angeles Mod v2.1), JoseOu (LAPD Ford CV LED lightbar Submod V2.0), Ubisoft (Chevrolet impala model)
+Hoppah (Los Angeles Mod v2.1), JoseOu (LAPD Ford CV LED lightbar Submod V2.0), Ubisoft (Chevrolet impala model), EA Games (Ford Explorer model)
 
 Crediting the orignal author of work is really important. If you spot something you've made and have been missed off this was not deliberate! If you have any questions, want to update the credits or want to reach out, please raise a "Credits update" issue in the github repository for the mod.

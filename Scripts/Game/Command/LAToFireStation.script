@@ -241,7 +241,7 @@ object VcmdToFireStation : CommandScript
 				ActorList l2 = Game::GetActors(VO_TURNTO6);
 			}
 		}
-		else if(StrCompare(v.GetPrototypeFileName(), OBJ_AMBULANCE02) == 0 || StrCompare(v.GetPrototypeFileName(), OBJ_AMBULANCE03) == 0 || StrCompare(v.GetPrototypeFileName(), OBJ_AMBULANCE04) == 0)
+		else if(StrCompare(v.GetPrototypeFileName(), OBJ_RESCUE11) == 0 || StrCompare(v.GetPrototypeFileName(), OBJ_RESCUE12) == 0 || StrCompare(v.GetPrototypeFileName(), OBJ_RESCUE31) == 0)
 		{
 			bool Possible = false;
 
@@ -271,7 +271,7 @@ object VcmdToFireStation : CommandScript
 				return;
 			}
 		}
-		else if(StrCompare(v.GetPrototypeFileName(), OBJ_AMBULANCE01) == 0)
+		else if(StrCompare(v.GetPrototypeFileName(), OBJ_RESCUE21) == 0)
 		{
 			bool Possible = false;
 
@@ -427,7 +427,7 @@ object DummyCheckParked : CommandScript
 				ActorList l2 = Game::GetActors(VO_BATTALION2);
 			}
 		}
-		else if(StrCompare(v.GetPrototypeFileName(), OBJ_AMBULANCE02) == 0 || StrCompare(v.GetPrototypeFileName(), OBJ_AMBULANCE03) == 0 || StrCompare(v.GetPrototypeFileName(), OBJ_AMBULANCE04) == 0)
+		else if(StrCompare(v.GetPrototypeFileName(), OBJ_RESCUE11) == 0 || StrCompare(v.GetPrototypeFileName(), OBJ_RESCUE12) == 0 || StrCompare(v.GetPrototypeFileName(), OBJ_RESCUE31) == 0)
 		{
 			ActorList l2 = Game::GetActors(VO_TURNTO1);
 			if (!Game::IsSquadInVirtualObject(VO_AMBULANCE01) && !Game::IsSquadInVirtualObject(VO_AMBULANCE02) && !Game::IsSquadInVirtualObject(VO_AMBULANCE03))
@@ -516,7 +516,7 @@ object DummyCheckParked : CommandScript
 				return;
 			}
 		}
-		else if(StrCompare(v.GetPrototypeFileName(), OBJ_AMBULANCE01) == 0)
+		else if(StrCompare(v.GetPrototypeFileName(), OBJ_RESCUE21) == 0)
 		{
 			GameObjectList l3;
  			Game::CollectObstaclesOnVirtualObject(VO_AMBULANCE04, l3, ACTOR_VEHICLE);

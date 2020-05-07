@@ -285,7 +285,7 @@ object VcmdStart : CommandScript
 			m.PushActionWait(ACTION_APPEND, 1.5f);
 			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
 		}
-		ActorList l12 = Game::GetActors(VO_USAR);
+		ActorList l12 = Game::GetActors(VO_RESCUESQUAD1);
 		for(int i=0; i < l12.GetNumActors(); i++)
 		{
 			Vector Usar = l12.GetActor(0)->GetPosition();
@@ -353,15 +353,11 @@ object VcmdStart : CommandScript
 			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
 			m.PushActionWait(ACTION_APPEND, 1.5f);
 			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-					}
-		ActorList l16 = Game::GetActors(VO_ENGINE03);
+		}
+		ActorList l16 = Game::GetActors(VO_ENGINE04);
 		for(int i=0; i < l16.GetNumActors(); i++)
 		{
-		}
-		ActorList l17 = Game::GetActors(VO_ENGINE04);
-		for(int i=0; i < l17.GetNumActors(); i++)
-		{
-			Vector Engine04 = l17.GetActor(0)->GetPosition();
+			Vector Engine04 = l16.GetActor(0)->GetPosition();
 			Vehicle m = Game::CreateVehicle(OBJ_ENGINE31, UNNAMED);
 			m.EnableBlueLights(false);
 			m.SetPosition(Engine04);
@@ -378,10 +374,10 @@ object VcmdStart : CommandScript
 			m.PushActionWait(ACTION_APPEND, 1.5f);
 			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
 		}
-		ActorList l18 = Game::GetActors(VO_AMBULANCE03);
-		for(int i=0; i < l18.GetNumActors(); i++)
+		ActorList l17 = Game::GetActors(VO_AMBULANCE03);
+		for(int i=0; i < l17.GetNumActors(); i++)
 		{
-			Vector Ambulance03 = l18.GetActor(0)->GetPosition();
+			Vector Ambulance03 = l17.GetActor(0)->GetPosition();
 			Vehicle m = Game::CreateVehicle(OBJ_RESCUE31, UNNAMED);
 			m.EnableBlueLights(false);
       m.SetPosition(Ambulance03);
@@ -394,10 +390,10 @@ object VcmdStart : CommandScript
 			m.PushActionWait(ACTION_APPEND, 0.5f);
 			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 2, false);
 		}
-		ActorList l19 = Game::GetActors(VO_FIREINVESTIGATOR);
-		for(int i=0; i < l19.GetNumActors(); i++)
+		ActorList l18 = Game::GetActors(VO_FIREINVESTIGATOR);
+		for(int i=0; i < l18.GetNumActors(); i++)
 		{
-			Vector Investigator = l19.GetActor(0)->GetPosition();
+			Vector Investigator = l18.GetActor(0)->GetPosition();
 			Vehicle m = Game::CreateVehicle(OBJ_FIREINVESTIGATION, UNNAMED);
 			m.EnableBlueLights(false);
 			m.SetPosition(Investigator);

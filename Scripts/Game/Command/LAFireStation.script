@@ -226,7 +226,6 @@ object VcmdAlarm : CommandScript
 						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 2, false);
 					}
 				}
-			}
 			GameObjectList l4;
  			Game::CollectObstaclesOnVirtualObject(VO_AMBULANCE02, l4, ACTOR_VEHICLE);
 			if(l4.GetNumObjects() > 0)
@@ -240,7 +239,6 @@ object VcmdAlarm : CommandScript
 						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 2, false);
 					}
 				}
-			}
 			GameObjectList l5;
  			Game::CollectObstaclesOnVirtualObject(VO_AMBULANCE03, l5, ACTOR_VEHICLE);
 			if(l5.GetNumObjects() > 0)
@@ -254,7 +252,6 @@ object VcmdAlarm : CommandScript
 						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 2, false);
 					}
 				}
-			}
 			GameObjectList l6;
  			Game::CollectObstaclesOnVirtualObject(VO_LADDER, l6, ACTOR_VEHICLE);
 			if(l6.GetNumObjects() > 0)
@@ -300,7 +297,6 @@ object VcmdAlarm : CommandScript
 						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 5, false);
 					}
 				}
-			}
 			GameObjectList l9;
  			Game::CollectObstaclesOnVirtualObject(VO_ENGINE02, l9, ACTOR_VEHICLE);
 			if(l9.GetNumObjects() > 0)
@@ -320,15 +316,10 @@ object VcmdAlarm : CommandScript
 				}
 			}
 			GameObjectList l10;
- 			Game::CollectObstaclesOnVirtualObject(VO_ENGINE03, l10, ACTOR_VEHICLE);
+ 			Game::CollectObstaclesOnVirtualObject(VO_ENGINE04, l10, ACTOR_VEHICLE);
 			if(l10.GetNumObjects() > 0)
 			{
-			}
-			GameObjectList l11;
- 			Game::CollectObstaclesOnVirtualObject(VO_ENGINE04, l11, ACTOR_VEHICLE);
-			if(l11.GetNumObjects() > 0)
-			{
-				Vehicle m = l11.GetObject(0);
+				Vehicle m = l10.GetObject(0);
 				PersonList passengers = m.GetPassengers();
 				if (passengers.GetNumPersons() == 0)
 				{
@@ -342,11 +333,11 @@ object VcmdAlarm : CommandScript
 					m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
 					}
 				}
-				GameObjectList l12;
-	 			Game::CollectObstaclesOnVirtualObject(VO_FIREINVESTIGATOR, l12, ACTOR_VEHICLE);
-				if(l12.GetNumObjects() > 0)
+				GameObjectList l11;
+	 			Game::CollectObstaclesOnVirtualObject(VO_FIREINVESTIGATOR, l11, ACTOR_VEHICLE);
+				if(l11.GetNumObjects() > 0)
 				{
-					Vehicle m = l12.GetObject(0);
+					Vehicle m = l11.GetObject(0);
 					PersonList passengers = m.GetPassengers();
 					if (passengers.GetNumPersons() == 0)
 					{
@@ -354,7 +345,6 @@ object VcmdAlarm : CommandScript
 					}
 				}
 			}
-		}
 		if(Caller->HasName(NAME_CONTROLPANEL2)) //= fire station 2
 		{
 			Caller->AssignCommand(DUMMY_ALARM);
@@ -388,7 +378,6 @@ object VcmdAlarm : CommandScript
 						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 2, false);
 					}
 				}
-			}
 			GameObjectList l3;
  			Game::CollectObstaclesOnVirtualObject(VO_ENGINE05, l3, ACTOR_VEHICLE);
 			if(l3.GetNumObjects() > 0)

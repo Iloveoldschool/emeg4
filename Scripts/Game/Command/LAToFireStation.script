@@ -1,6 +1,8 @@
 //******************************************************************************************
 // #Version 1.4#
 //
+// With edits by djchill
+//
 // 		Includes: To fire station command.
 //
 //	- VcmdToFireStation
@@ -85,7 +87,7 @@ const char VO_AMBULANCE04[] 			= "fs_ambulance04";
 const char VO_ENGINE01[]			= "fs_engine01";
 const char VO_ENGINE02[]			= "fs_engine02";
 const char VO_ENGINE03[]			= "fs_engine03";
-const char VO_ENGINE04[]			= "fs_engine04";
+// const char VO_ENGINE04[]			= "fs_engine04";
 const char VO_ENGINE05[]			= "fs_engine05";
 const char VO_BATTALION[]			= "fs_battalion";
 const char VO_BATTALION2[]			= "fs_battalion2";
@@ -129,7 +131,7 @@ object VcmdToFireStation : CommandScript
 		if (!v.HasCommand("MoveTo"))
 			return false;
 
-		if (v.HasCommand(CMD_FLOODLIGHTS_OFF) && (StrCompare(v.GetPrototypeFileName(), OBJ_HAZMATSQUAD) == 0 || StrCompare(v.GetPrototypeFileName(), OBJ_USAR) == 0))
+		if (v.HasCommand(CMD_FLOODLIGHTS_OFF) && (StrCompare(v.GetPrototypeFileName(), OBJ_SQUAD1) == 0))
 			return false;
 
 		return true;
@@ -194,10 +196,10 @@ object VcmdToFireStation : CommandScript
 				ActorList l2 = Game::GetActors(VO_BATTALION);
 			}
 		}
-		else if(StrCompare(v.GetPrototypeFileName(), OBJ_USAR) == 0)
+		else if(StrCompare(v.GetPrototypeFileName(), OBJ_SQUAD1) == 0)
 		{
 			GameObjectList l4;
- 			Game::CollectObstaclesOnVirtualObject(VO_USAR, l4, ACTOR_VEHICLE);
+ 			Game::CollectObstaclesOnVirtualObject(VO_RESCUESQUAD1, l4, ACTOR_VEHICLE);
 			if(l4.GetNumObjects() > 0)
 			{
 				Mission::PlayHint(HINT_NOSPACE);
@@ -224,10 +226,10 @@ object VcmdToFireStation : CommandScript
 				ActorList l2 = Game::GetActors(VO_TURNTO3);
 			}
 		}
-		else if(StrCompare(v.GetPrototypeFileName(), OBJ_HAZMATSQUAD) == 0)
+		else if(StrCompare(v.GetPrototypeFileName(), OBJ_WOODS32) == 0)
 		{
 			GameObjectList l4;
- 			Game::CollectObstaclesOnVirtualObject(VO_HAZMAT, l4, ACTOR_VEHICLE);
+ 			Game::CollectObstaclesOnVirtualObject(VO_WOODS, l4, ACTOR_VEHICLE);
 			if(l4.GetNumObjects() > 0)
 			{
 				Mission::PlayHint(HINT_NOSPACE);
@@ -339,18 +341,13 @@ object VcmdToFireStation : CommandScript
 				ActorList l2 = Game::GetActors(VO_TURNTO7);
 			}
 		}
-		else if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE02) == 0)
+		else if(StrCompare(v.GetPrototypeFileName(), OBJ_SQUAD2) == 0)
  		{
 			bool Possible = false;
 
 			GameObjectList l3;
  			Game::CollectObstaclesOnVirtualObject(VO_ENGINE02, l3, ACTOR_VEHICLE);
 			if(l3.GetNumObjects() == 0 && !Possible)
-				Possible = true;
-
-			GameObjectList l4;
- 			Game::CollectObstaclesOnVirtualObject(VO_ENGINE04, l4, ACTOR_VEHICLE);
-			if(l4.GetNumObjects() == 0 && !Possible)
 				Possible = true;
 
 			if (Possible)
@@ -535,10 +532,10 @@ object DummyCheckParked : CommandScript
 				ActorList l2 = Game::GetActors(VO_TURNTO8);
 			}
 		}
-		else if(StrCompare(v.GetPrototypeFileName(), OBJ_USAR) == 0)
+		else if(StrCompare(v.GetPrototypeFileName(), OBJ_SQUAD1) == 0)
  		{
 			GameObjectList l3;
- 			Game::CollectObstaclesOnVirtualObject(VO_USAR, l3, ACTOR_VEHICLE);
+ 			Game::CollectObstaclesOnVirtualObject(VO_RESCUESQUAD1, l3, ACTOR_VEHICLE);
 			if(l3.GetNumObjects() > 0)
 			{
 				Mission::PlayHint(HINT_NOSPACE);
@@ -547,7 +544,7 @@ object DummyCheckParked : CommandScript
 			} else
 			{
 				ParkinglotFound = true;
-				ActorList l1 = Game::GetActors(VO_USAR);
+				ActorList l1 = Game::GetActors(VO_RESCUESQUAD1);
 				ActorList l2 = Game::GetActors(VO_TURNTO2);
 			}
 		}
@@ -567,10 +564,10 @@ object DummyCheckParked : CommandScript
 				ActorList l2 = Game::GetActors(VO_TURNTO3);
 			}
 		}
-		else if(StrCompare(v.GetPrototypeFileName(), OBJ_HAZMATSQUAD) == 0)
+		else if(StrCompare(v.GetPrototypeFileName(), OBJ_WOODS32) == 0)
  		{
 			GameObjectList l3;
- 			Game::CollectObstaclesOnVirtualObject(VO_HAZMAT, l3, ACTOR_VEHICLE);
+ 			Game::CollectObstaclesOnVirtualObject(VO_WOODS, l3, ACTOR_VEHICLE);
 			if(l3.GetNumObjects() > 0)
 			{
 				Mission::PlayHint(HINT_NOSPACE);
@@ -579,11 +576,11 @@ object DummyCheckParked : CommandScript
 			} else
 			{
 				ParkinglotFound = true;
-				ActorList l1 = Game::GetActors(VO_HAZMAT);
+				ActorList l1 = Game::GetActors(VO_WOODS);
 				ActorList l2 = Game::GetActors(VO_TURNTO6);
 			}
 		}
-		else if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE01) == 0 || StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE03) == 0)
+		else if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE11) == 0 || StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE31) == 0)
 		{
 			if(FS1Closer)
 			{
@@ -635,38 +632,19 @@ object DummyCheckParked : CommandScript
 				}
 			}
 		}
-		else if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE02) == 0)
- 		{
-			GameObjectList l3;
- 			Game::CollectObstaclesOnVirtualObject(VO_ENGINE02, l3, ACTOR_VEHICLE);
-			if(l3.GetNumObjects() > 0)
+		else if(StrCompare(v.GetPrototypeFileName(), OBJ_SQUAD2) == 0)
+		{
+			GameObjectList l4;
+ 			Game::CollectObstaclesOnVirtualObject(VO_ENGINE02, l4, ACTOR_VEHICLE);
+			if(l4.GetNumObjects() > 0)
 			{
-				GameObjectList l4;
- 				Game::CollectObstaclesOnVirtualObject(VO_ENGINE04, l4, ACTOR_VEHICLE);
-				if(l4.GetNumObjects() > 0)
-				{
-					v.PushActionExecuteCommand(ACTION_NEWLIST, CMD_TOFIRESTATION, Caller, 0, false);
-					return;
-				} else
-				{
-					ParkinglotFound = true;
-					ActorList l1 = Game::GetActors(VO_ENGINE04);
-					ActorList l2 = Game::GetActors(VO_TURNTO5);
-				}
+				Mission::PlayHint(HINT_NOSPACE);
+				v.PushActionReturnToBase(ACTION_NEWLIST);
+				return;
 			} else
 			{
-				GameObjectList l4;
- 				Game::CollectObstaclesOnVirtualObject(VO_ENGINE04, l4, ACTOR_VEHICLE);
-				if(l4.GetNumObjects() > 0)
-				{
-					ActorList l1 = Game::GetActors(VO_ENGINE04);
-					ActorList l5 = Game::GetActors(VO_ENGINE02);
-					Vector Move = l5.GetActor(0)->GetPosition();
-					l4.GetObject(0)->PushActionMove(ACTION_NEWLIST, Move, true);
-				} else
-					ActorList l1 = Game::GetActors(VO_ENGINE02);
-				ActorList l2 = Game::GetActors(VO_TURNTO5);
-				ParkinglotFound = true;
+				ActorList l1 = Game::GetActors(VO_FP2);
+				ActorList l2 = Game::GetActors(VO_TURNTO2);
 			}
 		}
 		if(ParkinglotFound)

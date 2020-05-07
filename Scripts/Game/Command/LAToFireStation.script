@@ -226,7 +226,7 @@ object VcmdToFireStation : CommandScript
 				ActorList l2 = Game::GetActors(VO_TURNTO2);
 			}
 		}
-		else if(StrCompare(v.GetPrototypeFileName(), OBJ_LADDER) == 0 || StrCompare(v.GetPrototypeFileName(), OBJ_TILLER) == 0)
+		else if(StrCompare(v.GetPrototypeFileName(), OBJ_LADDER) == 0)
 		{
 			GameObjectList l4;
  			Game::CollectObstaclesOnVirtualObject(VO_LADDER, l4, ACTOR_VEHICLE);
@@ -390,8 +390,6 @@ object VcmdToFireStation : CommandScript
 		Audio::PlaySample3D(SND_TOSTATION, Caller->GetPosition());
 		v.PushActionMove(ACTION_NEWLIST, FirstPoint);
 		v.PushActionTurnTo(ACTION_APPEND, TurnTo);
-		if (StrCompare(v.GetPrototypeFileName(), OBJ_TILLER) == 0)
-			v.PushActionExecuteCommand(ACTION_APPEND, DUMMY_TILLER, Caller, 3, false);
 		v.PushActionWait(ACTION_APPEND, 1.0f);
 		v.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CHECKPARKED, Caller, 0, false);
 	}
@@ -579,7 +577,7 @@ object DummyCheckParked : CommandScript
 				ActorList l2 = Game::GetActors(VO_TURNTO2);
 			}
 		}
-		else if(StrCompare(v.GetPrototypeFileName(), OBJ_LADDER) == 0 || StrCompare(v.GetPrototypeFileName(), OBJ_TILLER) == 0)
+		else if(StrCompare(v.GetPrototypeFileName(), OBJ_LADDER) == 0)
  		{
 			GameObjectList l3;
  			Game::CollectObstaclesOnVirtualObject(VO_LADDER, l3, ACTOR_VEHICLE);
@@ -682,18 +680,6 @@ object DummyCheckParked : CommandScript
 		{
 			if(l1.GetNumActors() > 0)
 			{
-				if (StrCompare(v.GetPrototypeFileName(), OBJ_TILLER) == 0)
-				{
-					Vector Park = l1.GetActor(0)->GetPosition();
-					float dx = 125.f, dy = 0.f, dz = 0.f;
-						float r[9];
-						float childr[9];
-					v.GetRotation(r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8]);
-					Math::RotateVector(dx, dy, dz, r);
-					Math::EulerToMatrix(0.0f, 0.f, 0.f, childr);
-					Math::MultiplyMatrices(childr, r);
-					Park = Park + Vector(dx, dy, 0);
-				} else
 				 Vector Park = l1.GetActor(0)->GetPosition();
 			}
 			if(l2.GetNumActors() > 0)

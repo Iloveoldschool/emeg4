@@ -1926,7 +1926,7 @@ object DummyGates : CommandScript
 		if(ChildID == 8) //To fire station cmd to open rear gates fire station 2
 		{
 			Vehicle v(Caller);
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_WOODS32) == 0)
+			if(v.GetPrototypeFileName(), OBJ_WOODS32) == 0)
 			{
 				for(int i=0; i < gate06b.GetNumObjects(); i++)
 				{
@@ -1942,7 +1942,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if(StrCompare(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE21) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE21) == 0)
 			{
 				for(int i=0; i < gate07b.GetNumObjects(); i++)
 				{
@@ -2078,7 +2078,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if(StrCompare(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE21) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE21) == 0)
 			{
 				for(int i=0; i < gate07b.GetNumObjects(); i++)
 				{

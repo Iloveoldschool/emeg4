@@ -1,10 +1,6 @@
 //******************************************************************************************
 // #Version 1.2#
 //
-// Includes edits made by djchill
-// - PcmdCallWoods
-// - Future changes to be made to simplify calling engines
-//
 // 		Includes: Call commands for the battalion chief.
 //
 //	- PcmdCallAmbulance
@@ -53,11 +49,13 @@ const char HINT_USARBOUGHT[] 			= "USAR squad bought for $3500 and dispatched!";
 const char HINT_HAZMATBOUGHT[] 			= "HAZMAT squad bought for $4000 and dispatched!";
 const char HINT_LADDERBOUGHT[] 			= "Aerial ladder bought for $4000 and dispatched!";
 const char HINT_LIGHTFORCEBOUGHT[] 		= "Light force bought for $8000 and dispatched!";
+const char VO_HAZMAT[]				= "fs_hazmat";
 const char VO_BATTALION[]			= "fs_battalion";
 const char VO_AMBULANCE01[]			= "fs_ambulance01";
 const char VO_AMBULANCE02[]			= "fs_ambulance02";
 const char VO_AMBULANCE03[]			= "fs_ambulance03";
 const char VO_AMBULANCE04[]			= "fs_ambulance04";
+const char VO_USAR[]				= "fs_usar";
 const char VO_LADDER[]				= "fs_ladder";
 const char VO_ENGINE01[]			= "fs_engine01";
 const char VO_ENGINE02[]			= "fs_engine02";
@@ -73,29 +71,20 @@ const char OBJ_GATE06A[]			= "fs_gate06a";
 const char OBJ_GATE07A[]			= "fs_gate07a";
 const char OBJ_GATE08A[]			= "fs_gate08a";
 
-const char OBJ_DEPUTYCHIEFEXPLORER[] = "mod:Prototypes/Vehicles/02 RC Fire Department/deputy_chief_explorer.e4p";
-const char OBJ_FIREINVESTIGATION[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_investigation_car.e4p";
-const char OBJ_ENGINE11[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine11.e4p";
-const char OBJ_ENGINE21[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine21.e4p";
-const char OBJ_ENGINE31[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine31.e4p";
-const char OBJ_SQUAD1[] = "mod:Prototypes/Vehicles/02 RC Fire Department/squad_1.e4p";
-const char OBJ_SQUAD2[] = "mod:Prototypes/Vehicles/02 RC Fire Department/squad_2.e4p";
-const char OBJ_WOODS32[] = "mod:Prototypes/Vehicles/02 RC Fire Department/woods_32.e4p";
-const char OBJ_RESCUE11[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_11.e4p";
-const char OBJ_RESCUE12[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_12.e4p";
-const char OBJ_RESCUE21[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_21.e4p";
-const char OBJ_RESCUE31[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_31.e4p";
-
-const char VO_FIREINVESTIGATOR[]			= "fs_fireinvestigator";
-const char VO_RESCUESQUAD1[]				= "fs_rescuesquad1";
-const char VO_RESCUESQUAD2[]				= "fs_rescuesquad2";
-const char VO_WOODS[]				= "fs_woods";
-
 const char PATH_PATROL01[] 			= "patrolpath01";
 const char PATH_PATROL02[] 			= "patrolpath02";
 const char PATH_PATROL03[] 			= "patrolpath03";
 
+const char OBJ_AMBULANCE01[]			= "mod:Prototypes/Vehicles/01 LA Ambulance/ambulance01.e4p";
+const char OBJ_AMBULANCE02[]			= "mod:Prototypes/Vehicles/01 LA Ambulance/ambulance02.e4p";
+const char OBJ_AMBULANCE03[]			= "mod:Prototypes/Vehicles/01 LA Ambulance/ambulance03.e4p";
+const char OBJ_AMBULANCE04[]			= "mod:Prototypes/Vehicles/01 LA Ambulance/ambulance04.e4p";
+const char OBJ_ENGINE01[] 			= "mod:Prototypes/Vehicles/02 LA Fire Department/fire_engine1.e4p";
+const char OBJ_ENGINE02[] 			= "mod:Prototypes/Vehicles/02 LA Fire Department/fire_engine2.e4p";
 const char OBJ_LADDER[] 			= "mod:Prototypes/Vehicles/02 LA Fire Department/aerial_ladder.e4p";
+const char OBJ_TILLER[]				= "mod:Prototypes/Vehicles/02 LA Fire Department/tiller_cabin.e4p";
+const char OBJ_HAZMAT[] 			= "mod:Prototypes/Vehicles/02 LA Fire Department/hazmat_squad.e4p";
+const char OBJ_USAR[] 			= "mod:Prototypes/Vehicles/02 LA Fire Department/usar_squad.e4p";
 const char OBJ_PM[]				= "mod:Prototypes/Persons/01 LA Ambulance/ff_paramedic.e4p";
 const char OBJ_EMT[]				= "mod:Prototypes/Persons/02 LA Fire Department/ff_emt.e4p";
 const char OBJ_PM_STRETCHER[]			= "mod:Prototypes/Persons/01 LA Ambulance/ff_paramedic_stretcher.e4p";
@@ -334,6 +323,15 @@ object PcmdCallAmbulance : CommandScript
 				PersonList passengers = v.GetPassengers();
 				if (passengers.GetNumPersons() == 0)
 				{
+					if (StrCompare(v.GetPrototypeFileName(), OBJ_AMBULANCE01) == 0)
+					{
+						v.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 7, false);
+						//v.PushActionWait(ACTION_APPEND, 0.5f);
+						//v.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
+						v.PushActionWait(ACTION_APPEND, 6.f);
+					}
+					else
+					{
 						v.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 1, false);
 						v.PushActionWait(ACTION_APPEND, 0.5f);
 						v.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 2, false);

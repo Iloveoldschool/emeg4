@@ -25,7 +25,7 @@
 //	- VcmdRepairVehicles
 //
 //		Script by Hoppah
-//		
+//
 //		Usage of this script in other mods is NOT allowed without permission of Hoppah
 //
 //******************************************************************************************
@@ -37,17 +37,28 @@ const char NAME_FIRESTATION2_ROOF[]		= "fire_station2_roof";
 const char NAME_CONTROLPANEL[]			= "fire_station_controlpanel";
 const char NAME_CONTROLPANEL2[]			= "fire_station_controlpanel2";
 
-const char OBJ_BATTALION[]			= "mod:Prototypes/Vehicles/02 LA Fire Department/battalion_chief_vehicle.e4p";
-const char OBJ_AMBULANCE01[]		= "mod:Prototypes/Vehicles/01 LA Ambulance/ambulance01.e4p";
-const char OBJ_AMBULANCE02[]		= "mod:Prototypes/Vehicles/01 LA Ambulance/ambulance02.e4p";
-const char OBJ_USAR[]				= "mod:Prototypes/Vehicles/02 LA Fire Department/usar_squad.e4p";
+const char OBJ_DEPUTYCHIEFEXPLORER[] = "mod:Prototypes/Vehicles/02 RC Fire Department/deputy_chief_explorer.e4p";
+const char OBJ_FIREINVESTIGATION[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_investigation_car.e4p";
+const char OBJ_ENGINE11[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine11.e4p";
+const char OBJ_ENGINE21[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine21.e4p";
+const char OBJ_ENGINE31[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine31.e4p";
+const char OBJ_SQUAD1[] = "mod:Prototypes/Vehicles/02 RC Fire Department/squad_1.e4p";
+const char OBJ_SQUAD2[] = "mod:Prototypes/Vehicles/02 RC Fire Department/squad_2.e4p";
+const char OBJ_WOODS32[] = "mod:Prototypes/Vehicles/02 RC Fire Department/woods_32.e4p";
+const char OBJ_RESCUE11[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_11.e4p";
+const char OBJ_RESCUE12[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_12.e4p";
+const char OBJ_RESCUE21[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_21.e4p";
+const char OBJ_RESCUE31[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_31.e4p";
+
+const char VO_FIREINVESTIGATOR[]			= "fs_fireinvestigator";
+const char VO_RESCUESQUAD1[]				= "fs_rescuesquad1";
+const char VO_RESCUESQUAD2[]				= "fs_rescuesquad2";
+const char VO_WOODS[]				= "fs_woods";
+
 const char OBJ_LADDER[]				= "mod:Prototypes/Vehicles/02 LA Fire Department/aerial_ladder.e4p";
-const char OBJ_TILLER[]				= "mod:Prototypes/Vehicles/02 LA Fire Department/tiller_cabin.e4p";
-const char OBJ_ENGINE01[]			= "mod:Prototypes/Vehicles/02 LA Fire Department/fire_engine1.e4p";
-const char OBJ_ENGINE02[]			= "mod:Prototypes/Vehicles/02 LA Fire Department/fire_engine2.e4p";
-const char OBJ_HAZMATSQUAD[]		= "mod:Prototypes/Vehicles/02 LA Fire Department/heavy_equipment_squad.e4p";
 
 const char OBJ_CHIEF[]				= "mod:Prototypes/Persons/02 LA Fire Department/battalion_chief.e4p";
+const char OBJ_EMS_CAPTAIN[]				= "mod:Prototypes/Persons/01 LA Ambulance/ems_paramedic_captain.e4p";
 const char OBJ_EMT[]				= "mod:Prototypes/Persons/02 LA Fire Department/ff_emt.e4p";
 const char OBJ_EMT_SCBA[]			= "mod:Prototypes/Persons/02 LA Fire Department/ff_emt_scba.e4p";
 const char OBJ_EMT_STRETCHER[]		= "mod:Prototypes/Persons/02 LA Fire Department/ff_emt_stretcher.e4p";
@@ -104,14 +115,12 @@ const char VO_AMBULANCE01[]			= "fs_ambulance01";
 const char VO_AMBULANCE02[]			= "fs_ambulance02";
 const char VO_AMBULANCE03[]			= "fs_ambulance03";
 const char VO_AMBULANCE04[]			= "fs_ambulance04";
-const char VO_USAR[]				= "fs_usar";
 const char VO_LADDER[]				= "fs_ladder";
 const char VO_ENGINE01[]			= "fs_engine01";
 const char VO_ENGINE02[]			= "fs_engine02";
 const char VO_ENGINE03[]			= "fs_engine03";
 const char VO_ENGINE04[]			= "fs_engine04";
 const char VO_ENGINE05[]			= "fs_engine05";
-const char VO_HAZMAT[]				= "fs_hazmat";
 
 const char VO_SPAWN01[]				= "fs_spawn01";
 const char VO_SPAWN02[]				= "fs_spawn02";
@@ -202,8 +211,6 @@ object VcmdAlarm : CommandScript
 				if (passengers.GetNumPersons() == 0)
 				{
 					m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 4, false);
-					m.PushActionWait(ACTION_APPEND, 0.5f);
-					m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
 				}
 			}
 			GameObjectList l3;
@@ -214,20 +221,11 @@ object VcmdAlarm : CommandScript
 				PersonList passengers = m.GetPassengers();
 				if (passengers.GetNumPersons() == 0)
 				{
-					if(StrCompare(m.GetPrototypeFileName(), OBJ_AMBULANCE01) == 0)
-					{
-						m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 7, false);
-						//m.PushActionWait(ACTION_APPEND, 0.5f);
-						//m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-
-					} else
-					{
 						m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 1, false);
 						m.PushActionWait(ACTION_APPEND, 0.5f);
 						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 2, false);
 					}
 				}
-			}
 			GameObjectList l4;
  			Game::CollectObstaclesOnVirtualObject(VO_AMBULANCE02, l4, ACTOR_VEHICLE);
 			if(l4.GetNumObjects() > 0)
@@ -236,19 +234,11 @@ object VcmdAlarm : CommandScript
 				PersonList passengers = m.GetPassengers();
 				if (passengers.GetNumPersons() == 0)
 				{
-					if(StrCompare(m.GetPrototypeFileName(), OBJ_AMBULANCE01) == 0)
-					{
-						m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 7, false);
-						//m.PushActionWait(ACTION_APPEND, 0.5f);
-						//m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-					} else
-					{
 						m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 1, false);
 						m.PushActionWait(ACTION_APPEND, 0.5f);
 						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 2, false);
 					}
 				}
-			}
 			GameObjectList l5;
  			Game::CollectObstaclesOnVirtualObject(VO_AMBULANCE03, l5, ACTOR_VEHICLE);
 			if(l5.GetNumObjects() > 0)
@@ -257,19 +247,11 @@ object VcmdAlarm : CommandScript
 				PersonList passengers = m.GetPassengers();
 				if (passengers.GetNumPersons() == 0)
 				{
-					if(StrCompare(m.GetPrototypeFileName(), OBJ_AMBULANCE01) == 0)
-					{
-						m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 7, false);
-						//m.PushActionWait(ACTION_APPEND, 0.5f);
-						//m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-					} else
-					{
 						m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 1, false);
 						m.PushActionWait(ACTION_APPEND, 0.5f);
 						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 2, false);
 					}
 				}
-			}
 			GameObjectList l6;
  			Game::CollectObstaclesOnVirtualObject(VO_LADDER, l6, ACTOR_VEHICLE);
 			if(l6.GetNumObjects() > 0)
@@ -285,7 +267,7 @@ object VcmdAlarm : CommandScript
 				}
 			}
 			GameObjectList l7;
- 			Game::CollectObstaclesOnVirtualObject(VO_USAR, l7, ACTOR_VEHICLE);
+ 			Game::CollectObstaclesOnVirtualObject(VO_RESCUESQUAD1, l7, ACTOR_VEHICLE);
 			if(l7.GetNumObjects() > 0)
 			{
 				Vehicle m = l7.GetObject(0);
@@ -305,29 +287,16 @@ object VcmdAlarm : CommandScript
 				PersonList passengers = m.GetPassengers();
 				if (passengers.GetNumPersons() == 0)
 				{
-					if(StrCompare(m.GetPrototypeFileName(), OBJ_ENGINE01) == 0)
-					{
 						m.PushActionWait(ACTION_NEWLIST, 2.0f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
+						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 5, false);
 						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
+						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 5, false);
 						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
+						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 5, false);
 						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-					} else
-					{
-						m.PushActionWait(ACTION_NEWLIST, 2.0f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
+						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 5, false);
 					}
 				}
-			}
 			GameObjectList l9;
  			Game::CollectObstaclesOnVirtualObject(VO_ENGINE02, l9, ACTOR_VEHICLE);
 			if(l9.GetNumObjects() > 0)
@@ -336,92 +305,46 @@ object VcmdAlarm : CommandScript
 				PersonList passengers = m.GetPassengers();
 				if (passengers.GetNumPersons() == 0)
 				{
-					if(StrCompare(m.GetPrototypeFileName(), OBJ_ENGINE01) == 0)
-					{
-						m.PushActionWait(ACTION_NEWLIST, 2.0f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-					} else
-					{
-						m.PushActionWait(ACTION_NEWLIST, 2.0f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-					}
+					m.PushActionWait(ACTION_NEWLIST, 2.0f);
+					m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
+					m.PushActionWait(ACTION_APPEND, 0.5f);
+					m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
+					m.PushActionWait(ACTION_APPEND, 0.5f);
+					m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
+					m.PushActionWait(ACTION_APPEND, 0.5f);
+					m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
 				}
 			}
 			GameObjectList l10;
- 			Game::CollectObstaclesOnVirtualObject(VO_ENGINE03, l10, ACTOR_VEHICLE);
+ 			Game::CollectObstaclesOnVirtualObject(VO_ENGINE04, l10, ACTOR_VEHICLE);
 			if(l10.GetNumObjects() > 0)
 			{
 				Vehicle m = l10.GetObject(0);
 				PersonList passengers = m.GetPassengers();
 				if (passengers.GetNumPersons() == 0)
 				{
-					if(StrCompare(m.GetPrototypeFileName(), OBJ_ENGINE01) == 0)
-					{
-						m.PushActionWait(ACTION_NEWLIST, 2.0f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-					} else
-					{
-						m.PushActionWait(ACTION_NEWLIST, 2.0f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
+					m.PushActionWait(ACTION_NEWLIST, 2.0f);
+					m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
+					m.PushActionWait(ACTION_APPEND, 0.5f);
+					m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
+					m.PushActionWait(ACTION_APPEND, 0.5f);
+					m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
+					m.PushActionWait(ACTION_APPEND, 0.5f);
+					m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
 					}
 				}
-			}
-			GameObjectList l11;
- 			Game::CollectObstaclesOnVirtualObject(VO_ENGINE04, l11, ACTOR_VEHICLE);
-			if(l11.GetNumObjects() > 0)
-			{
-				Vehicle m = l11.GetObject(0);
-				PersonList passengers = m.GetPassengers();
-				if (passengers.GetNumPersons() == 0)
+				GameObjectList l11;
+	 			Game::CollectObstaclesOnVirtualObject(VO_FIREINVESTIGATOR, l11, ACTOR_VEHICLE);
+				if(l11.GetNumObjects() > 0)
 				{
-					if(StrCompare(m.GetPrototypeFileName(), OBJ_ENGINE01) == 0)
+					Vehicle m = l11.GetObject(0);
+					PersonList passengers = m.GetPassengers();
+					if (passengers.GetNumPersons() == 0)
 					{
-						m.PushActionWait(ACTION_NEWLIST, 2.0f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-					} else
-					{
-						m.PushActionWait(ACTION_NEWLIST, 2.0f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
+						m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 8, false);
 					}
 				}
 			}
-		}
 		if(Caller->HasName(NAME_CONTROLPANEL2)) //= fire station 2
 		{
 			Caller->AssignCommand(DUMMY_ALARM);
@@ -450,19 +373,11 @@ object VcmdAlarm : CommandScript
 				PersonList passengers = m.GetPassengers();
 				if (passengers.GetNumPersons() == 0)
 				{
-					if(StrCompare(m.GetPrototypeFileName(), OBJ_AMBULANCE01) == 0)
-					{
-						m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 7, false);
-						//m.PushActionWait(ACTION_APPEND, 0.5f);
-						//m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-					} else
-					{
 						m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 1, false);
 						m.PushActionWait(ACTION_APPEND, 0.5f);
 						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 2, false);
 					}
 				}
-			}
 			GameObjectList l3;
  			Game::CollectObstaclesOnVirtualObject(VO_ENGINE05, l3, ACTOR_VEHICLE);
 			if(l3.GetNumObjects() > 0)
@@ -482,7 +397,7 @@ object VcmdAlarm : CommandScript
 				}
 			}
 			GameObjectList l4;
- 			Game::CollectObstaclesOnVirtualObject(VO_HAZMAT, l4, ACTOR_VEHICLE);
+ 			Game::CollectObstaclesOnVirtualObject(VO_WOODS, l4, ACTOR_VEHICLE);
 			if(l4.GetNumObjects() > 0)
 			{
 				Vehicle m = l4.GetObject(0);
@@ -492,7 +407,7 @@ object VcmdAlarm : CommandScript
 					m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 1, false);
 					m.PushActionWait(ACTION_APPEND, 0.5f);
 					m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
-									}
+				}
 			}
 		}
 	}
@@ -535,13 +450,13 @@ object VcmdRoof : CommandScript
 				GameObject *obj = l1.GetObject(i);
 				if(obj->GetUserData() == 0)
 				{
-					obj->Hide(); 
+					obj->Hide();
 					obj->SetUserData(1);
 				} else
 				{
-					obj->Show(); 
+					obj->Show();
 					obj->SetUserData(0);
-				} 
+				}
 			}
 		}
 		if(Caller->HasName(NAME_CONTROLPANEL2)) //= fire station 2
@@ -552,13 +467,13 @@ object VcmdRoof : CommandScript
 				GameObject *obj = l1.GetObject(i);
 				if(obj->GetUserData() == 0)
 				{
-					obj->Hide(); 
+					obj->Hide();
 					obj->SetUserData(1);
 				} else
 				{
-					obj->Show(); 
+					obj->Show();
 					obj->SetUserData(0);
-				} 
+				}
 			}
 		}
 	}
@@ -692,7 +607,7 @@ object VcmdCallEMT : CommandScript
 
 		if(l2.GetNumActors() > 0)
 			Vector MoveTo = l2.GetActor(0)->GetPosition();
-		
+
 		Person p = Game::CreatePerson(OBJ_EMT, UNNAMED);
 		if (Game::FindFreePosition(&p, Spawn))
 		{
@@ -752,7 +667,7 @@ object VcmdCallEMTSCBA : CommandScript
 
 		if(l2.GetNumActors() > 0)
 			Vector MoveTo = l2.GetActor(0)->GetPosition();
-		
+
 		Person p = Game::CreatePerson(OBJ_EMT_SCBA, UNNAMED);
 		if (Game::FindFreePosition(&p, Spawn))
 		{
@@ -812,7 +727,7 @@ object VcmdCallEMTStretcher : CommandScript
 
 		if(l2.GetNumActors() > 0)
 			Vector MoveTo = l2.GetActor(0)->GetPosition();
-		
+
 		Person p = Game::CreatePerson(OBJ_EMT_STRETCHER, UNNAMED);
 		if (Game::FindFreePosition(&p, Spawn))
 		{
@@ -873,7 +788,7 @@ object VcmdCallPM : CommandScript
 
 		if(l2.GetNumActors() > 0)
 			Vector MoveTo = l2.GetActor(0)->GetPosition();
-		
+
 		Person p = Game::CreatePerson(OBJ_PM, UNNAMED);
 		if (Game::FindFreePosition(&p, Spawn))
 		{
@@ -935,7 +850,7 @@ object VcmdCallPMSCBA : CommandScript
 
 		if(l2.GetNumActors() > 0)
 			Vector MoveTo = l2.GetActor(0)->GetPosition();
-		
+
 		Person p = Game::CreatePerson(OBJ_PM_SCBA, UNNAMED);
 		if (Game::FindFreePosition(&p, Spawn))
 		{
@@ -997,7 +912,7 @@ object VcmdCallPMStretcher : CommandScript
 
 		if(l2.GetNumActors() > 0)
 			Vector MoveTo = l2.GetActor(0)->GetPosition();
-				
+
 		Person p = Game::CreatePerson(OBJ_PM_STRETCHER, UNNAMED);
 		if (Game::FindFreePosition(&p, Spawn))
 		{
@@ -1058,7 +973,7 @@ object VcmdCallDiver : CommandScript
 
 		if(l2.GetNumActors() > 0)
 			Vector MoveTo = l2.GetActor(0)->GetPosition();
-				
+
 		Person p = Game::CreatePerson(OBJ_DIVER, UNNAMED);
 		if (Game::FindFreePosition(&p, Spawn))
 		{
@@ -1118,7 +1033,7 @@ object VcmdCallHazmat : CommandScript
 
 		if(l2.GetNumActors() > 0)
 			Vector MoveTo = l2.GetActor(0)->GetPosition();
-				
+
 		Person p = Game::CreatePerson(OBJ_HAZMAT, UNNAMED);
 		if (Game::FindFreePosition(&p, Spawn))
 		{
@@ -1177,7 +1092,7 @@ object VcmdCallUSARFF : CommandScript
 
 		if(l2.GetNumActors() > 0)
 			Vector MoveTo = l2.GetActor(0)->GetPosition();
-				
+
 		Person p = Game::CreatePerson(OBJ_USARFF, UNNAMED);
 		if (Game::FindFreePosition(&p, Spawn))
 		{
@@ -1269,11 +1184,11 @@ object DummyDisableAlarm : CommandScript
  	{
  		return false;
  	}
- 
+
  	bool CheckPossible(GameObject *Caller)
  	{
  		return false;
- 	} 
+ 	}
 
 	void PushActions(GameObject *Caller, Actor *Target, int ChildID)
 	{
@@ -1308,11 +1223,11 @@ object DummyCallCrew : CommandScript
  	{
  		return false;
  	}
- 
+
  	bool CheckPossible(GameObject *Caller)
  	{
  		return false;
- 	} 
+ 	}
 
 	void PushActions(GameObject *Caller, Actor *Target, int ChildID)
 	{
@@ -1360,7 +1275,7 @@ object DummyCallCrew : CommandScript
 					obj->AttachSound(soundID);
 				}
 			}
-		} 
+		}
 		else
 		{
 			ActorList l1 = Game::GetActors(VO_SPAWN02);
@@ -1386,6 +1301,8 @@ object DummyCallCrew : CommandScript
 			Person p = Game::CreatePerson(OBJ_USARFF, UNNAMED);
 		else if (ChildID == 7)
 			Person p = Game::CreatePerson(OBJ_EMT_STRETCHER, UNNAMED);
+		else if (ChildID == 8)
+			Person p = Game::CreatePerson(OBJ_EMS_CAPTAIN, UNNAMED);
 		else
 			return;
 
@@ -1409,11 +1326,11 @@ object DummyGates : CommandScript
  	{
  		return false;
  	}
- 
+
  	bool CheckPossible(GameObject *Caller)
  	{
  		return false;
- 	} 
+ 	}
 
 	void PushActions(GameObject *Caller, Actor *Target, int ChildID)
 	{
@@ -1429,18 +1346,18 @@ object DummyGates : CommandScript
 		GameObjectList gate02b = Game::GetGameObjects(NAME_GATE02B);
 		GameObjectList gate03b = Game::GetGameObjects(NAME_GATE03B);
 		GameObjectList gate04b = Game::GetGameObjects(NAME_GATE04B);
-		GameObjectList gate05b = Game::GetGameObjects(NAME_GATE05B); 
+		GameObjectList gate05b = Game::GetGameObjects(NAME_GATE05B);
 		GameObjectList gate06b = Game::GetGameObjects(NAME_GATE06B);
 		GameObjectList gate07b = Game::GetGameObjects(NAME_GATE07B);
-		GameObjectList gate08b = Game::GetGameObjects(NAME_GATE08B); 
-		ActorList vogate01a = Game::GetActors(VO_GATE01A); 
+		GameObjectList gate08b = Game::GetGameObjects(NAME_GATE08B);
+		ActorList vogate01a = Game::GetActors(VO_GATE01A);
 		ActorList vogate02a = Game::GetActors(VO_GATE02A);
-		ActorList vogate03a = Game::GetActors(VO_GATE03A); 
+		ActorList vogate03a = Game::GetActors(VO_GATE03A);
 		ActorList vogate04a = Game::GetActors(VO_GATE04A);
-		ActorList vogate05a = Game::GetActors(VO_GATE05A); 
-		ActorList vogate06a = Game::GetActors(VO_GATE06A); 
+		ActorList vogate05a = Game::GetActors(VO_GATE05A);
+		ActorList vogate06a = Game::GetActors(VO_GATE06A);
 		ActorList vogate07a = Game::GetActors(VO_GATE07A);
-		ActorList vogate08a = Game::GetActors(VO_GATE08A); 
+		ActorList vogate08a = Game::GetActors(VO_GATE08A);
  		ActorList vogate01b = Game::GetActors(VO_GATE01B);
 		ActorList vogate02b = Game::GetActors(VO_GATE02B);
 		ActorList vogate03b = Game::GetActors(VO_GATE03B);
@@ -1457,7 +1374,7 @@ object DummyGates : CommandScript
 				GameObject *gate = gate01a.GetObject(i);
 				Actor *vogate = vogate01a.GetActor(i);
 				if (gate->GetUserData() == 0)
-				{ 
+				{
 					gate->SetUserData(1);
 					gate->SetAnimation(ANI_OPEN);
 					vogate->SetVirtualObjectTerrain(VOSET_ROAD);
@@ -1468,7 +1385,7 @@ object DummyGates : CommandScript
 				GameObject *gate = gate02a.GetObject(i);
 				Actor *vogate = vogate02a.GetActor(i);
 				if (gate->GetUserData() == 0)
-				{ 
+				{
 					gate->SetUserData(1);
 					gate->SetAnimation(ANI_OPEN);
 					vogate->SetVirtualObjectTerrain(VOSET_ROAD);
@@ -1480,7 +1397,7 @@ object DummyGates : CommandScript
 				Actor *vogate = vogate03a.GetActor(i);
 				Vector GateSnd = gate->GetPosition();
 				if (gate->GetUserData() == 0)
-				{ 
+				{
 					gate->SetUserData(1);
 					gate->SetAnimation(ANI_OPEN);
 					vogate->SetVirtualObjectTerrain(VOSET_ROAD);
@@ -1492,7 +1409,7 @@ object DummyGates : CommandScript
 				GameObject *gate = gate04a.GetObject(i);
 				Actor *vogate = vogate04a.GetActor(i);
 				if (gate->GetUserData() == 0)
-				{ 
+				{
 					gate->SetUserData(1);
 					gate->SetAnimation(ANI_OPEN);
 					vogate->SetVirtualObjectTerrain(VOSET_ROAD);
@@ -1503,7 +1420,7 @@ object DummyGates : CommandScript
 				GameObject *gate = gate05a.GetObject(i);
 				Actor *vogate = vogate05a.GetActor(i);
 				if (gate->GetUserData() == 0)
-				{ 
+				{
 					gate->SetUserData(1);
 					gate->SetAnimation(ANI_OPEN);
 					vogate->SetVirtualObjectTerrain(VOSET_ROAD);
@@ -1517,7 +1434,7 @@ object DummyGates : CommandScript
 				GameObject *gate = gate01a.GetObject(i);
 				Actor *vogate = vogate01a.GetActor(i);
 				if (gate->GetUserData() == 1)
-				{ 
+				{
 					gate->SetUserData(0);
 					gate->SetAnimation(ANI_CLOSE);
 					vogate->SetVirtualObjectTerrain(VOSET_BARRICADE);
@@ -1528,7 +1445,7 @@ object DummyGates : CommandScript
 				GameObject *gate = gate02a.GetObject(i);
 				Actor *vogate = vogate02a.GetActor(i);
 				if (gate->GetUserData() == 1)
-				{ 
+				{
 					gate->SetUserData(0);
 					gate->SetAnimation(ANI_CLOSE);
 					vogate->SetVirtualObjectTerrain(VOSET_BARRICADE);
@@ -1540,7 +1457,7 @@ object DummyGates : CommandScript
 				Actor *vogate = vogate03a.GetActor(i);
 				Vector GateSnd = gate->GetPosition();
 				if (gate->GetUserData() == 1)
-				{ 
+				{
 					gate->SetUserData(0);
 					gate->SetAnimation(ANI_CLOSE);
 					vogate->SetVirtualObjectTerrain(VOSET_BARRICADE);
@@ -1552,7 +1469,7 @@ object DummyGates : CommandScript
 				GameObject *gate = gate04a.GetObject(i);
 				Actor *vogate = vogate04a.GetActor(i);
 				if (gate->GetUserData() == 1)
-				{ 
+				{
 					gate->SetUserData(0);
 					gate->SetAnimation(ANI_CLOSE);
 					vogate->SetVirtualObjectTerrain(VOSET_BARRICADE);
@@ -1563,7 +1480,7 @@ object DummyGates : CommandScript
 				GameObject *gate = gate05a.GetObject(i);
 				Actor *vogate = vogate05a.GetActor(i);
 				if (gate->GetUserData() == 1)
-				{ 
+				{
 					gate->SetUserData(0);
 					gate->SetAnimation(ANI_CLOSE);
 					vogate->SetVirtualObjectTerrain(VOSET_BARRICADE);
@@ -1574,7 +1491,7 @@ object DummyGates : CommandScript
 				GameObject *gate = gate01b.GetObject(i);
 				Actor *vogate = vogate01b.GetActor(i);
 				if (gate->GetUserData() == 1)
-				{ 
+				{
 					gate->SetUserData(0);
 					gate->SetAnimation(ANI_CLOSE);
 					vogate->SetVirtualObjectTerrain(VOSET_BARRICADE);
@@ -1585,7 +1502,7 @@ object DummyGates : CommandScript
 				GameObject *gate = gate02b.GetObject(i);
 				Actor *vogate = vogate02b.GetActor(i);
 				if (gate->GetUserData() == 1)
-				{ 
+				{
 					gate->SetUserData(0);
 					gate->SetAnimation(ANI_CLOSE);
 					vogate->SetVirtualObjectTerrain(VOSET_BARRICADE);
@@ -1597,7 +1514,7 @@ object DummyGates : CommandScript
 				Actor *vogate = vogate03b.GetActor(i);
 				Vector GateSnd = gate->GetPosition();
 				if (gate->GetUserData() == 1)
-				{ 
+				{
 					gate->SetUserData(0);
 					gate->SetAnimation(ANI_CLOSE);
 					vogate->SetVirtualObjectTerrain(VOSET_BARRICADE);
@@ -1609,7 +1526,7 @@ object DummyGates : CommandScript
 				GameObject *gate = gate04b.GetObject(i);
 				Actor *vogate = vogate04b.GetActor(i);
 				if (gate->GetUserData() == 1)
-				{ 
+				{
 					gate->SetUserData(0);
 					gate->SetAnimation(ANI_CLOSE);
 					vogate->SetVirtualObjectTerrain(VOSET_BARRICADE);
@@ -1620,7 +1537,7 @@ object DummyGates : CommandScript
 				GameObject *gate = gate05b.GetObject(i);
 				Actor *vogate = vogate05b.GetActor(i);
 				if (gate->GetUserData() == 1)
-				{ 
+				{
 					gate->SetUserData(0);
 					gate->SetAnimation(ANI_CLOSE);
 					vogate->SetVirtualObjectTerrain(VOSET_BARRICADE);
@@ -1634,7 +1551,7 @@ object DummyGates : CommandScript
 				GameObject *gate = gate06a.GetObject(i);
 				Actor *vogate = vogate06a.GetActor(i);
 				if (gate->GetUserData() == 0)
-				{ 
+				{
 					gate->SetUserData(1);
 					gate->SetAnimation(ANI_OPEN);
 					vogate->SetVirtualObjectTerrain(VOSET_ROAD);
@@ -1645,7 +1562,7 @@ object DummyGates : CommandScript
 				GameObject *gate = gate07a.GetObject(i);
 				Actor *vogate = vogate07a.GetActor(i);
 				if (gate->GetUserData() == 0)
-				{ 
+				{
 					gate->SetUserData(1);
 					gate->SetAnimation(ANI_OPEN);
 					vogate->SetVirtualObjectTerrain(VOSET_ROAD);
@@ -1657,7 +1574,7 @@ object DummyGates : CommandScript
 				Actor *vogate = vogate08a.GetActor(i);
 				Vector GateSnd = gate->GetPosition();
 				if (gate->GetUserData() == 0)
-				{ 
+				{
 					gate->SetUserData(1);
 					gate->SetAnimation(ANI_OPEN);
 					vogate->SetVirtualObjectTerrain(VOSET_ROAD);
@@ -1672,7 +1589,7 @@ object DummyGates : CommandScript
 				GameObject *gate = gate06a.GetObject(i);
 				Actor *vogate = vogate06a.GetActor(i);
 				if (gate->GetUserData() == 1)
-				{ 
+				{
 					gate->SetUserData(0);
 					gate->SetAnimation(ANI_CLOSE);
 					vogate->SetVirtualObjectTerrain(VOSET_BARRICADE);
@@ -1683,7 +1600,7 @@ object DummyGates : CommandScript
 				GameObject *gate = gate07a.GetObject(i);
 				Actor *vogate = vogate07a.GetActor(i);
 				if (gate->GetUserData() == 1)
-				{ 
+				{
 					gate->SetUserData(0);
 					gate->SetAnimation(ANI_CLOSE);
 					vogate->SetVirtualObjectTerrain(VOSET_BARRICADE);
@@ -1695,7 +1612,7 @@ object DummyGates : CommandScript
 				Actor *vogate = vogate08a.GetActor(i);
 				Vector GateSnd = gate->GetPosition();
 				if (gate->GetUserData() == 1)
-				{ 
+				{
 					gate->SetUserData(0);
 					gate->SetAnimation(ANI_CLOSE);
 					vogate->SetVirtualObjectTerrain(VOSET_BARRICADE);
@@ -1707,7 +1624,7 @@ object DummyGates : CommandScript
 				GameObject *gate = gate06b.GetObject(i);
 				Actor *vogate = vogate06b.GetActor(i);
 				if (gate->GetUserData() == 1)
-				{ 
+				{
 					gate->SetUserData(0);
 					gate->SetAnimation(ANI_CLOSE);
 					vogate->SetVirtualObjectTerrain(VOSET_BARRICADE);
@@ -1718,7 +1635,7 @@ object DummyGates : CommandScript
 				GameObject *gate = gate07b.GetObject(i);
 				Actor *vogate = vogate07b.GetActor(i);
 				if (gate->GetUserData() == 1)
-				{ 
+				{
 					gate->SetUserData(0);
 					gate->SetAnimation(ANI_CLOSE);
 					vogate->SetVirtualObjectTerrain(VOSET_BARRICADE);
@@ -1730,7 +1647,7 @@ object DummyGates : CommandScript
 				Actor *vogate = vogate08b.GetActor(i);
 				Vector GateSnd = gate->GetPosition();
 				if (gate->GetUserData() == 1)
-				{ 
+				{
 					gate->SetUserData(0);
 					gate->SetAnimation(ANI_CLOSE);
 					vogate->SetVirtualObjectTerrain(VOSET_BARRICADE);
@@ -1741,7 +1658,7 @@ object DummyGates : CommandScript
 		if(ChildID == 5) //= Battalion chief 'calls vehicle cmds' for opening/closing front gates fire station 1
 		{
 			Vehicle v(Caller);
-			if (v.GetVehicleType() == VT_AMBULANCE_RTW) 
+			if (v.GetVehicleType() == VT_AMBULANCE_RTW)
 			{
 				for(int i=0; i < gate01a.GetNumObjects(); i++)
 				{
@@ -1763,7 +1680,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_USAR) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_SQUAD1) == 0)
 			{
 				for(int i=0; i < gate02a.GetNumObjects(); i++)
 				{
@@ -1785,7 +1702,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_LADDER) == 0 || StrCompare(v.GetPrototypeFileName(), OBJ_TILLER) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_LADDER) == 0)
 			{
 				for(int i=0; i < gate03a.GetNumObjects(); i++)
 				{
@@ -1807,7 +1724,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE01) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_SQUAD2) == 0)
 			{
 				for(int i=0; i < gate04a.GetNumObjects(); i++)
 				{
@@ -1827,9 +1744,9 @@ object DummyGates : CommandScript
 						vogate->SetVirtualObjectTerrain(VOSET_BARRICADE);
 						Audio::PlaySample3D(SND_GATE, GateSnd);
 					}
-				}	
+				}
 			}
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE02) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE11) == 0 || StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE31) == 0)
 			{
 				for(int i=0; i < gate05a.GetNumObjects(); i++)
 				{
@@ -1855,7 +1772,7 @@ object DummyGates : CommandScript
 		if(ChildID == 6) //= Battalion chief 'calls vehicle cmds' for opening/closing front gates fire station 2
 		{
 			Vehicle v(Caller);
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_HAZMATSQUAD) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_WOODS32) == 0)
 			{
 				for(int i=0; i < gate06a.GetNumObjects(); i++)
 				{
@@ -1877,7 +1794,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE01) == 0 || StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE02) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE21) == 0)
 			{
 				for(int i=0; i < gate07a.GetNumObjects(); i++)
 				{
@@ -1897,9 +1814,9 @@ object DummyGates : CommandScript
 						vogate->SetVirtualObjectTerrain(VOSET_BARRICADE);
 						Audio::PlaySample3D(SND_GATE, GateSnd);
 					}
-				}	
+				}
 			}
-			if (v.GetVehicleType() == VT_AMBULANCE_RTW) 
+			if (v.GetVehicleType() == VT_AMBULANCE_RTW)
 			{
 				for(int i=0; i < gate08a.GetNumObjects(); i++)
 				{
@@ -1921,12 +1838,11 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-
 		}
 		if(ChildID == 7) //To fire station cmd to open rear gates fire station 1
 		{
 			Vehicle v(Caller);
-			if (v.GetVehicleType() == VT_AMBULANCE_RTW) 
+			if (v.GetVehicleType() == VT_AMBULANCE_RTW)
 			{
 				for(int i=0; i < gate01b.GetNumObjects(); i++)
 				{
@@ -1942,7 +1858,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_USAR) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_SQUAD1) == 0)
 			{
 				for(int i=0; i < gate02b.GetNumObjects(); i++)
 				{
@@ -1958,7 +1874,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_LADDER) == 0 || StrCompare(v.GetPrototypeFileName(), OBJ_TILLER) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_LADDER) == 0)
 			{
 				for(int i=0; i < gate03b.GetNumObjects(); i++)
 				{
@@ -1974,7 +1890,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE01) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_SQUAD2) == 0)
 			{
 				for(int i=0; i < gate04b.GetNumObjects(); i++)
 				{
@@ -1988,9 +1904,9 @@ object DummyGates : CommandScript
 						vogate->SetVirtualObjectTerrain(VOSET_ROAD);
 						Audio::PlaySample3D(SND_GATE, GateSnd);
 					}
-				}	
+				}
 			}
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE02) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE11) == 0 || StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE31) == 0))
 			{
 				for(int i=0; i < gate05b.GetNumObjects(); i++)
 				{
@@ -2010,7 +1926,7 @@ object DummyGates : CommandScript
 		if(ChildID == 8) //To fire station cmd to open rear gates fire station 2
 		{
 			Vehicle v(Caller);
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_HAZMATSQUAD) == 0)
+			if(v.GetPrototypeFileName(), OBJ_WOODS32) == 0)
 			{
 				for(int i=0; i < gate06b.GetNumObjects(); i++)
 				{
@@ -2026,7 +1942,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE01) == 0 || StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE02) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE21) == 0)
 			{
 				for(int i=0; i < gate07b.GetNumObjects(); i++)
 				{
@@ -2040,9 +1956,9 @@ object DummyGates : CommandScript
 						vogate->SetVirtualObjectTerrain(VOSET_ROAD);
 						Audio::PlaySample3D(SND_GATE, GateSnd);
 					}
-				}	
+				}
 			}
-			if (v.GetVehicleType() == VT_AMBULANCE_RTW) 
+			if (v.GetVehicleType() == VT_AMBULANCE_RTW)
 			{
 				for(int i=0; i < gate08b.GetNumObjects(); i++)
 				{
@@ -2062,7 +1978,7 @@ object DummyGates : CommandScript
 		if(ChildID == 9) //To fire station cmd to close rear gates fire station 1
 		{
 			Vehicle v(Caller);
-			if (v.GetVehicleType() == VT_AMBULANCE_RTW) 
+			if (v.GetVehicleType() == VT_AMBULANCE_RTW)
 			{
 				for(int i=0; i < gate01b.GetNumObjects(); i++)
 				{
@@ -2078,7 +1994,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_USAR) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_SQUAD1) == 0)
 			{
 				for(int i=0; i < gate02b.GetNumObjects(); i++)
 				{
@@ -2094,7 +2010,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_LADDER) == 0 || StrCompare(v.GetPrototypeFileName(), OBJ_TILLER) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_LADDER) == 0)
 			{
 				for(int i=0; i < gate03b.GetNumObjects(); i++)
 				{
@@ -2110,7 +2026,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE01) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_SQUAD2) == 0)
 			{
 				for(int i=0; i < gate04b.GetNumObjects(); i++)
 				{
@@ -2126,7 +2042,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE02) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE11) == 0 || StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE31) == 0))
 			{
 				for(int i=0; i < gate05b.GetNumObjects(); i++)
 				{
@@ -2146,7 +2062,7 @@ object DummyGates : CommandScript
 		if(ChildID == 10) //To fire station cmd to close rear gates fire station 2
 		{
 			Vehicle v(Caller);
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_HAZMATSQUAD) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_WOODS32) == 0)
 			{
 				for(int i=0; i < gate06b.GetNumObjects(); i++)
 				{
@@ -2162,7 +2078,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE01) == 0 || StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE02) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE21) == 0)
 			{
 				for(int i=0; i < gate07b.GetNumObjects(); i++)
 				{
@@ -2178,7 +2094,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if (v.GetVehicleType() == VT_AMBULANCE_RTW) 
+			if (v.GetVehicleType() == VT_AMBULANCE_RTW)
 			{
 				for(int i=0; i < gate08b.GetNumObjects(); i++)
 				{
@@ -2210,7 +2126,7 @@ object VcmdAutoStaffOn : CommandScript
 	{
 		if (!Caller->IsValid() || !Game::IsFreeplay())
 			return false;
-			
+
 		return true;
 	}
 
@@ -2241,7 +2157,7 @@ object VcmdAutoStaffOff : CommandScript
 	{
 		if (!Caller->IsValid() || !Game::IsFreeplay())
 			return false;
-			
+
 		return true;
 	}
 
@@ -2275,14 +2191,14 @@ object VcmdRepairVehicles : CommandScript
 
 		if (!Game::IsFreeplay() && !Game::IsMultiplayer())
 			return false;
-			
+
 		int Money = Mission::GetMoneyLeft();
 		if (Money < PRICE_REPAIR)
-			return false;			
-			
+			return false;
+
 		Vehicle v(Caller);
 		if (v.HasCommand(DUMMY_ALARM))
-			return false;	
+			return false;
 
 		return true;
 	}
@@ -2314,7 +2230,7 @@ object VcmdRepairVehicles : CommandScript
 				l2 = Game::GetActors(VO_SPAWN02);
 				l3 = Game::GetActors(VO_MOVETO02);
 			}
-			
+
 			Vector Spawn = l2.GetActor(0)->GetPosition();
 			Vector MoveTo = l3.GetActor(0)->GetPosition();
 			bool repair = false;
@@ -2333,8 +2249,8 @@ object VcmdRepairVehicles : CommandScript
 				if (Money >= PRICE_REPAIR)
 				{
 					int NewMoney = Money - PRICE_REPAIR;
-					Mission::SetMoney(NewMoney);			
-				}			
+					Mission::SetMoney(NewMoney);
+				}
 				Person p = Game::CreatePerson(OBJ_ENGINEER, UNNAMED);
 				if (Game::FindFreePosition(&p, Spawn))
 				{
@@ -2354,19 +2270,19 @@ object VcmdRepairVehicles : CommandScript
 			Vehicle cp(Target);
 			GameObjectList l1;
 			ActorList l2;
-			bool repair = false;			
+			bool repair = false;
 			if(cp.HasName(NAME_CONTROLPANEL))
 			{
 				Game::CollectObstaclesOnVirtualObject(VO_SQUAD01, l1, ACTOR_VEHICLE);
 				l2 = Game::GetActors(VO_SPAWN01);
-			}	
+			}
 			if(cp.HasName(NAME_CONTROLPANEL2))
 			{
 				Game::CollectObstaclesOnVirtualObject(VO_SQUAD02, l1, ACTOR_VEHICLE);
 				l2 = Game::GetActors(VO_SPAWN02);
 			}
-			
-			Vector Delete = l2.GetActor(0)->GetPosition();			
+
+			Vector Delete = l2.GetActor(0)->GetPosition();
 			for(int i=0; i < l1.GetNumObjects(); i++)
 			{
 				if (!repair)
@@ -2387,7 +2303,7 @@ object VcmdRepairVehicles : CommandScript
 				Mission::PlayHint(HINT_REPAIRED);
 				p.PushActionMove(ACTION_NEWLIST, Delete);
 				p.PushActionDeleteOwner(ACTION_APPEND);
-			}			
+			}
 		}
 	}
 };

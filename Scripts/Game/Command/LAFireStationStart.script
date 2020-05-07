@@ -6,7 +6,7 @@
 //	- VcmdStart
 //
 //		Script by Hoppah
-//		
+//
 //		Usage of this script in other mods is NOT allowed without permission of Hoppah
 //
 //******************************************************************************************
@@ -17,15 +17,26 @@ const char NAME_FIRESTATION2[]			= "fire_station2";
 const char NAME_FIRESTATION2_ROOF[]		= "fire_station2_roof";
 const char NAME_CONTROLPANEL[]			= "fire_station_controlpanel";
 const char NAME_CONTROLPANEL2[]			= "fire_station_controlpanel2";
-const char OBJ_AMBULANCE01[]			= "mod:Prototypes/Vehicles/01 LA Ambulance/ambulance01.e4p";
-const char OBJ_AMBULANCE02[]			= "mod:Prototypes/Vehicles/01 LA Ambulance/ambulance02.e4p";
-const char OBJ_BATTALION[]				= "mod:Prototypes/Vehicles/02 LA Fire Department/battalion_chief_vehicle.e4p";
-const char OBJ_USAR[]					= "mod:Prototypes/Vehicles/02 LA Fire Department/usar_squad.e4p";
+
+const char OBJ_DEPUTYCHIEFEXPLORER[] = "mod:Prototypes/Vehicles/02 RC Fire Department/deputy_chief_explorer.e4p";
+const char OBJ_FIREINVESTIGATION[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_investigation_car.e4p";
+const char OBJ_ENGINE11[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine11.e4p";
+const char OBJ_ENGINE21[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine21.e4p";
+const char OBJ_ENGINE31[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine31.e4p";
+const char OBJ_SQUAD1[] = "mod:Prototypes/Vehicles/02 RC Fire Department/squad_1.e4p";
+const char OBJ_SQUAD2[] = "mod:Prototypes/Vehicles/02 RC Fire Department/squad_2.e4p";
+const char OBJ_WOODS32[] = "mod:Prototypes/Vehicles/02 RC Fire Department/woods_32.e4p";
+const char OBJ_RESCUE11[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_11.e4p";
+const char OBJ_RESCUE12[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_12.e4p";
+const char OBJ_RESCUE21[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_21.e4p";
+const char OBJ_RESCUE31[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_31.e4p";
+
+const char VO_FIREINVESTIGATOR[]			= "fs_fireinvestigator";
+const char VO_RESCUESQUAD1[]				= "fs_rescuesquad1";
+const char VO_RESCUESQUAD2[]				= "fs_rescuesquad2";
+const char VO_WOODS[]				= "fs_woods";
+
 const char OBJ_LADDER[]					= "mod:Prototypes/Vehicles/02 LA Fire Department/aerial_ladder.e4p";
-const char OBJ_TILLER[]					= "mod:Prototypes/Vehicles/02 LA Fire Department/tiller_cabin.e4p";
-const char OBJ_ENGINE01[]				= "mod:Prototypes/Vehicles/02 LA Fire Department/fire_engine1.e4p";
-const char OBJ_ENGINE02[]				= "mod:Prototypes/Vehicles/02 LA Fire Department/fire_engine2.e4p";
-const char OBJ_HAZMATSQUAD[]			= "mod:Prototypes/Vehicles/02 LA Fire Department/heavy_equipment_squad.e4p";
 const char DUMMY_GATES[]				= "DummyGates";
 const char DUMMY_ALARM[]				= "DummyDisableAlarm";
 const char DUMMY_CALLCREW[]				= "DummyCallCrew";
@@ -34,14 +45,12 @@ const char VO_AMBULANCE01[]				= "fs_ambulance01";
 const char VO_AMBULANCE02[]				= "fs_ambulance02";
 const char VO_AMBULANCE03[]				= "fs_ambulance03";
 const char VO_AMBULANCE04[]				= "fs_ambulance04";
-const char VO_USAR[]					= "fs_usar";
 const char VO_LADDER[]					= "fs_ladder";
 const char VO_ENGINE01[]				= "fs_engine01";
 const char VO_ENGINE02[]				= "fs_engine02";
 const char VO_ENGINE03[]				= "fs_engine03";
 const char VO_ENGINE04[]				= "fs_engine04";
 const char VO_ENGINE05[]				= "fs_engine05";
-const char VO_HAZMAT[]					= "fs_hazmat";
 const char NAME_GATE01A[]				= "fs_gate01a";
 const char NAME_GATE02A[]				= "fs_gate02a";
 const char NAME_GATE03A[]				= "fs_gate03a";
@@ -76,9 +85,9 @@ object VcmdStart : CommandScript
 		{
 			Vehicle *c = list3.GetVehicle(i);
 			c->SetSmokeLevelDuration(25.f);
-		}	
-		
-		GameObjectList l1 = Game::GetGameObjects(NAME_FIRESTATION); 
+		}
+
+		GameObjectList l1 = Game::GetGameObjects(NAME_FIRESTATION);
 		for(int i=0; i < l1.GetNumObjects(); i++)
 		{
 			GameObject *obj = l1.GetObject(i);
@@ -109,7 +118,7 @@ object VcmdStart : CommandScript
 		{
 			GameObject *obj = l3.GetObject(i);
 			obj->AssignCommand("VcmdAutoStaffOff");
-			obj->AssignCommand("VcmdRepairVehicles");			
+			obj->AssignCommand("VcmdRepairVehicles");
 			obj->AssignCommand(DUMMY_ALARM);
 			obj->PushActionWait(ACTION_NEWLIST, 1.5f);
 			obj->PushActionExecuteCommand(ACTION_APPEND, DUMMY_GATES, Caller, 1, false);
@@ -148,13 +157,13 @@ object VcmdStart : CommandScript
 				obj->SetUserData(1);
 			}
 		}
-		
+
 		GameObjectList gate01a = Game::GetGameObjects(NAME_GATE01A);
 		for(int i=0; i < gate01a.GetNumObjects(); i++)
 			GameObject *gate1 = gate01a.GetObject(i);
 		GameObjectList gate02a = Game::GetGameObjects(NAME_GATE02A);
 		for(int i=0; i < gate02a.GetNumObjects(); i++)
-			GameObject *gate2 = gate02a.GetObject(i);		
+			GameObject *gate2 = gate02a.GetObject(i);
 		GameObjectList gate03a = Game::GetGameObjects(NAME_GATE03A);
 		for(int i=0; i < gate03a.GetNumObjects(); i++)
 			GameObject *gate3 = gate03a.GetObject(i);
@@ -163,7 +172,7 @@ object VcmdStart : CommandScript
 			GameObject *gate4 = gate04a.GetObject(i);
 		GameObjectList gate05a = Game::GetGameObjects(NAME_GATE05A);
 		for(int i=0; i < gate05a.GetNumObjects(); i++)
-			GameObject *gate5 = gate05a.GetObject(i);			
+			GameObject *gate5 = gate05a.GetObject(i);
 		GameObjectList gate06a = Game::GetGameObjects(NAME_GATE06A);
 		for(int i=0; i < gate06a.GetNumObjects(); i++)
 			GameObject *gate6 = gate06a.GetObject(i);
@@ -173,26 +182,24 @@ object VcmdStart : CommandScript
 		GameObjectList gate08a = Game::GetGameObjects(NAME_GATE08A);
 		for(int i=0; i < gate08a.GetNumObjects(); i++)
 			GameObject *gate8 = gate08a.GetObject(i);
-			
+
 		ActorList l6 = Game::GetActors(VO_BATTALION);
 		for(int i=0; i < l6.GetNumActors(); i++)
 		{
 			Vector Battalion = l6.GetActor(0)->GetPosition();
-			Vehicle m = Game::CreateVehicle(OBJ_BATTALION, UNNAMED);
+			Vehicle m = Game::CreateVehicle(OBJ_DEPUTYCHIEFEXPLORER, UNNAMED);
 			m.EnableBlueLights(false);
 			m.SetPosition(Battalion);
 			m.UpdatePlacement();
 			m.SetMaxPassengers(2);
 			m.SetSpeed(12.0f);
 			m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 4, false);
-			m.PushActionWait(ACTION_APPEND, 0.5f);
-			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
 		}
 		ActorList l7 = Game::GetActors(VO_AMBULANCE01);
 		for(int i=0; i < l7.GetNumActors(); i++)
 		{
 			Vector Ambulance01 = l7.GetActor(0)->GetPosition();
-			Vehicle m = Game::CreateVehicle(OBJ_AMBULANCE02, UNNAMED);
+			Vehicle m = Game::CreateVehicle(OBJ_RESCUE11, UNNAMED);
 			m.EnableBlueLights(false);
 			m.SetPosition(Ambulance01);
 			m.SetRotation(gate1);
@@ -208,7 +215,7 @@ object VcmdStart : CommandScript
 		for(int i=0; i < l8.GetNumActors(); i++)
 		{
 			Vector Ambulance02 = l8.GetActor(0)->GetPosition();
-			Vehicle m = Game::CreateVehicle(OBJ_AMBULANCE02, UNNAMED);
+			Vehicle m = Game::CreateVehicle(OBJ_RESCUE12, UNNAMED);
 			m.EnableBlueLights(false);
 			m.SetPosition(Ambulance02);
 			m.SetRotation(gate1);
@@ -241,27 +248,28 @@ object VcmdStart : CommandScript
 		for(int i=0; i < l10.GetNumActors(); i++)
 		{
 			Vector Engine01 = l10.GetActor(0)->GetPosition();
-			Vehicle m = Game::CreateVehicle(OBJ_ENGINE01, UNNAMED);
+			Vehicle m = Game::CreateVehicle(OBJ_SQUAD2, UNNAMED);
 			m.EnableBlueLights(false);
 			m.SetPosition(Engine01);
 			m.SetRotation(gate4);
 			m.UpdatePlacement();
-			m.SetMaxPassengers(6);
-			m.SetSpeed(9.0f);
+			m.SetMaxPassengers(4);
+			m.SetMaxTransports(2);
+			m.SetSpeed(8.0f);
 			m.PushActionWait(ACTION_NEWLIST, 3.0f);
-			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
+			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 5, false);
 			m.PushActionWait(ACTION_APPEND, 0.5f);
-			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
+			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 5, false);
 			m.PushActionWait(ACTION_APPEND, 0.5f);
-			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
+			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 5, false);
 			m.PushActionWait(ACTION_APPEND, 1.5f);
-			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
+			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 5, false);
 		}
 		ActorList l11 = Game::GetActors(VO_ENGINE02);
 		for(int i=0; i < l11.GetNumActors(); i++)
 		{
 			Vector Engine02 = l11.GetActor(0)->GetPosition();
-			Vehicle m = Game::CreateVehicle(OBJ_ENGINE02, UNNAMED);
+			Vehicle m = Game::CreateVehicle(OBJ_ENGINE11, UNNAMED);
 			m.EnableBlueLights(false);
 			m.SetPosition(Engine02);
 			m.SetRotation(gate5);
@@ -269,19 +277,19 @@ object VcmdStart : CommandScript
 			m.SetMaxPassengers(6);
 			m.SetSpeed(9.0f);
 			m.PushActionWait(ACTION_NEWLIST, 3.5f);
-			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
+			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
 			m.PushActionWait(ACTION_APPEND, 0.5f);
-			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
+			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
 			m.PushActionWait(ACTION_APPEND, 0.5f);
 			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
 			m.PushActionWait(ACTION_APPEND, 1.5f);
 			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
 		}
-		ActorList l12 = Game::GetActors(VO_USAR);
+		ActorList l12 = Game::GetActors(VO_RESCUESQUAD1);
 		for(int i=0; i < l12.GetNumActors(); i++)
 		{
 			Vector Usar = l12.GetActor(0)->GetPosition();
-			Vehicle m = Game::CreateVehicle(OBJ_USAR, UNNAMED);
+			Vehicle m = Game::CreateVehicle(OBJ_SQUAD1, UNNAMED);
 			m.EnableBlueLights(false);
 			m.SetPosition(Usar);
 			m.SetRotation(gate2);
@@ -296,7 +304,7 @@ object VcmdStart : CommandScript
 		for(int i=0; i < l13.GetNumActors(); i++)
 		{
 			Vector Ambulance04 = l13.GetActor(0)->GetPosition();
-			Vehicle m = Game::CreateVehicle(OBJ_AMBULANCE01, UNNAMED);
+			Vehicle m = Game::CreateVehicle(OBJ_RESCUE21, UNNAMED);
 			m.EnableBlueLights(false);
 			m.SetPosition(Ambulance04);
 			m.SetRotation(gate8);
@@ -305,15 +313,15 @@ object VcmdStart : CommandScript
 			m.SetMaxTransports(1);
 			m.SetSpeed(12.0f);
 			m.PushActionWait(ACTION_NEWLIST, 4.5f);
-			//m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
+			//m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
 			//m.PushActionWait(ACTION_APPEND, 0.5f);
-			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 7, false);
+			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 2, false);
 		}
 		ActorList l14 = Game::GetActors(VO_ENGINE05);
 		for(int i=0; i < l14.GetNumActors(); i++)
 		{
 			Vector Engine04 = l14.GetActor(0)->GetPosition();
-			Vehicle m = Game::CreateVehicle(OBJ_ENGINE01, UNNAMED);
+			Vehicle m = Game::CreateVehicle(OBJ_ENGINE21, UNNAMED);
 			m.EnableBlueLights(false);
 			m.SetPosition(Engine04);
 			m.SetRotation(gate7);
@@ -329,48 +337,28 @@ object VcmdStart : CommandScript
 			m.PushActionWait(ACTION_APPEND, 1.0f);
 			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
 		}
-		ActorList l15 = Game::GetActors(VO_HAZMAT);
+		ActorList l15 = Game::GetActors(VO_WOODS);
 		for(int i=0; i < l15.GetNumActors(); i++)
 		{
-			Vector Hazmat = l15.GetActor(0)->GetPosition();
-			Vehicle m = Game::CreateVehicle(OBJ_HAZMATSQUAD, UNNAMED);
+			Vector Woods32 = l15.GetActor(0)->GetPosition();
+			Vehicle m = Game::CreateVehicle(OBJ_WOODS32, UNNAMED);
 			m.EnableBlueLights(false);
-			m.SetPosition(Hazmat);
+			m.SetPosition(Woods32);
 			m.SetRotation(gate6);
 			m.UpdatePlacement();
-			m.SetMaxPassengers(4);
+			m.SetMaxPassengers(2);
 			m.SetMaxTransports(0);
 			m.SetSpeed(12.0f);
 			m.PushActionWait(ACTION_NEWLIST, 1.0f);
-			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
-			m.PushActionWait(ACTION_APPEND, 1.5f);
-			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
-					}
-		ActorList l16 = Game::GetActors(VO_ENGINE03);
-		for(int i=0; i < l16.GetNumActors(); i++)
-		{
-			Vector Engine03 = l16.GetActor(0)->GetPosition();
-			Vehicle m = Game::CreateVehicle(OBJ_ENGINE01, UNNAMED);
-			m.EnableBlueLights(false);
-			m.SetPosition(Engine03);
-			m.SetRotation(gate4);
-			m.UpdatePlacement();
-			m.SetMaxPassengers(6);
-			m.SetSpeed(9.0f);
-			m.PushActionWait(ACTION_NEWLIST, 3.0f);
-			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
-			m.PushActionWait(ACTION_APPEND, 0.5f);
-			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
-			m.PushActionWait(ACTION_APPEND, 0.5f);
 			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
 			m.PushActionWait(ACTION_APPEND, 1.5f);
 			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
 		}
-		ActorList l17 = Game::GetActors(VO_ENGINE04);
-		for(int i=0; i < l17.GetNumActors(); i++)
+		ActorList l16 = Game::GetActors(VO_ENGINE04);
+		for(int i=0; i < l16.GetNumActors(); i++)
 		{
-			Vector Engine04 = l17.GetActor(0)->GetPosition();
-			Vehicle m = Game::CreateVehicle(OBJ_ENGINE02, UNNAMED);
+			Vector Engine04 = l16.GetActor(0)->GetPosition();
+			Vehicle m = Game::CreateVehicle(OBJ_ENGINE31, UNNAMED);
 			m.EnableBlueLights(false);
 			m.SetPosition(Engine04);
 			m.SetRotation(gate5);
@@ -378,21 +366,21 @@ object VcmdStart : CommandScript
 			m.SetMaxPassengers(6);
 			m.SetSpeed(9.0f);
 			m.PushActionWait(ACTION_NEWLIST, 3.5f);
-			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
+			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
 			m.PushActionWait(ACTION_APPEND, 0.5f);
-			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
+			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
 			m.PushActionWait(ACTION_APPEND, 0.5f);
 			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
 			m.PushActionWait(ACTION_APPEND, 1.5f);
 			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
 		}
-		ActorList l18 = Game::GetActors(VO_AMBULANCE03);
-		for(int i=0; i < l18.GetNumActors(); i++)
+		ActorList l17 = Game::GetActors(VO_AMBULANCE03);
+		for(int i=0; i < l17.GetNumActors(); i++)
 		{
-			Vector Ambulance03 = l18.GetActor(0)->GetPosition();
-			Vehicle m = Game::CreateVehicle(OBJ_AMBULANCE02, UNNAMED);
+			Vector Ambulance03 = l17.GetActor(0)->GetPosition();
+			Vehicle m = Game::CreateVehicle(OBJ_RESCUE31, UNNAMED);
 			m.EnableBlueLights(false);
-            m.SetPosition(Ambulance03);
+      m.SetPosition(Ambulance03);
 			m.SetRotation(gate1);
 			m.UpdatePlacement();
 			m.SetMaxPassengers(2);
@@ -401,7 +389,19 @@ object VcmdStart : CommandScript
 			m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 1, false);
 			m.PushActionWait(ACTION_APPEND, 0.5f);
 			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 2, false);
-		}		
+		}
+		ActorList l18 = Game::GetActors(VO_FIREINVESTIGATOR);
+		for(int i=0; i < l18.GetNumActors(); i++)
+		{
+			Vector Investigator = l18.GetActor(0)->GetPosition();
+			Vehicle m = Game::CreateVehicle(OBJ_FIREINVESTIGATION, UNNAMED);
+			m.EnableBlueLights(false);
+			m.SetPosition(Investigator);
+			m.UpdatePlacement();
+			m.SetMaxPassengers(2);
+			m.SetSpeed(12.0f);
+			m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 8, false);
+		}
 		System::Log("Fire stations activated!");
 	}
 };

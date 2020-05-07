@@ -24,15 +24,19 @@ const char DUMMY_HOSESON[] 			= "DummyHosesAreOn";
 const char NAME_DUMMYOBJECT[] 		= "HelpingObjekt_Hoppah";
 const char DUMMY_GETTIL[] 			= "DummyGetTiller";
 
+const char PROTO_DEPUTYCHIEFEXPLORER[] = "mod:Prototypes/Vehicles/02 RC Fire Department/deputy_chief_explorer.e4p";
+const char PROTO_FIREINVESTIGATION[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_investigation_car.e4p";
 const char PROTO_ENGINE11[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine11.e4p";
 const char PROTO_ENGINE21[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine21.e4p";
 const char PROTO_ENGINE31[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine31.e4p";
 const char PROTO_SQUAD1[] = "mod:Prototypes/Vehicles/02 RC Fire Department/squad_1.e4p";
+const char PROTO_SQUAD2[] = "mod:Prototypes/Vehicles/02 RC Fire Department/squad_2.e4p";
 const char PROTO_WOODS32[] = "mod:Prototypes/Vehicles/02 RC Fire Department/woods_32.e4p";
 
 const char PROTO_RESCUE11[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_11.e4p";
 const char PROTO_RESCUE12[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_12.e4p";
 const char PROTO_RESCUE21[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_21.e4p";
+const char PROTO_RESCUE31[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_31.e4p";
 
 const char PROTO_ENGINE01[] = "mod:Prototypes/Vehicles/02 LA Fire Department/fire_engine1.e4p";
 const char PROTO_ENGINE02[] = "mod:Prototypes/Vehicles/02 LA Fire Department/fire_engine2.e4p";
@@ -138,6 +142,7 @@ object VcmdSiren : CommandScript
 			StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE21) == 0 ||
 			StrCompare(v.GetPrototypeFileName(), PROTO_ENGINE31) == 0 ||
 			StrCompare(v.GetPrototypeFileName(), PROTO_SQUAD1) == 0 ||
+			StrCompare(v.GetPrototypeFileName(), PROTO_SQUAD2) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_WATERTENDER) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_LADDER) == 0 ||
 			StrCompare(v.GetPrototypeFileName(), PROTO_TILLER) == 0 ||
@@ -161,6 +166,8 @@ object VcmdSiren : CommandScript
 				}
  			}
  			else if (StrCompare(v.GetPrototypeFileName(), PROTO_BCV) == 0 ||
+			StrCompare(v.GetPrototypeFileName(), PROTO_DEPUTYCHIEFEXPLORER) == 0 ||
+			StrCompare(v.GetPrototypeFileName(), PROTO_FIREINVESTIGATION) == 0 ||
 			StrCompare(v.GetPrototypeFileName(), PROTO_WOODS32) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_HES) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_BRUSH) == 0 ||
@@ -170,8 +177,9 @@ object VcmdSiren : CommandScript
 			StrCompare(v.GetPrototypeFileName(), PROTO_RESCUE11) == 0 ||
 			StrCompare(v.GetPrototypeFileName(), PROTO_RESCUE12) == 0 ||
 			StrCompare(v.GetPrototypeFileName(), PROTO_RESCUE21) == 0 ||
+			StrCompare(v.GetPrototypeFileName(), PROTO_RESCUE31) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_AMBULANCE01) == 0 ||
-  			StrCompare(v.GetPrototypeFileName(), PROTO_AMBULANCE02) == 0 ||
+  		StrCompare(v.GetPrototypeFileName(), PROTO_AMBULANCE02) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_AMBULANCE03) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_AMBULANCE04) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_DOGTRUCK) == 0)

@@ -1838,7 +1838,6 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-
 		}
 		if(ChildID == 7) //To fire station cmd to open rear gates fire station 1
 		{

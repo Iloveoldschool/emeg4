@@ -181,7 +181,7 @@ object VcmdToFireStation : CommandScript
 			Game::ExecuteCommand(DUMMY_PATROL, &v, &v);
 		if (v.HasCommand(DUMMY_HASSIREN) && v.HasCommand(CMD_AUTOSIREN_OFF))
 			Game::ExecuteCommand(DUMMY_DISABLE, &v, &v);
-		if(StrCompare(v.GetPrototypeFileName(), OBJ_BATTALION) == 0)
+		if(StrCompare(v.GetPrototypeFileName(), OBJ_DEPUTYCHIEFEXPLORER) == 0)
 		{
 			GameObjectList l4;
  			Game::CollectObstaclesOnVirtualObject(VO_BATTALION, l4, ACTOR_VEHICLE);
@@ -411,7 +411,7 @@ object DummyCheckParked : CommandScript
 			FS1Closer = true;
 
 		Vehicle v(Caller);
-		if(StrCompare(v.GetPrototypeFileName(), OBJ_BATTALION) == 0)
+		if(StrCompare(v.GetPrototypeFileName(), OBJ_DEPUTYCHIEFEXPLORER) == 0)
 		{
 			GameObjectList l3;
  			Game::CollectObstaclesOnVirtualObject(VO_BATTALION, l3, ACTOR_VEHICLE);
@@ -669,7 +669,7 @@ object DummyCheckParked : CommandScript
 				Vector TurnTo = l2.GetActor(0)->GetPosition();
 			if (v.HasCommand(DUMMY_VCALLED))
 				v.RemoveCommand(DUMMY_VCALLED);
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_BATTALION) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_DEPUTYCHIEFEXPLORER) == 0)
 			{
 				v.PushActionMove(ACTION_APPEND, Park);
 				v.PushActionTurnTo(ACTION_APPEND, TurnTo);
@@ -718,7 +718,7 @@ object DummyAtFireStation : CommandScript
 	void PushActions(GameObject *Caller, Actor *Target, int ChildID)
 	{
 		Vehicle v(Caller);
-		if(StrCompare(v.GetPrototypeFileName(), OBJ_BATTALION) == 0)
+		if(StrCompare(v.GetPrototypeFileName(), OBJ_DEPUTYCHIEFEXPLORER) == 0)
 			ActorList l1 = Game::GetActors(VO_SPAWN02);
 		else if(v.IsCollidingWithVirtualObject(VO_SQUAD01))
 			ActorList l1 = Game::GetActors(VO_SPAWN01);

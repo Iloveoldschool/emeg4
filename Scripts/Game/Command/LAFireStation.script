@@ -1702,7 +1702,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_LADDER) == 0 || StrCompare(v.GetPrototypeFileName(), OBJ_TILLER) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_LADDER) == 0)
 			{
 				for(int i=0; i < gate03a.GetNumObjects(); i++)
 				{
@@ -1875,7 +1875,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_LADDER) == 0 || StrCompare(v.GetPrototypeFileName(), OBJ_TILLER) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_LADDER) == 0)
 			{
 				for(int i=0; i < gate03b.GetNumObjects(); i++)
 				{
@@ -2011,7 +2011,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_LADDER) == 0 || StrCompare(v.GetPrototypeFileName(), OBJ_TILLER) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_LADDER) == 0)
 			{
 				for(int i=0; i < gate03b.GetNumObjects(); i++)
 				{

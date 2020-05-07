@@ -1794,7 +1794,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if(StrCompare(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE21) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE21) == 0)
 			{
 				for(int i=0; i < gate07a.GetNumObjects(); i++)
 				{

@@ -145,7 +145,6 @@ object VcmdSiren : CommandScript
 			StrCompare(v.GetPrototypeFileName(), PROTO_SQUAD2) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_WATERTENDER) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_LADDER) == 0 ||
-			StrCompare(v.GetPrototypeFileName(), PROTO_TILLER) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_HAZMAT) == 0 ||
 			StrCompare(v.GetPrototypeFileName(), PROTO_MOTORBOAT) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_CRASHTENDER) == 0 ||

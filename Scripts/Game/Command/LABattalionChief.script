@@ -1,6 +1,10 @@
 //******************************************************************************************
 // #Version 1.2#
 //
+// Includes edits made by djchill
+// - PcmdCallWoods
+// - Future changes to be made to simplify calling engines
+//
 // 		Includes: Call commands for the battalion chief.
 //
 //	- PcmdCallAmbulance
@@ -14,7 +18,7 @@
 //	- DummyVehicleCalled
 //
 //		Script by Hoppah
-//		
+//
 //		Usage of this script in other mods is NOT allowed without permission of Hoppah
 //
 //******************************************************************************************
@@ -49,13 +53,11 @@ const char HINT_USARBOUGHT[] 			= "USAR squad bought for $3500 and dispatched!";
 const char HINT_HAZMATBOUGHT[] 			= "HAZMAT squad bought for $4000 and dispatched!";
 const char HINT_LADDERBOUGHT[] 			= "Aerial ladder bought for $4000 and dispatched!";
 const char HINT_LIGHTFORCEBOUGHT[] 		= "Light force bought for $8000 and dispatched!";
-const char VO_HAZMAT[]				= "fs_hazmat";
 const char VO_BATTALION[]			= "fs_battalion";
 const char VO_AMBULANCE01[]			= "fs_ambulance01";
 const char VO_AMBULANCE02[]			= "fs_ambulance02";
 const char VO_AMBULANCE03[]			= "fs_ambulance03";
 const char VO_AMBULANCE04[]			= "fs_ambulance04";
-const char VO_USAR[]				= "fs_usar";
 const char VO_LADDER[]				= "fs_ladder";
 const char VO_ENGINE01[]			= "fs_engine01";
 const char VO_ENGINE02[]			= "fs_engine02";
@@ -71,20 +73,29 @@ const char OBJ_GATE06A[]			= "fs_gate06a";
 const char OBJ_GATE07A[]			= "fs_gate07a";
 const char OBJ_GATE08A[]			= "fs_gate08a";
 
+const char OBJ_DEPUTYCHIEFEXPLORER[] = "mod:Prototypes/Vehicles/02 RC Fire Department/deputy_chief_explorer.e4p";
+const char OBJ_FIREINVESTIGATION[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_investigation_car.e4p";
+const char OBJ_ENGINE11[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine11.e4p";
+const char OBJ_ENGINE21[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine21.e4p";
+const char OBJ_ENGINE31[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine31.e4p";
+const char OBJ_SQUAD1[] = "mod:Prototypes/Vehicles/02 RC Fire Department/squad_1.e4p";
+const char OBJ_SQUAD2[] = "mod:Prototypes/Vehicles/02 RC Fire Department/squad_2.e4p";
+const char OBJ_WOODS32[] = "mod:Prototypes/Vehicles/02 RC Fire Department/woods_32.e4p";
+const char OBJ_RESCUE11[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_11.e4p";
+const char OBJ_RESCUE12[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_12.e4p";
+const char OBJ_RESCUE21[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_21.e4p";
+const char OBJ_RESCUE31[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_31.e4p";
+
+const char VO_FIREINVESTIGATOR[]			= "fs_fireinvestigator";
+const char VO_RESCUESQUAD1[]				= "fs_rescuesquad1";
+const char VO_RESCUESQUAD2[]				= "fs_rescuesquad2";
+const char VO_WOODS[]				= "fs_woods";
+
 const char PATH_PATROL01[] 			= "patrolpath01";
 const char PATH_PATROL02[] 			= "patrolpath02";
 const char PATH_PATROL03[] 			= "patrolpath03";
 
-const char OBJ_AMBULANCE01[]			= "mod:Prototypes/Vehicles/01 LA Ambulance/ambulance01.e4p";
-const char OBJ_AMBULANCE02[]			= "mod:Prototypes/Vehicles/01 LA Ambulance/ambulance02.e4p";
-const char OBJ_AMBULANCE03[]			= "mod:Prototypes/Vehicles/01 LA Ambulance/ambulance03.e4p";
-const char OBJ_AMBULANCE04[]			= "mod:Prototypes/Vehicles/01 LA Ambulance/ambulance04.e4p";
-const char OBJ_ENGINE01[] 			= "mod:Prototypes/Vehicles/02 LA Fire Department/fire_engine1.e4p";
-const char OBJ_ENGINE02[] 			= "mod:Prototypes/Vehicles/02 LA Fire Department/fire_engine2.e4p";
 const char OBJ_LADDER[] 			= "mod:Prototypes/Vehicles/02 LA Fire Department/aerial_ladder.e4p";
-const char OBJ_TILLER[]				= "mod:Prototypes/Vehicles/02 LA Fire Department/tiller_cabin.e4p";
-const char OBJ_HAZMAT[] 			= "mod:Prototypes/Vehicles/02 LA Fire Department/hazmat_squad.e4p";
-const char OBJ_USAR[] 			= "mod:Prototypes/Vehicles/02 LA Fire Department/usar_squad.e4p";
 const char OBJ_PM[]				= "mod:Prototypes/Persons/01 LA Ambulance/ff_paramedic.e4p";
 const char OBJ_EMT[]				= "mod:Prototypes/Persons/02 LA Fire Department/ff_emt.e4p";
 const char OBJ_PM_STRETCHER[]			= "mod:Prototypes/Persons/01 LA Ambulance/ff_paramedic_stretcher.e4p";
@@ -149,7 +160,7 @@ object PcmdCallAmbulance : CommandScript
 			return false;
 
 		Person p(Caller);
-		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1)) 
+		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1))
 			return false;
 
 		if (p.IsCurrentAction("EActionTreatPerson"))
@@ -170,7 +181,7 @@ object PcmdCallAmbulance : CommandScript
 			return false;
 
 		Person p(Caller);
-		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1)) 
+		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1))
 			return false;
 
 		if (p.IsCurrentAction("EActionTreatPerson"))
@@ -191,13 +202,13 @@ object PcmdCallAmbulance : CommandScript
 		Vehicle *theCar = NULL;
 		float bestCar = 0.;
 		VehicleList patrolCars(VT_AMBULANCE_RTW, VT_AMBULANCE_RTW);
-		for (int i = 0; i < patrolCars.GetNumVehicles(); i++) 
+		for (int i = 0; i < patrolCars.GetNumVehicles(); i++)
 		{
 			Vehicle *aCar = patrolCars.GetVehicle(i);
 			if (aCar->GetPlayerMP() == Caller->GetPlayerMP() && !aCar->HasCommand(DUMMY_VCALLED) && (aCar->HasCommand(CMD_STANDBY_OFF) || aCar->HasCommand(DUMMY_PATROL) || aCar->IsCollidingWithVirtualObject(VO_SQUAD01) || aCar->IsCollidingWithVirtualObject(VO_SQUAD02)))
 			{
 				float distCurrCar = Math::dist(CmdPos.x, CmdPos.y, aCar->GetPosition().x, aCar->GetPosition().y);
-				if (distCurrCar < bestCar || bestCar == 0.) 
+				if (distCurrCar < bestCar || bestCar == 0.)
 				{
 					theCar = aCar;
 					bestCar = distCurrCar;
@@ -220,7 +231,7 @@ object PcmdCallAmbulance : CommandScript
 					theCar->RemoveCommand(CMD_STANDBY_OFF);
 					theCar->AssignCommand(CMD_STANDBY_ON);
 				}
-				if (theCar->HasCommand(CMD_WARNINGLIGHTS_OFF)) 
+				if (theCar->HasCommand(CMD_WARNINGLIGHTS_OFF))
 				{
 					theCar->EnableBlinker(BLT_NONE);
 					theCar->RemoveCommand(CMD_WARNINGLIGHTS_OFF);
@@ -253,7 +264,7 @@ object PcmdCallAmbulance : CommandScript
 						} else
 						Ambulance02 = true;
 					} else
-					Ambulance02 = true;	
+					Ambulance02 = true;
 				}
 				if (!VehicleCalled && Ambulance02)
 				{
@@ -269,7 +280,7 @@ object PcmdCallAmbulance : CommandScript
 						} else
 						Ambulance03 = true;
 					} else
-					Ambulance03 = true;	
+					Ambulance03 = true;
 				}
 				if (!VehicleCalled && Ambulance03)
 				{
@@ -283,7 +294,7 @@ object PcmdCallAmbulance : CommandScript
 							v.AssignCommand(DUMMY_VCALLED);
 							VehicleCalled = true;
 						}
-					}	
+					}
 				}
 			}
 			else if (theCar->IsCollidingWithVirtualObject(VO_SQUAD02))
@@ -310,28 +321,19 @@ object PcmdCallAmbulance : CommandScript
 				if(v.IsCollidingWithVirtualObject(VO_SQUAD01))
 				{
 					Station1 = true;
-					GameObjectList gate01a = Game::GetGameObjects(OBJ_GATE01A);  
+					GameObjectList gate01a = Game::GetGameObjects(OBJ_GATE01A);
 					for(int i=0; i < gate01a.GetNumObjects(); i++)
 						GameObject *gate = gate01a.GetObject(i);
 				}
 				else if(v.IsCollidingWithVirtualObject(VO_SQUAD02))
 				{
-					GameObjectList gate08a = Game::GetGameObjects(OBJ_GATE08A);  
+					GameObjectList gate08a = Game::GetGameObjects(OBJ_GATE08A);
 					for(int i=0; i < gate08a.GetNumObjects(); i++)
 						GameObject *gate = gate08a.GetObject(i);
 				}
 				PersonList passengers = v.GetPassengers();
 				if (passengers.GetNumPersons() == 0)
 				{
-					if (StrCompare(v.GetPrototypeFileName(), OBJ_AMBULANCE01) == 0)
-					{
-						v.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 7, false);
-						//v.PushActionWait(ACTION_APPEND, 0.5f);
-						//v.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-						v.PushActionWait(ACTION_APPEND, 6.f);
-					}
-					else
-					{
 						v.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 1, false);
 						v.PushActionWait(ACTION_APPEND, 0.5f);
 						v.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 2, false);
@@ -480,7 +482,7 @@ object PcmdCallAmbulance1 : CommandScript
 			return false;
 
 		Person p(Caller);
-		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1)) 
+		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1))
 			return false;
 
 		if (p.IsCurrentAction("EActionTreatPerson"))
@@ -501,7 +503,7 @@ object PcmdCallAmbulance1 : CommandScript
 			return false;
 
 		Person p(Caller);
-		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1)) 
+		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1))
 			return false;
 
 		if (p.IsCurrentAction("EActionTreatPerson"))
@@ -525,13 +527,13 @@ object PcmdCallAmbulance1 : CommandScript
 		Vehicle *theCar = NULL;
 		float bestCar = 0.;
 		VehicleList patrolCars(VT_AMBULANCE_RTW, VT_AMBULANCE_RTW);
-		for (int i = 0; i < patrolCars.GetNumVehicles(); i++) 
+		for (int i = 0; i < patrolCars.GetNumVehicles(); i++)
 		{
 			Vehicle *aCar = patrolCars.GetVehicle(i);
 			if (StrCompare(aCar->GetPrototypeFileName(), OBJ_AMBULANCE01) == 0 && aCar->GetPlayerMP() == Caller->GetPlayerMP() && !aCar->HasCommand(DUMMY_VCALLED) && (aCar->HasCommand(CMD_STANDBY_OFF) || aCar->HasCommand(DUMMY_PATROL) || aCar->IsCollidingWithVirtualObject(VO_SQUAD02)))
 			{
 				float distCurrCar = Math::dist(CmdPos.x, CmdPos.y, aCar->GetPosition().x, aCar->GetPosition().y);
-				if (distCurrCar < bestCar || bestCar == 0.) 
+				if (distCurrCar < bestCar || bestCar == 0.)
 				{
 					theCar = aCar;
 					bestCar = distCurrCar;
@@ -555,7 +557,7 @@ object PcmdCallAmbulance1 : CommandScript
 					theCar->RemoveCommand(CMD_STANDBY_OFF);
 					theCar->AssignCommand(CMD_STANDBY_ON);
 				}
-				if (theCar->HasCommand(CMD_WARNINGLIGHTS_OFF)) 
+				if (theCar->HasCommand(CMD_WARNINGLIGHTS_OFF))
 				{
 					theCar->EnableBlinker(BLT_NONE);
 					theCar->RemoveCommand(CMD_WARNINGLIGHTS_OFF);
@@ -591,7 +593,7 @@ object PcmdCallAmbulance1 : CommandScript
 				else if (!v.IsBlueLightEnabled() && !Input::LShiftPressed() && !Input::RShiftPressed())
 					v.EnableBlueLights(true);
 
-				GameObjectList gate08a = Game::GetGameObjects(OBJ_GATE08A);  
+				GameObjectList gate08a = Game::GetGameObjects(OBJ_GATE08A);
 				for(int i=0; i < gate08a.GetNumObjects(); i++)
 					GameObject *gate = gate08a.GetObject(i);
 
@@ -728,7 +730,7 @@ object PcmdCallAmbulance2 : CommandScript
 			return false;
 
 		Person p(Caller);
-		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1)) 
+		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1))
 			return false;
 
 		if (p.IsCurrentAction("EActionTreatPerson"))
@@ -749,7 +751,7 @@ object PcmdCallAmbulance2 : CommandScript
 			return false;
 
 		Person p(Caller);
-		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1)) 
+		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1))
 			return false;
 
 		if (p.IsCurrentAction("EActionTreatPerson"))
@@ -773,13 +775,13 @@ object PcmdCallAmbulance2 : CommandScript
 		Vehicle *theCar = NULL;
 		float bestCar = 0.;
 		VehicleList patrolCars(VT_AMBULANCE_RTW, VT_AMBULANCE_RTW);
-		for (int i = 0; i < patrolCars.GetNumVehicles(); i++) 
+		for (int i = 0; i < patrolCars.GetNumVehicles(); i++)
 		{
 			Vehicle *aCar = patrolCars.GetVehicle(i);
 			if (StrCompare(aCar->GetPrototypeFileName(), OBJ_AMBULANCE02) == 0 && aCar->GetPlayerMP() == Caller->GetPlayerMP() && !aCar->HasCommand(DUMMY_VCALLED) && (aCar->HasCommand(CMD_STANDBY_OFF) || aCar->HasCommand(DUMMY_PATROL) || aCar->IsCollidingWithVirtualObject(VO_SQUAD01)))
 			{
 				float distCurrCar = Math::dist(CmdPos.x, CmdPos.y, aCar->GetPosition().x, aCar->GetPosition().y);
-				if (distCurrCar < bestCar || bestCar == 0.) 
+				if (distCurrCar < bestCar || bestCar == 0.)
 				{
 					theCar = aCar;
 					bestCar = distCurrCar;
@@ -803,7 +805,7 @@ object PcmdCallAmbulance2 : CommandScript
 					theCar->RemoveCommand(CMD_STANDBY_OFF);
 					theCar->AssignCommand(CMD_STANDBY_ON);
 				}
-				if (theCar->HasCommand(CMD_WARNINGLIGHTS_OFF)) 
+				if (theCar->HasCommand(CMD_WARNINGLIGHTS_OFF))
 				{
 					theCar->EnableBlinker(BLT_NONE);
 					theCar->RemoveCommand(CMD_WARNINGLIGHTS_OFF);
@@ -836,7 +838,7 @@ object PcmdCallAmbulance2 : CommandScript
 						} else
 						Ambulance02 = true;
 					} else
-					Ambulance02 = true;	
+					Ambulance02 = true;
 				}
 				if (!VehicleCalled && Ambulance02)
 				{
@@ -852,7 +854,7 @@ object PcmdCallAmbulance2 : CommandScript
 						} else
 						Ambulance03 = true;
 					} else
-					Ambulance03 = true;	
+					Ambulance03 = true;
 				}
 				if (!VehicleCalled && Ambulance03)
 				{
@@ -866,7 +868,7 @@ object PcmdCallAmbulance2 : CommandScript
 							v.AssignCommand(DUMMY_VCALLED);
 							VehicleCalled = true;
 						}
-					}	
+					}
 				}
 			}
 			if (VehicleCalled)
@@ -876,7 +878,7 @@ object PcmdCallAmbulance2 : CommandScript
 				else if (!v.IsBlueLightEnabled() && !Input::LShiftPressed() && !Input::RShiftPressed())
 					v.EnableBlueLights(true);
 
-				GameObjectList gate01a = Game::GetGameObjects(OBJ_GATE01A);  
+				GameObjectList gate01a = Game::GetGameObjects(OBJ_GATE01A);
 				for(int i=0; i < gate01a.GetNumObjects(); i++)
 					GameObject *gate = gate01a.GetObject(i);
 
@@ -1019,7 +1021,7 @@ object PcmdCallEngine1 : CommandScript
 			return false;
 
 		Person p(Caller);
-		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1)) 
+		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1))
 			return false;
 
 		if (p.IsCurrentAction("EActionTreatPerson"))
@@ -1040,7 +1042,7 @@ object PcmdCallEngine1 : CommandScript
 			return false;
 
 		Person p(Caller);
-		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1)) 
+		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1))
 			return false;
 
 		if (p.IsCurrentAction("EActionTreatPerson"))
@@ -1064,13 +1066,13 @@ object PcmdCallEngine1 : CommandScript
 		Vehicle *theCar = NULL;
 		float bestCar = 0.;
 		VehicleList patrolCars(VT_FIREFIGHTERS_TLF, VT_FIREFIGHTERS_TLF);
-		for (int i = 0; i < patrolCars.GetNumVehicles(); i++) 
+		for (int i = 0; i < patrolCars.GetNumVehicles(); i++)
 		{
 			Vehicle *aCar = patrolCars.GetVehicle(i);
 			if (StrCompare(aCar->GetPrototypeFileName(), OBJ_ENGINE01) == 0 && aCar->GetPlayerMP() == Caller->GetPlayerMP() && !aCar->HasCommand(DUMMY_VCALLED) && !aCar->HasCommand(DUMMY_HOSESON) && (aCar->HasCommand(CMD_STANDBY_OFF) || aCar->IsCollidingWithVirtualObject(VO_SQUAD01) || aCar->IsCollidingWithVirtualObject(VO_SQUAD02)))
 			{
 				float distCurrCar = Math::dist(CmdPos.x, CmdPos.y, aCar->GetPosition().x, aCar->GetPosition().y);
-				if (distCurrCar < bestCar || bestCar == 0.) 
+				if (distCurrCar < bestCar || bestCar == 0.)
 				{
 					theCar = aCar;
 					bestCar = distCurrCar;
@@ -1092,7 +1094,7 @@ object PcmdCallEngine1 : CommandScript
 					theCar->RemoveCommand(CMD_STANDBY_OFF);
 					theCar->AssignCommand(CMD_STANDBY_ON);
 				}
-				if (theCar->HasCommand(CMD_WARNINGLIGHTS_OFF)) 
+				if (theCar->HasCommand(CMD_WARNINGLIGHTS_OFF))
 				{
 					theCar->EnableBlinker(BLT_NONE);
 					theCar->RemoveCommand(CMD_WARNINGLIGHTS_OFF);
@@ -1138,7 +1140,7 @@ object PcmdCallEngine1 : CommandScript
 							v.AssignCommand(DUMMY_VCALLED);
 							VehicleCalled = true;
 						}
-					}	
+					}
 				}
 			}
 			else if (theCar->IsCollidingWithVirtualObject(VO_SQUAD02))
@@ -1155,7 +1157,7 @@ object PcmdCallEngine1 : CommandScript
 							v.AssignCommand(DUMMY_VCALLED);
 							VehicleCalled = true;
 						}
-					}	
+					}
 				}
 			}
 			if (VehicleCalled)
@@ -1168,12 +1170,12 @@ object PcmdCallEngine1 : CommandScript
 				if(v.IsCollidingWithVirtualObject(VO_SQUAD01))
 				{
 					Station1 = true;
-					GameObjectList gate04a = Game::GetGameObjects(OBJ_GATE04A);  
+					GameObjectList gate04a = Game::GetGameObjects(OBJ_GATE04A);
 					for(int i=0; i < gate04a.GetNumObjects(); i++)
 						GameObject *gate = gate04a.GetObject(i);
 				} else
 				{
-					GameObjectList gate07a = Game::GetGameObjects(OBJ_GATE07A);  
+					GameObjectList gate07a = Game::GetGameObjects(OBJ_GATE07A);
 					for(int i=0; i < gate07a.GetNumObjects(); i++)
 						GameObject *gate = gate07a.GetObject(i);
 				}
@@ -1189,7 +1191,7 @@ object PcmdCallEngine1 : CommandScript
 				if (gate->GetUserData() == 0)
 				{
 					if(Station1)
-					{				
+					{
 						v.PushActionExecuteCommand(ACTION_APPEND, DUMMY_GATES, Caller, 5, false);
 						float dx = 1050.f, dy = 0.f, dz = 0.f;
 					} else
@@ -1339,7 +1341,7 @@ object PcmdCallEngine2 : CommandScript
 			return false;
 
 		Person p(Caller);
-		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1)) 
+		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1))
 			return false;
 
 		if (p.IsCurrentAction("EActionTreatPerson"))
@@ -1360,7 +1362,7 @@ object PcmdCallEngine2 : CommandScript
 			return false;
 
 		Person p(Caller);
-		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1)) 
+		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1))
 			return false;
 
 		if (p.IsCurrentAction("EActionTreatPerson"))
@@ -1384,13 +1386,13 @@ object PcmdCallEngine2 : CommandScript
 		Vehicle *theCar = NULL;
 		float bestCar = 0.;
 		VehicleList patrolCars(VT_FIREFIGHTERS_TLF, VT_FIREFIGHTERS_TLF);
-		for (int i = 0; i < patrolCars.GetNumVehicles(); i++) 
+		for (int i = 0; i < patrolCars.GetNumVehicles(); i++)
 		{
 			Vehicle *aCar = patrolCars.GetVehicle(i);
 			if (StrCompare(aCar->GetPrototypeFileName(), OBJ_ENGINE02) == 0 && aCar->GetPlayerMP() == Caller->GetPlayerMP() && !aCar->HasCommand(DUMMY_VCALLED) && !aCar->HasCommand(DUMMY_HOSESON) && (aCar->HasCommand(CMD_STANDBY_OFF) || aCar->IsCollidingWithVirtualObject(VO_SQUAD01)))
 			{
 				float distCurrCar = Math::dist(CmdPos.x, CmdPos.y, aCar->GetPosition().x, aCar->GetPosition().y);
-				if (distCurrCar < bestCar || bestCar == 0.) 
+				if (distCurrCar < bestCar || bestCar == 0.)
 				{
 					theCar = aCar;
 					bestCar = distCurrCar;
@@ -1412,7 +1414,7 @@ object PcmdCallEngine2 : CommandScript
 					theCar->RemoveCommand(CMD_STANDBY_OFF);
 					theCar->AssignCommand(CMD_STANDBY_ON);
 				}
-				if (theCar->HasCommand(CMD_WARNINGLIGHTS_OFF)) 
+				if (theCar->HasCommand(CMD_WARNINGLIGHTS_OFF))
 				{
 					theCar->EnableBlinker(BLT_NONE);
 					theCar->RemoveCommand(CMD_WARNINGLIGHTS_OFF);
@@ -1444,7 +1446,7 @@ object PcmdCallEngine2 : CommandScript
 						} else
 						Engine04 = true;
 					} else
-					Engine04 = true;	
+					Engine04 = true;
 				}
 
 				if (!VehicleCalled && Engine04)
@@ -1459,7 +1461,7 @@ object PcmdCallEngine2 : CommandScript
 							v.AssignCommand(DUMMY_VCALLED);
 							VehicleCalled = true;
 						}
-					}	
+					}
 				}
 			}
 			if (VehicleCalled)
@@ -1469,7 +1471,7 @@ object PcmdCallEngine2 : CommandScript
 				else if (!v.IsBlueLightEnabled() && !Input::LShiftPressed() && !Input::RShiftPressed())
 					v.EnableBlueLights(true);
 
-				GameObjectList gate05a = Game::GetGameObjects(OBJ_GATE05A);  
+				GameObjectList gate05a = Game::GetGameObjects(OBJ_GATE05A);
 				for(int i=0; i < gate05a.GetNumObjects(); i++)
 					GameObject *gate = gate05a.GetObject(i);
 
@@ -1623,7 +1625,7 @@ object PcmdCallLightForce : CommandScript
 			return false;
 
 		Person p(Caller);
-		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1)) 
+		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1))
 			return false;
 
 		if (p.IsCurrentAction("EActionTreatPerson"))
@@ -1644,7 +1646,7 @@ object PcmdCallLightForce : CommandScript
 			return false;
 
 		Person p(Caller);
-		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1)) 
+		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1))
 			return false;
 
 		if (p.IsCurrentAction("EActionTreatPerson"))
@@ -1668,13 +1670,13 @@ object PcmdCallLightForce : CommandScript
 		Vehicle *theCar = NULL;
 		float bestCar = 0.;
 		VehicleList patrolCars(VT_FIREFIGHTERS_DLK, VT_FIREFIGHTERS_RW);
-		for (int i = 0; i < patrolCars.GetNumVehicles(); i++) 
+		for (int i = 0; i < patrolCars.GetNumVehicles(); i++)
 		{
 			Vehicle *aCar = patrolCars.GetVehicle(i);
 			if ((StrCompare(aCar->GetPrototypeFileName(), OBJ_LADDER) == 0 || StrCompare(aCar->GetPrototypeFileName(), OBJ_TILLER) == 0) && aCar->GetPlayerMP() == Caller->GetPlayerMP() && !aCar->HasCommand(DUMMY_VCALLED) && !aCar->IsInstalled() && (aCar->HasCommand(CMD_STANDBY_OFF) || aCar->IsCollidingWithVirtualObject(VO_SQUAD01)))
 			{
 				float distCurrCar = Math::dist(CmdPos.x, CmdPos.y, aCar->GetPosition().x, aCar->GetPosition().y);
-				if (distCurrCar < bestCar || bestCar == 0.) 
+				if (distCurrCar < bestCar || bestCar == 0.)
 				{
 					theCar = aCar;
 					bestCar = distCurrCar;
@@ -1695,7 +1697,7 @@ object PcmdCallLightForce : CommandScript
 					theCar->RemoveCommand(CMD_STANDBY_OFF);
 					theCar->AssignCommand(CMD_STANDBY_ON);
 				}
-				if (theCar->HasCommand(CMD_WARNINGLIGHTS_OFF)) 
+				if (theCar->HasCommand(CMD_WARNINGLIGHTS_OFF))
 				{
 					theCar->EnableBlinker(BLT_NONE);
 					theCar->RemoveCommand(CMD_WARNINGLIGHTS_OFF);
@@ -1730,7 +1732,7 @@ object PcmdCallLightForce : CommandScript
 					v.EnableBlueLights(false);
 				else if (!v.IsBlueLightEnabled() && !Input::LShiftPressed() && !Input::RShiftPressed())
 					v.EnableBlueLights(true);
-				GameObjectList gate03a = Game::GetGameObjects(OBJ_GATE03A);  
+				GameObjectList gate03a = Game::GetGameObjects(OBJ_GATE03A);
 				for(int i=0; i < gate03a.GetNumObjects(); i++)
 					GameObject *gate = gate03a.GetObject(i);
 
@@ -1805,7 +1807,7 @@ object PcmdCallLightForce : CommandScript
 						} else
 						Engine04 = true;
 					} else
-					Engine04 = true;	
+					Engine04 = true;
 				}
 				if (!Vehicle2Called && Engine04)
 				{
@@ -1819,7 +1821,7 @@ object PcmdCallLightForce : CommandScript
 							e.AssignCommand(DUMMY_VCALLED);
 							Vehicle2Called = true;
 						}
-					}	
+					}
 				}
 				if (!Vehicle2Called && Engine04)
 				{
@@ -1833,7 +1835,7 @@ object PcmdCallLightForce : CommandScript
 					else if (!e.IsBlueLightEnabled() && !Input::LShiftPressed() && !Input::RShiftPressed())
 						e.EnableBlueLights(true);
 
-					GameObjectList gate05a = Game::GetGameObjects(OBJ_GATE05A);  
+					GameObjectList gate05a = Game::GetGameObjects(OBJ_GATE05A);
 					for(int i=0; i < gate05a.GetNumObjects(); i++)
 						GameObject *gate = gate05a.GetObject(i);
 
@@ -1963,7 +1965,7 @@ object PcmdCallLightForce : CommandScript
 
 		if (!n.HasCommand(DUMMY_HASSIREN) && n.HasCommand(CMD_AUTOSIREN_OFF) && !Input::LShiftPressed() && !Input::RShiftPressed())
 			Game::ExecuteCommand(CMD_SIREN, &n, &n);
-		
+
 		if (BuyAerialOnly)
 			Mission::PlayHint(HINT_LADDERBOUGHT);
 		else if (!BuyAerialOnly)
@@ -2033,7 +2035,7 @@ object PcmdCallUSARSquad : CommandScript
 			return false;
 
 		Person p(Caller);
-		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1)) 
+		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1))
 			return false;
 
 		if (p.IsCurrentAction("EActionTreatPerson"))
@@ -2054,7 +2056,7 @@ object PcmdCallUSARSquad : CommandScript
 			return false;
 
 		Person p(Caller);
-		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1)) 
+		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1))
 			return false;
 
 		if (p.IsCurrentAction("EActionTreatPerson"))
@@ -2078,13 +2080,13 @@ object PcmdCallUSARSquad : CommandScript
 		Vehicle *theCar = NULL;
 		float bestCar = 0.;
 		VehicleList patrolCars(VT_FIREFIGHTERS_RW, VT_FIREFIGHTERS_RW);
-		for (int i = 0; i < patrolCars.GetNumVehicles(); i++) 
+		for (int i = 0; i < patrolCars.GetNumVehicles(); i++)
 		{
 			Vehicle *aCar = patrolCars.GetVehicle(i);
 			if (StrCompare(aCar->GetPrototypeFileName(), OBJ_USAR) == 0 && aCar->GetPlayerMP() == Caller->GetPlayerMP() && !aCar->HasCommand(DUMMY_VCALLED) && (aCar->HasCommand(CMD_STANDBY_OFF) || aCar->IsCollidingWithVirtualObject(VO_SQUAD01)))
 			{
 				float distCurrCar = Math::dist(CmdPos.x, CmdPos.y, aCar->GetPosition().x, aCar->GetPosition().y);
-				if (distCurrCar < bestCar || bestCar == 0.) 
+				if (distCurrCar < bestCar || bestCar == 0.)
 				{
 					theCar = aCar;
 					bestCar = distCurrCar;
@@ -2106,7 +2108,7 @@ object PcmdCallUSARSquad : CommandScript
 					theCar->RemoveCommand(CMD_STANDBY_OFF);
 					theCar->AssignCommand(CMD_STANDBY_ON);
 				}
-				if (theCar->HasCommand(CMD_WARNINGLIGHTS_OFF)) 
+				if (theCar->HasCommand(CMD_WARNINGLIGHTS_OFF))
 				{
 					theCar->EnableBlinker(BLT_NONE);
 					theCar->RemoveCommand(CMD_WARNINGLIGHTS_OFF);
@@ -2141,7 +2143,7 @@ object PcmdCallUSARSquad : CommandScript
 					v.EnableBlueLights(false);
 				else if (!v.IsBlueLightEnabled() && !Input::LShiftPressed() && !Input::RShiftPressed())
 					v.EnableBlueLights(true);
-				GameObjectList gate02a = Game::GetGameObjects(OBJ_GATE02A);  
+				GameObjectList gate02a = Game::GetGameObjects(OBJ_GATE02A);
 				for(int i=0; i < gate02a.GetNumObjects(); i++)
 					GameObject *gate = gate02a.GetObject(i);
 
@@ -2283,7 +2285,7 @@ object PcmdCallHazmat : CommandScript
 			return false;
 
 		Person p(Caller);
-		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1)) 
+		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1))
 			return false;
 
 		if (p.IsCurrentAction("EActionTreatPerson"))
@@ -2304,7 +2306,7 @@ object PcmdCallHazmat : CommandScript
 			return false;
 
 		Person p(Caller);
-		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1)) 
+		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1))
 			return false;
 
 		if (p.IsCurrentAction("EActionTreatPerson"))
@@ -2328,13 +2330,13 @@ object PcmdCallHazmat : CommandScript
 		Vehicle *theCar = NULL;
 		float bestCar = 0.;
 		VehicleList patrolCars(VT_FIREFIGHTERS_DEKONP, VT_FIREFIGHTERS_DEKONP);
-		for (int i = 0; i < patrolCars.GetNumVehicles(); i++) 
+		for (int i = 0; i < patrolCars.GetNumVehicles(); i++)
 		{
 			Vehicle *aCar = patrolCars.GetVehicle(i);
 			if (StrCompare(aCar->GetPrototypeFileName(), OBJ_HAZMAT) == 0 && !aCar->IsDecontaminating() && aCar->GetPlayerMP() == Caller->GetPlayerMP() && !aCar->HasCommand(DUMMY_VCALLED) && (aCar->HasCommand(CMD_STANDBY_OFF) || aCar->IsCollidingWithVirtualObject(VO_SQUAD02)))
 			{
 				float distCurrCar = Math::dist(CmdPos.x, CmdPos.y, aCar->GetPosition().x, aCar->GetPosition().y);
-				if (distCurrCar < bestCar || bestCar == 0.) 
+				if (distCurrCar < bestCar || bestCar == 0.)
 				{
 					theCar = aCar;
 					bestCar = distCurrCar;
@@ -2356,7 +2358,7 @@ object PcmdCallHazmat : CommandScript
 					theCar->RemoveCommand(CMD_STANDBY_OFF);
 					theCar->AssignCommand(CMD_STANDBY_ON);
 				}
-				if (theCar->HasCommand(CMD_WARNINGLIGHTS_OFF)) 
+				if (theCar->HasCommand(CMD_WARNINGLIGHTS_OFF))
 				{
 					theCar->EnableBlinker(BLT_NONE);
 					theCar->RemoveCommand(CMD_WARNINGLIGHTS_OFF);
@@ -2391,7 +2393,7 @@ object PcmdCallHazmat : CommandScript
 					v.EnableBlueLights(false);
 				else if (!v.IsBlueLightEnabled() && !Input::LShiftPressed() && !Input::RShiftPressed())
 					v.EnableBlueLights(true);
-				GameObjectList gate06a = Game::GetGameObjects(OBJ_GATE06A);  
+				GameObjectList gate06a = Game::GetGameObjects(OBJ_GATE06A);
 				for(int i=0; i < gate06a.GetNumObjects(); i++)
 					GameObject *gate = gate06a.GetObject(i);
 				PersonList passengers = v.GetPassengers();

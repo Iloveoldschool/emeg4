@@ -37,15 +37,25 @@ const char NAME_FIRESTATION2_ROOF[]		= "fire_station2_roof";
 const char NAME_CONTROLPANEL[]			= "fire_station_controlpanel";
 const char NAME_CONTROLPANEL2[]			= "fire_station_controlpanel2";
 
-const char OBJ_BATTALION[]			= "mod:Prototypes/Vehicles/02 LA Fire Department/battalion_chief_vehicle.e4p";
-const char OBJ_AMBULANCE01[]		= "mod:Prototypes/Vehicles/01 LA Ambulance/ambulance01.e4p";
-const char OBJ_AMBULANCE02[]		= "mod:Prototypes/Vehicles/01 LA Ambulance/ambulance02.e4p";
-const char OBJ_USAR[]				= "mod:Prototypes/Vehicles/02 LA Fire Department/usar_squad.e4p";
+const char OBJ_DEPUTYCHIEFEXPLORER[] = "mod:Prototypes/Vehicles/02 RC Fire Department/deputy_chief_explorer.e4p";
+const char OBJ_FIREINVESTIGATION[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_investigation_car.e4p";
+const char OBJ_ENGINE11[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine11.e4p";
+const char OBJ_ENGINE21[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine21.e4p";
+const char OBJ_ENGINE31[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_engine31.e4p";
+const char OBJ_SQUAD1[] = "mod:Prototypes/Vehicles/02 RC Fire Department/squad_1.e4p";
+const char OBJ_SQUAD2[] = "mod:Prototypes/Vehicles/02 RC Fire Department/squad_2.e4p";
+const char OBJ_WOODS32[] = "mod:Prototypes/Vehicles/02 RC Fire Department/woods_32.e4p";
+const char OBJ_RESCUE11[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_11.e4p";
+const char OBJ_RESCUE12[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_12.e4p";
+const char OBJ_RESCUE21[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_21.e4p";
+const char OBJ_RESCUE31[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_31.e4p";
+
+const char VO_FIREINVESTIGATOR[]			= "fs_fireinvestigator";
+const char VO_RESCUESQUAD1[]				= "fs_rescuesquad1";
+const char VO_RESCUESQUAD2[]				= "fs_rescuesquad2";
+const char VO_WOODS[]				= "fs_woods";
+
 const char OBJ_LADDER[]				= "mod:Prototypes/Vehicles/02 LA Fire Department/aerial_ladder.e4p";
-const char OBJ_TILLER[]				= "mod:Prototypes/Vehicles/02 LA Fire Department/tiller_cabin.e4p";
-const char OBJ_ENGINE01[]			= "mod:Prototypes/Vehicles/02 LA Fire Department/fire_engine1.e4p";
-const char OBJ_ENGINE02[]			= "mod:Prototypes/Vehicles/02 LA Fire Department/fire_engine2.e4p";
-const char OBJ_HAZMATSQUAD[]		= "mod:Prototypes/Vehicles/02 LA Fire Department/heavy_equipment_squad.e4p";
 
 const char OBJ_CHIEF[]				= "mod:Prototypes/Persons/02 LA Fire Department/battalion_chief.e4p";
 const char OBJ_EMS_CAPTAIN[]				= "mod:Prototypes/Persons/01 LA Ambulance/ems_paramedic_captain.e4p";
@@ -105,14 +115,12 @@ const char VO_AMBULANCE01[]			= "fs_ambulance01";
 const char VO_AMBULANCE02[]			= "fs_ambulance02";
 const char VO_AMBULANCE03[]			= "fs_ambulance03";
 const char VO_AMBULANCE04[]			= "fs_ambulance04";
-const char VO_USAR[]				= "fs_usar";
 const char VO_LADDER[]				= "fs_ladder";
 const char VO_ENGINE01[]			= "fs_engine01";
 const char VO_ENGINE02[]			= "fs_engine02";
 const char VO_ENGINE03[]			= "fs_engine03";
 const char VO_ENGINE04[]			= "fs_engine04";
 const char VO_ENGINE05[]			= "fs_engine05";
-const char VO_HAZMAT[]				= "fs_hazmat";
 
 const char VO_SPAWN01[]				= "fs_spawn01";
 const char VO_SPAWN02[]				= "fs_spawn02";
@@ -203,8 +211,6 @@ object VcmdAlarm : CommandScript
 				if (passengers.GetNumPersons() == 0)
 				{
 					m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 4, false);
-					m.PushActionWait(ACTION_APPEND, 0.5f);
-					m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
 				}
 			}
 			GameObjectList l3;
@@ -215,14 +221,6 @@ object VcmdAlarm : CommandScript
 				PersonList passengers = m.GetPassengers();
 				if (passengers.GetNumPersons() == 0)
 				{
-					if(StrCompare(m.GetPrototypeFileName(), OBJ_AMBULANCE01) == 0)
-					{
-						m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 7, false);
-						//m.PushActionWait(ACTION_APPEND, 0.5f);
-						//m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-
-					} else
-					{
 						m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 1, false);
 						m.PushActionWait(ACTION_APPEND, 0.5f);
 						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 2, false);
@@ -237,13 +235,6 @@ object VcmdAlarm : CommandScript
 				PersonList passengers = m.GetPassengers();
 				if (passengers.GetNumPersons() == 0)
 				{
-					if(StrCompare(m.GetPrototypeFileName(), OBJ_AMBULANCE01) == 0)
-					{
-						m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 7, false);
-						//m.PushActionWait(ACTION_APPEND, 0.5f);
-						//m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-					} else
-					{
 						m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 1, false);
 						m.PushActionWait(ACTION_APPEND, 0.5f);
 						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 2, false);
@@ -258,13 +249,6 @@ object VcmdAlarm : CommandScript
 				PersonList passengers = m.GetPassengers();
 				if (passengers.GetNumPersons() == 0)
 				{
-					if(StrCompare(m.GetPrototypeFileName(), OBJ_AMBULANCE01) == 0)
-					{
-						m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 7, false);
-						//m.PushActionWait(ACTION_APPEND, 0.5f);
-						//m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-					} else
-					{
 						m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 1, false);
 						m.PushActionWait(ACTION_APPEND, 0.5f);
 						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 2, false);
@@ -286,7 +270,7 @@ object VcmdAlarm : CommandScript
 				}
 			}
 			GameObjectList l7;
- 			Game::CollectObstaclesOnVirtualObject(VO_USAR, l7, ACTOR_VEHICLE);
+ 			Game::CollectObstaclesOnVirtualObject(VO_RESCUESQUAD1, l7, ACTOR_VEHICLE);
 			if(l7.GetNumObjects() > 0)
 			{
 				Vehicle m = l7.GetObject(0);
@@ -306,26 +290,14 @@ object VcmdAlarm : CommandScript
 				PersonList passengers = m.GetPassengers();
 				if (passengers.GetNumPersons() == 0)
 				{
-					if(StrCompare(m.GetPrototypeFileName(), OBJ_ENGINE01) == 0)
-					{
 						m.PushActionWait(ACTION_NEWLIST, 2.0f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
+						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 5, false);
 						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
+						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 5, false);
 						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
+						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 5, false);
 						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-					} else
-					{
-						m.PushActionWait(ACTION_NEWLIST, 2.0f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
+						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 5, false);
 					}
 				}
 			}
@@ -337,59 +309,20 @@ object VcmdAlarm : CommandScript
 				PersonList passengers = m.GetPassengers();
 				if (passengers.GetNumPersons() == 0)
 				{
-					if(StrCompare(m.GetPrototypeFileName(), OBJ_ENGINE01) == 0)
-					{
-						m.PushActionWait(ACTION_NEWLIST, 2.0f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-					} else
-					{
-						m.PushActionWait(ACTION_NEWLIST, 2.0f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-					}
+					m.PushActionWait(ACTION_NEWLIST, 2.0f);
+					m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
+					m.PushActionWait(ACTION_APPEND, 0.5f);
+					m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
+					m.PushActionWait(ACTION_APPEND, 0.5f);
+					m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
+					m.PushActionWait(ACTION_APPEND, 0.5f);
+					m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
 				}
 			}
 			GameObjectList l10;
  			Game::CollectObstaclesOnVirtualObject(VO_ENGINE03, l10, ACTOR_VEHICLE);
 			if(l10.GetNumObjects() > 0)
 			{
-				Vehicle m = l10.GetObject(0);
-				PersonList passengers = m.GetPassengers();
-				if (passengers.GetNumPersons() == 0)
-				{
-					if(StrCompare(m.GetPrototypeFileName(), OBJ_ENGINE01) == 0)
-					{
-						m.PushActionWait(ACTION_NEWLIST, 2.0f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-					} else
-					{
-						m.PushActionWait(ACTION_NEWLIST, 2.0f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-					}
-				}
 			}
 			GameObjectList l11;
  			Game::CollectObstaclesOnVirtualObject(VO_ENGINE04, l11, ACTOR_VEHICLE);
@@ -399,26 +332,25 @@ object VcmdAlarm : CommandScript
 				PersonList passengers = m.GetPassengers();
 				if (passengers.GetNumPersons() == 0)
 				{
-					if(StrCompare(m.GetPrototypeFileName(), OBJ_ENGINE01) == 0)
+					m.PushActionWait(ACTION_NEWLIST, 2.0f);
+					m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
+					m.PushActionWait(ACTION_APPEND, 0.5f);
+					m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
+					m.PushActionWait(ACTION_APPEND, 0.5f);
+					m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
+					m.PushActionWait(ACTION_APPEND, 0.5f);
+					m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
+					}
+				}
+				GameObjectList l12;
+	 			Game::CollectObstaclesOnVirtualObject(VO_FIREINVESTIGATOR, l12, ACTOR_VEHICLE);
+				if(l12.GetNumObjects() > 0)
+				{
+					Vehicle m = l12.GetObject(0);
+					PersonList passengers = m.GetPassengers();
+					if (passengers.GetNumPersons() == 0)
 					{
-						m.PushActionWait(ACTION_NEWLIST, 2.0f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-					} else
-					{
-						m.PushActionWait(ACTION_NEWLIST, 2.0f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-						m.PushActionWait(ACTION_APPEND, 0.5f);
-						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
+						m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 8, false);
 					}
 				}
 			}
@@ -451,13 +383,6 @@ object VcmdAlarm : CommandScript
 				PersonList passengers = m.GetPassengers();
 				if (passengers.GetNumPersons() == 0)
 				{
-					if(StrCompare(m.GetPrototypeFileName(), OBJ_AMBULANCE01) == 0)
-					{
-						m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 7, false);
-						//m.PushActionWait(ACTION_APPEND, 0.5f);
-						//m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 3, false);
-					} else
-					{
 						m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 1, false);
 						m.PushActionWait(ACTION_APPEND, 0.5f);
 						m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 2, false);
@@ -483,7 +408,7 @@ object VcmdAlarm : CommandScript
 				}
 			}
 			GameObjectList l4;
- 			Game::CollectObstaclesOnVirtualObject(VO_HAZMAT, l4, ACTOR_VEHICLE);
+ 			Game::CollectObstaclesOnVirtualObject(VO_WOODS, l4, ACTOR_VEHICLE);
 			if(l4.GetNumObjects() > 0)
 			{
 				Vehicle m = l4.GetObject(0);
@@ -493,7 +418,7 @@ object VcmdAlarm : CommandScript
 					m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 1, false);
 					m.PushActionWait(ACTION_APPEND, 0.5f);
 					m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
-									}
+				}
 			}
 		}
 	}
@@ -1766,7 +1691,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_USAR) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_SQUAD1) == 0)
 			{
 				for(int i=0; i < gate02a.GetNumObjects(); i++)
 				{
@@ -1810,7 +1735,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE01) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_SQUAD2) == 0)
 			{
 				for(int i=0; i < gate04a.GetNumObjects(); i++)
 				{
@@ -1832,7 +1757,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE02) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE11) == 0 || StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE31) == 0)
 			{
 				for(int i=0; i < gate05a.GetNumObjects(); i++)
 				{
@@ -1858,7 +1783,7 @@ object DummyGates : CommandScript
 		if(ChildID == 6) //= Battalion chief 'calls vehicle cmds' for opening/closing front gates fire station 2
 		{
 			Vehicle v(Caller);
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_HAZMATSQUAD) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_WOODS32) == 0)
 			{
 				for(int i=0; i < gate06a.GetNumObjects(); i++)
 				{
@@ -1880,7 +1805,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE01) == 0 || StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE02) == 0)
+			if(StrCompare(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE21) == 0)
 			{
 				for(int i=0; i < gate07a.GetNumObjects(); i++)
 				{
@@ -1945,7 +1870,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_USAR) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_SQUAD1) == 0)
 			{
 				for(int i=0; i < gate02b.GetNumObjects(); i++)
 				{
@@ -1977,7 +1902,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE01) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_SQUAD2) == 0)
 			{
 				for(int i=0; i < gate04b.GetNumObjects(); i++)
 				{
@@ -1993,7 +1918,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE02) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE11) == 0 || StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE31) == 0))
 			{
 				for(int i=0; i < gate05b.GetNumObjects(); i++)
 				{
@@ -2013,7 +1938,7 @@ object DummyGates : CommandScript
 		if(ChildID == 8) //To fire station cmd to open rear gates fire station 2
 		{
 			Vehicle v(Caller);
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_HAZMATSQUAD) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_WOODS32) == 0)
 			{
 				for(int i=0; i < gate06b.GetNumObjects(); i++)
 				{
@@ -2029,7 +1954,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE01) == 0 || StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE02) == 0)
+			if(StrCompare(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE21) == 0)
 			{
 				for(int i=0; i < gate07b.GetNumObjects(); i++)
 				{
@@ -2081,7 +2006,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_USAR) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_SQUAD1) == 0)
 			{
 				for(int i=0; i < gate02b.GetNumObjects(); i++)
 				{
@@ -2113,7 +2038,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE01) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_SQUAD2) == 0)
 			{
 				for(int i=0; i < gate04b.GetNumObjects(); i++)
 				{
@@ -2129,7 +2054,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE02) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE11) == 0 || StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE31) == 0))
 			{
 				for(int i=0; i < gate05b.GetNumObjects(); i++)
 				{
@@ -2149,7 +2074,7 @@ object DummyGates : CommandScript
 		if(ChildID == 10) //To fire station cmd to close rear gates fire station 2
 		{
 			Vehicle v(Caller);
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_HAZMATSQUAD) == 0)
+			if(StrCompare(v.GetPrototypeFileName(), OBJ_WOODS32) == 0)
 			{
 				for(int i=0; i < gate06b.GetNumObjects(); i++)
 				{
@@ -2165,7 +2090,7 @@ object DummyGates : CommandScript
 					}
 				}
 			}
-			if(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE01) == 0 || StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE02) == 0)
+			if(StrCompare(StrCompare(v.GetPrototypeFileName(), OBJ_ENGINE21) == 0)
 			{
 				for(int i=0; i < gate07b.GetNumObjects(); i++)
 				{

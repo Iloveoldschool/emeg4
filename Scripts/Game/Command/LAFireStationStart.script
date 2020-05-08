@@ -400,7 +400,7 @@ object VcmdStart : CommandScript
 			m.UpdatePlacement();
 			m.SetMaxPassengers(2);
 			m.SetSpeed(12.0f);
-			m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 8, false);
+			m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 9, false);
 		}
 		System::Log("Fire stations activated!");
 	}

@@ -60,6 +60,8 @@ const char VO_RESCUESQUAD1[]				= "fs_rescuesquad1";
 const char VO_RESCUESQUAD2[]				= "fs_rescuesquad2";
 const char VO_WOODS[]				= "fs_woods";
 
+const char OBJ_INVESTIGATORFF[]				= "mod:Prototypes/Persons/02 RC Fire Department/fire_investigator.e4p";
+
 const char OBJ_LADDER[]				= "mod:Prototypes/Vehicles/02 LA Fire Department/aerial_ladder.e4p";
 
 const char OBJ_CHIEF[]				= "mod:Prototypes/Persons/02 LA Fire Department/battalion_chief.e4p";
@@ -346,7 +348,7 @@ object VcmdAlarm : CommandScript
 					PersonList passengers = m.GetPassengers();
 					if (passengers.GetNumPersons() == 0)
 					{
-						m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 8, false);
+						m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 9, false);
 					}
 				}
 			}
@@ -1368,6 +1370,8 @@ object DummyCallCrew : CommandScript
 			Person p = Game::CreatePerson(OBJ_EMT_STRETCHER, UNNAMED);
 		else if (ChildID == 8)
 			Person p = Game::CreatePerson(OBJ_EMS_CAPTAIN, UNNAMED);
+		else if (ChildID == 9)
+			Person p = Game::CreatePerson(OBJ_INVESTIGATORFF, UNNAMED);
 		else
 			return;
 

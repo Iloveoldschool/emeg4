@@ -313,8 +313,8 @@ object VcmdStart : CommandScript
 			m.SetMaxTransports(1);
 			m.SetSpeed(12.0f);
 			m.PushActionWait(ACTION_NEWLIST, 4.5f);
-			//m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
-			//m.PushActionWait(ACTION_APPEND, 0.5f);
+			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
+			m.PushActionWait(ACTION_APPEND, 0.5f);
 			m.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 2, false);
 		}
 		ActorList l14 = Game::GetActors(VO_ENGINE05);

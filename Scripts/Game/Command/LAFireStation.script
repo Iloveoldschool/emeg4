@@ -1,4 +1,9 @@
 //******************************************************************************************
+//
+// djchill Additions:
+// - VcmdCallBatChief
+//
+//
 // #Version 1.5#
 //
 // 		Includes: All command for the fire station.
@@ -556,6 +561,66 @@ object VcmdGarageDoorsDown : CommandScript
 			Caller->PushActionExecuteCommand(ACTION_APPEND, DUMMY_GATES, Caller, 2, false);
 		else if(Caller->HasName(NAME_CONTROLPANEL2)) //= fire station 2
 			Caller->PushActionExecuteCommand(ACTION_APPEND, DUMMY_GATES, Caller, 4, false);
+	}
+};
+
+object VcmdCallBatChief : CommandScript
+{
+	VcmdCallBatChief()
+	{
+		SetCursor("alarm");
+		SetIcon("callchief");
+	}
+
+	bool CheckPossible(GameObject *Caller)
+	{
+		if (!Caller->IsValid())
+			return false;
+
+		if (!Game::IsFreeplay() && !Game::IsMultiplayer())
+			return false;
+
+		Vehicle v(Caller);
+		if (v.HasCommand(DUMMY_ALARM))
+			return false;
+
+		return true;
+	}
+
+	bool CheckTarget(GameObject *Caller, Actor *Target, int childID)
+	{
+		if (!Caller->IsValid() || !Target->IsValid() || (Caller->GetID() != Target->GetID()))
+			return false;
+
+		return true;
+	}
+
+	void PushActions(GameObject *Caller, Actor *Target, int ChildID)
+	{
+		if(Caller->HasName(NAME_CONTROLPANEL)) //= fire station 1
+		{
+			ActorList l1 = Game::GetActors(VO_SPAWN02);
+			ActorList l2 = Game::GetActors(VO_MOVETO01);
+		}
+		if(Caller->HasName(NAME_CONTROLPANEL2)) //= fire station 2
+		{
+			ActorList l1 = Game::GetActors(VO_SPAWN03);
+			ActorList l2 = Game::GetActors(VO_MOVETO02);
+		}
+		if(l1.GetNumActors() > 0)
+			Vector Spawn = l1.GetActor(0)->GetPosition();
+
+		if(l2.GetNumActors() > 0)
+			Vector MoveTo = l2.GetActor(0)->GetPosition();
+
+		Person p = Game::CreatePerson(OBJ_CHIEF, UNNAMED);
+		if (Game::FindFreePosition(&p, Spawn))
+		{
+			p.SetUpgradeLevel(3);
+			Game::FindFreePosition(&p, Spawn);
+			p.SetPosition(Spawn);
+			p.PushActionMove(ACTION_NEWLIST, MoveTo);
+		}
 	}
 };
 

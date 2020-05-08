@@ -15,7 +15,8 @@ If you download a zip file, extract it to your emergency 4 mods folder. The path
 
 ### Changelog
 #### v1.0
-*
+* Added Event: Car crash #16 outside building site.
+* Added Event: Hazmat Car crash #17 in industrial area.
 
 ### Private Roadmap (for now)
 https://trello.com/b/Hf6xCZG9/rcid-modding

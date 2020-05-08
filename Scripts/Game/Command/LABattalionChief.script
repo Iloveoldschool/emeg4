@@ -467,7 +467,7 @@ object PcmdCallAmbulance : CommandScript
 
 object PcmdCallEngine : CommandScript
 {
-	PcmdCallEngine1()
+	PcmdCallEngine()
 	{
 		SetIcon("callengine1");
 		SetCursor("callassistance");
@@ -787,7 +787,7 @@ object PcmdCallEngine : CommandScript
 
 object PcmdCallTower : CommandScript
 {
-	PcmdCallLightForce()
+	PcmdCallTower()
 	{
 		SetIcon("calllightforce");
 		SetCursor("callassistance");

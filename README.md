@@ -1,4 +1,4 @@
-# Reedy_Creek_Fire_Department_Mod
+# Reedy Creek Improvement District Mod
 A modification for emergency 4 based around the Reedy Creek Improvement District and firefighters in the area around Disney Florida.
 
 The `master` branch will contain the latest stable build, and is the best version to download to play. If you wish, you can download the `Dev`, or any other branch where the latest features will be created. But content here will be very work in progress and may break part of the game, so do so at your own risk.

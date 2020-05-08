@@ -3,8 +3,7 @@
 // djchill additions, specifically for Reedy Creek Improvement District Mod:
 // - PcmdCallEngine
 // - PcmdCallTower
-// - PcmdCallSquad1
-// - PcmdCallSquad2
+// - PcmdCallRescueSquad
 // - removed unneeded commands for RCID.
 //
 //
@@ -46,7 +45,7 @@ const char DUMMY_CALLVEHICLE[]			= "DummyCallVehicle";
 const char DUMMY_HOSESON[] 			= "DummyHosesAreOn";
 const char HINT_DISPATCHED[] 			= "Vehicle dispatched!";
 const char HINT_NOAMBULANCE[] 			= "No ambulance available!";
-const char HINT_NOUSAR[] 			= "No USAR squad available!";
+const char HINT_NOUSAR[] 			= "No rescue squad available!";
 const char HINT_NOLADDER[] 			= "No tower ladder available!";
 const char HINT_NOENGINE[] 			= "No fire engine available!";
 const char HINT_NOHAZMAT[] 			= "No HAZMAT squad available!";
@@ -119,7 +118,6 @@ const char SND_BATLIGHTFORCE[]			= "mod:Audio/FX/radio/bat_lightforce.wav";
 const char SND_BATMEDFLIGHT[]			= "mod:Audio/FX/radio/bat_medflight.wav";
 const char SND_BATPD[]				= "mod:Audio/FX/radio/bat_pd.wav";
 const char SND_BATUSAR[]			= "mod:Audio/FX/radio/bat_usar.wav";
-const char SND_BATHES[]			= "mod:Audio/FX/radio/bat_usar.wav";
 const char SND_EMSALS[]				= "mod:Audio/FX/radio/ems_als.wav";
 const char SND_EMSALSE[]			= "mod:Audio/FX/radio/ems_alse.wav";
 const char SND_EMSBLS[]				= "mod:Audio/FX/radio/ems_bls.wav";
@@ -1041,9 +1039,9 @@ object PcmdCallTower : CommandScript
 		}
 };
 
-object PcmdCallUSARSquad : CommandScript
+object PcmdCallRescueSquad : CommandScript
 {
-	PcmdCallUSARSquad()
+	PcmdCallRescueSquad()
 	{
 		SetIcon("callusarsquad");
 		SetCursor("callassistance");
@@ -1110,7 +1108,7 @@ object PcmdCallUSARSquad : CommandScript
 		for (int i = 0; i < patrolCars.GetNumVehicles(); i++)
 		{
 			Vehicle *aCar = patrolCars.GetVehicle(i);
-			if (StrCompare(aCar->GetPrototypeFileName(), OBJ_USAR) == 0 && aCar->GetPlayerMP() == Caller->GetPlayerMP() && !aCar->HasCommand(DUMMY_VCALLED) && (aCar->HasCommand(CMD_STANDBY_OFF) || aCar->IsCollidingWithVirtualObject(VO_SQUAD01)))
+			if (StrCompare(aCar->GetPrototypeFileName(), OBJ_SQUAD1) == 0 && aCar->GetPlayerMP() == Caller->GetPlayerMP() && !aCar->HasCommand(DUMMY_VCALLED) && (aCar->HasCommand(CMD_STANDBY_OFF) || aCar->IsCollidingWithVirtualObject(VO_SQUAD01)))
 			{
 				float distCurrCar = Math::dist(CmdPos.x, CmdPos.y, aCar->GetPosition().x, aCar->GetPosition().y);
 				if (distCurrCar < bestCar || bestCar == 0.)
@@ -1153,7 +1151,7 @@ object PcmdCallUSARSquad : CommandScript
 			else if (theCar->IsCollidingWithVirtualObject(VO_SQUAD01))
 			{
 				GameObjectList ppc;
- 				Game::CollectObstaclesOnVirtualObject(VO_USAR, ppc, ACTOR_VEHICLE);
+ 				Game::CollectObstaclesOnVirtualObject(VO_RESCUESQUAD1, ppc, ACTOR_VEHICLE);
 				for (int i = 0; i < ppc.GetNumObjects(); i++)
 				{
 					Vehicle v = ppc.GetObject(i);
@@ -1360,7 +1358,7 @@ object PcmdCallHazmat : CommandScript
 		for (int i = 0; i < patrolCars.GetNumVehicles(); i++)
 		{
 			Vehicle *aCar = patrolCars.GetVehicle(i);
-			if (StrCompare(aCar->GetPrototypeFileName(), OBJ_HAZMAT) == 0 && !aCar->IsDecontaminating() && aCar->GetPlayerMP() == Caller->GetPlayerMP() && !aCar->HasCommand(DUMMY_VCALLED) && (aCar->HasCommand(CMD_STANDBY_OFF) || aCar->IsCollidingWithVirtualObject(VO_SQUAD02)))
+			if (StrCompare(aCar->GetPrototypeFileName(), OBJ_SQUAD2) == 0 && !aCar->IsDecontaminating() && aCar->GetPlayerMP() == Caller->GetPlayerMP() && !aCar->HasCommand(DUMMY_VCALLED) && (aCar->HasCommand(CMD_STANDBY_OFF) || aCar->IsCollidingWithVirtualObject(VO_SQUAD02)))
 			{
 				float distCurrCar = Math::dist(CmdPos.x, CmdPos.y, aCar->GetPosition().x, aCar->GetPosition().y);
 				if (distCurrCar < bestCar || bestCar == 0.)
@@ -1403,7 +1401,7 @@ object PcmdCallHazmat : CommandScript
 			else if (theCar->IsCollidingWithVirtualObject(VO_SQUAD02))
 			{
 				GameObjectList ppc;
- 				Game::CollectObstaclesOnVirtualObject(VO_HAZMAT, ppc, ACTOR_VEHICLE);
+ 				Game::CollectObstaclesOnVirtualObject(VO_ENGINE01, ppc, ACTOR_VEHICLE);
 				for (int i = 0; i < ppc.GetNumObjects(); i++)
 				{
 					Vehicle v = ppc.GetObject(i);
@@ -1420,14 +1418,16 @@ object PcmdCallHazmat : CommandScript
 					v.EnableBlueLights(false);
 				else if (!v.IsBlueLightEnabled() && !Input::LShiftPressed() && !Input::RShiftPressed())
 					v.EnableBlueLights(true);
-				GameObjectList gate06a = Game::GetGameObjects(OBJ_GATE06A);
-				for(int i=0; i < gate06a.GetNumObjects(); i++)
-					GameObject *gate = gate06a.GetObject(i);
+				GameObjectList gate04a = Game::GetGameObjects(OBJ_GATE04A);
+				for(int i=0; i < gate04a.GetNumObjects(); i++)
+					GameObject *gate = gate04a.GetObject(i);
 				PersonList passengers = v.GetPassengers();
 				if (passengers.GetNumPersons() == 0)
 				{
-					v.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 1, false);
-					v.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 1, false);
+					v.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 5, false);
+					v.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 5, false);
+					v.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 5, false);
+					v.PushActionExecuteCommand(ACTION_APPEND, DUMMY_CALLCREW, Caller, 5, false);
 								v.PushActionWait(ACTION_APPEND, 9.0f);
 				}
 				if (gate->GetUserData() == 0)

@@ -48,7 +48,7 @@ object PcmdCallSecurityCar : CommandScript
 {
 	PcmdCallSecurityCar()
 	{
-		SetIcon("callpatrolcar");
+		SetIcon("callsecuritycar");
 		SetCursor("callassistance");
 		SetValidTargets(ACTOR_FLOOR | ACTOR_VIRTUAL);
 		SetDeselectCaller(false);

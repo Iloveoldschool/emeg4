@@ -616,7 +616,7 @@ object VcmdCallBatChief : CommandScript
 		if(l2.GetNumActors() > 0)
 			Vector MoveTo = l2.GetActor(0)->GetPosition();
 
-		Person p = Game::CreatePerson(OBJ_CHIEF, UNNAMED);
+		Person p = Game::CreatePerson(OBJ_DEPUTYCHIEF, UNNAMED);
 		if (Game::FindFreePosition(&p, Spawn))
 		{
 			p.SetUpgradeLevel(3);

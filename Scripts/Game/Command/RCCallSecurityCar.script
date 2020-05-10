@@ -40,7 +40,7 @@ const char OBJ_EMS_CAPTAIN[]			= "mod:Prototypes/Persons/01 LA Ambulance/ems_par
 const char OBJ_INVESTIGATORFF[]				= "mod:Prototypes/Persons/02 RC Fire Department/fire_investigator.e4p";
 const char OBJ_DISNEY_SECURITY_M[]			= "mod:Prototypes/Persons/03 RC Police/Disney_Security_Male.e4p";
 
-const char PROTO_SECURITY_EXPLORER[]			= "mod:Prototypes/Persons/03 RC Police/Disney_Security_Explorer.e4p";
+const char PROTO_SECURITY_EXPLORER[]			= "mod:Prototypes/Vehicles/03 RC Police/Disney_Security_Explorer.e4p";
 
 const char UNNAMED[] 				= "Unnamed";
 
@@ -172,7 +172,7 @@ object PcmdCallSecurityCar : CommandScript
 				Spawn = l1.GetActor(0)->GetPosition();
 				Rotate = l4.GetActor(0)->GetPosition();
 			}
-			System::Log("Buy patrol car");
+			System::Log("Buy security car");
 			int Money = Mission::GetMoneyLeft();
 			if (Money <= 1000)
 			{
@@ -196,7 +196,6 @@ object PcmdCallSecurityCar : CommandScript
            			n = Game::CreateVehicle(PROTO_SECURITY_EXPLORER, UNNAMED);
 				n.SetSpeed(12.0f);
 				p1 = Game::CreatePerson(OBJ_DISNEY_SECURITY_M, UNNAMED);
-				p2 = Game::CreatePerson(OBJ_DISNEY_SECURITY_M, UNNAMED);
 			}
 			else
 			{
@@ -208,7 +207,6 @@ object PcmdCallSecurityCar : CommandScript
            			n = Game::CreateVehicle(PROTO_SECURITY_EXPLORER, UNNAMED);
 				n.SetSpeed(12.0f);
 				p1 = Game::CreatePerson(OBJ_DISNEY_SECURITY_M, UNNAMED);
-				p2 = Game::CreatePerson(OBJ_DISNEY_SECURITY_M, UNNAMED);
 			}
 			n.SetPlayerMP(Caller->GetPlayerMP());
 			p1.SetPlayerMP(Caller->GetPlayerMP());

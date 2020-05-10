@@ -534,7 +534,7 @@ object PcmdCallEngine : CommandScript
 		for (int i = 0; i < patrolCars.GetNumVehicles(); i++)
 		{
 			Vehicle *aCar = patrolCars.GetVehicle(i);
-			if (StrCompare(aCar->GetPrototypeFileName(), OBJ_ENGINE11) == 0 || StrCompare(aCar->GetPrototypeFileName(), OBJ_ENGINE21) == 0 || StrCompare(aCar->GetPrototypeFileName(), OBJ_ENGINE31) == 0) && aCar->GetPlayerMP() == Caller->GetPlayerMP() && !aCar->HasCommand(DUMMY_VCALLED) && !aCar->HasCommand(DUMMY_HOSESON) && (aCar->HasCommand(CMD_STANDBY_OFF) || aCar->IsCollidingWithVirtualObject(VO_SQUAD01) || aCar->IsCollidingWithVirtualObject(VO_SQUAD02)))
+			if ((StrCompare(aCar->GetPrototypeFileName(), OBJ_ENGINE11) == 0 || StrCompare(aCar->GetPrototypeFileName(), OBJ_ENGINE21) == 0 || StrCompare(aCar->GetPrototypeFileName(), OBJ_ENGINE31) == 0) && aCar->GetPlayerMP() == Caller->GetPlayerMP() && !aCar->HasCommand(DUMMY_VCALLED) && !aCar->HasCommand(DUMMY_HOSESON) && (aCar->HasCommand(CMD_STANDBY_OFF) || aCar->IsCollidingWithVirtualObject(VO_SQUAD01) || aCar->IsCollidingWithVirtualObject(VO_SQUAD02)))
 			{
 				float distCurrCar = Math::dist(CmdPos.x, CmdPos.y, aCar->GetPosition().x, aCar->GetPosition().y);
 				if (distCurrCar < bestCar || bestCar == 0.)
@@ -1358,7 +1358,7 @@ object PcmdCallHazmat : CommandScript
 		for (int i = 0; i < patrolCars.GetNumVehicles(); i++)
 		{
 			Vehicle *aCar = patrolCars.GetVehicle(i);
-			if (StrCompare(aCar->GetPrototypeFileName(), OBJ_SQUAD2) == 0 && !aCar->IsDecontaminating() && aCar->GetPlayerMP() == Caller->GetPlayerMP() && !aCar->HasCommand(DUMMY_VCALLED) && (aCar->HasCommand(CMD_STANDBY_OFF) || aCar->IsCollidingWithVirtualObject(VO_SQUAD02)))
+			if (StrCompare(aCar->GetPrototypeFileName(), OBJ_SQUAD2) == 0 && !aCar->IsDecontaminating() && aCar->GetPlayerMP() == Caller->GetPlayerMP() && !aCar->HasCommand(DUMMY_VCALLED) && (aCar->HasCommand(CMD_STANDBY_OFF) || aCar->IsCollidingWithVirtualObject(VO_SQUAD01)))
 			{
 				float distCurrCar = Math::dist(CmdPos.x, CmdPos.y, aCar->GetPosition().x, aCar->GetPosition().y);
 				if (distCurrCar < bestCar || bestCar == 0.)
@@ -1398,7 +1398,7 @@ object PcmdCallHazmat : CommandScript
 				Mission::PlayHint(HINT_DISPATCHED);
 				return;
 			}
-			else if (theCar->IsCollidingWithVirtualObject(VO_SQUAD02))
+			else if (theCar->IsCollidingWithVirtualObject(VO_SQUAD01))
 			{
 				GameObjectList ppc;
  				Game::CollectObstaclesOnVirtualObject(VO_ENGINE01, ppc, ACTOR_VEHICLE);

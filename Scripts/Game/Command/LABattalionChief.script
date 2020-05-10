@@ -12,12 +12,6 @@
 // 		Includes: Call commands for the battalion chief.
 //
 //	- PcmdCallAmbulance
-//	- PcmdCallAmbulance1
-//	- PcmdCallAmbulance2
-//	- PcmdCallEngine1
-//	- PcmdCallEngine2
-//	- PcmdCallLightForce
-//	- PcmdCallUSARSquad
 //	- PcmdCallHazmat
 //	- DummyVehicleCalled
 //
@@ -854,7 +848,7 @@ object PcmdCallTower : CommandScript
 		for (int i = 0; i < patrolCars.GetNumVehicles(); i++)
 		{
 			Vehicle *aCar = patrolCars.GetVehicle(i);
-			if ((StrCompare(aCar->GetPrototypeFileName(), OBJ_LADDER) == 0) && aCar->GetPlayerMP() == Caller->GetPlayerMP() && !aCar->HasCommand(DUMMY_VCALLED) && !aCar->IsInstalled() && (aCar->HasCommand(CMD_STANDBY_OFF) || aCar->IsCollidingWithVirtualObject(VO_SQUAD01)))
+			if (StrCompare(aCar->GetPrototypeFileName(), OBJ_LADDER) == 0 && aCar->GetPlayerMP() == Caller->GetPlayerMP() && !aCar->HasCommand(DUMMY_VCALLED) && !aCar->IsInstalled() && (aCar->HasCommand(CMD_STANDBY_OFF) || aCar->IsCollidingWithVirtualObject(VO_SQUAD01)))
 			{
 				float distCurrCar = Math::dist(CmdPos.x, CmdPos.y, aCar->GetPosition().x, aCar->GetPosition().y);
 				if (distCurrCar < bestCar || bestCar == 0.)

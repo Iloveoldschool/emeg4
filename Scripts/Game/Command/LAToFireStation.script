@@ -121,9 +121,6 @@ object VcmdToFireStation : CommandScript
 		if (!Caller->IsValid())
 			return false;
 
-		if (!Game::IsFreeplay())
-			return false;
-
  		Vehicle v(Caller);
 		if (v.IsCollidingWithVirtualObject(VO_SQUAD01) || v.IsCollidingWithVirtualObject(VO_SQUAD02) || v.IsCollidingWithVirtualObject(VO_BATTALION) || v.IsCollidingWithVirtualObject(VO_FIREINVESTIGATOR) || (v.HasCommand(DUMMY_ISTRAILED) && !v.HasCommand(CMD_GETTILLER)) || v.HasCommand(DUMMY_HOSESON) || v.IsInstalled())
 			return false;
@@ -668,7 +665,7 @@ object DummyCheckParked : CommandScript
 			else if(StrCompare(v.GetPrototypeFileName(), OBJ_SQUAD2) == 0)
 	 		{
 				GameObjectList l3;
-	 			Game::CollectObstaclesOnVirtualObject(VO_ENGINE01, l3, ACTOR_VEHICLE);
+	 			Game::CollectObstaclesOnVirtualObject(VO_SQUAD2, l3, ACTOR_VEHICLE);
 				if(l3.GetNumObjects() > 0)
 				{
 					Mission::PlayHint(HINT_NOSPACE);
@@ -677,7 +674,7 @@ object DummyCheckParked : CommandScript
 				} else
 				{
 					ParkinglotFound = true;
-					ActorList l1 = Game::GetActors(VO_ENGINE01);
+					ActorList l1 = Game::GetActors(VO_SQUAD2);
 					ActorList l2 = Game::GetActors(VO_TURNTO4);
 				}
 			}

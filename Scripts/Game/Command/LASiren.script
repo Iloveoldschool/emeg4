@@ -38,6 +38,8 @@ const char PROTO_RESCUE12[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_12
 const char PROTO_RESCUE21[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_21.e4p";
 const char PROTO_RESCUE31[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_31.e4p";
 
+const char PROTO_SECURITY_EXPLORER[]			= "mod:Prototypes/Vehicles/03 RC Police/Disney_Security_Explorer.e4p";
+
 const char PROTO_ENGINE01[] = "mod:Prototypes/Vehicles/02 LA Fire Department/fire_engine1.e4p";
 const char PROTO_ENGINE02[] = "mod:Prototypes/Vehicles/02 LA Fire Department/fire_engine2.e4p";
 const char PROTO_WATERTENDER[] = "mod:Prototypes/Vehicles/02 LA Fire Department/water_tender.e4p";
@@ -162,6 +164,17 @@ object VcmdSiren : CommandScript
 				} else
 				{
   					soundID = Audio::PlaySample3D("mod:Audio/FX/Sirens/Siren02.wav", CarPos, true);
+				}
+ 			}
+			else if (StrCompare(v.GetPrototypeFileName(), PROTO_SECURITY_EXPLORER) == 0 )
+ 			{
+				int random = Math::rand()%2;
+				if (random == 0)
+				{
+  					soundID = Audio::PlaySample3D("mod:Audio/FX/Sirens/SecurityHiLo1.wav", CarPos, true);
+				} else
+				{
+  					soundID = Audio::PlaySample3D("mod:Audio/FX/Sirens/SecurityHiLo1.wav", CarPos, true);
 				}
  			}
  			else if (StrCompare(v.GetPrototypeFileName(), PROTO_BCV) == 0 ||

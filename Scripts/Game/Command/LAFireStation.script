@@ -1,4 +1,9 @@
 //******************************************************************************************
+//
+// djchill Additions:
+// - VcmdCallBatChief
+//
+//
 // #Version 1.5#
 //
 // 		Includes: All command for the fire station.
@@ -54,6 +59,9 @@ const char VO_FIREINVESTIGATOR[]			= "fs_fireinvestigator";
 const char VO_RESCUESQUAD1[]				= "fs_rescuesquad1";
 const char VO_RESCUESQUAD2[]				= "fs_rescuesquad2";
 const char VO_WOODS[]				= "fs_woods";
+
+const char OBJ_INVESTIGATORFF[]				= "mod:Prototypes/Persons/02 RC Fire Department/fire_investigator.e4p";
+const char OBJ_DEPUTYCHIEF[]				= "mod:Prototypes/Persons/02 RC Fire Department/deputy_chief.e4p";
 
 const char OBJ_LADDER[]				= "mod:Prototypes/Vehicles/02 LA Fire Department/aerial_ladder.e4p";
 
@@ -210,7 +218,7 @@ object VcmdAlarm : CommandScript
 				PersonList passengers = m.GetPassengers();
 				if (passengers.GetNumPersons() == 0)
 				{
-					m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 4, false);
+					m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 10, false);
 				}
 			}
 			GameObjectList l3;
@@ -341,7 +349,7 @@ object VcmdAlarm : CommandScript
 					PersonList passengers = m.GetPassengers();
 					if (passengers.GetNumPersons() == 0)
 					{
-						m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 8, false);
+						m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 9, false);
 					}
 				}
 			}
@@ -556,6 +564,66 @@ object VcmdGarageDoorsDown : CommandScript
 			Caller->PushActionExecuteCommand(ACTION_APPEND, DUMMY_GATES, Caller, 2, false);
 		else if(Caller->HasName(NAME_CONTROLPANEL2)) //= fire station 2
 			Caller->PushActionExecuteCommand(ACTION_APPEND, DUMMY_GATES, Caller, 4, false);
+	}
+};
+
+object VcmdCallBatChief : CommandScript
+{
+	VcmdCallBatChief()
+	{
+		SetCursor("alarm");
+		SetIcon("callchief");
+	}
+
+	bool CheckPossible(GameObject *Caller)
+	{
+		if (!Caller->IsValid())
+			return false;
+
+		if (!Game::IsFreeplay() && !Game::IsMultiplayer())
+			return false;
+
+		Vehicle v(Caller);
+		if (v.HasCommand(DUMMY_ALARM))
+			return false;
+
+		return true;
+	}
+
+	bool CheckTarget(GameObject *Caller, Actor *Target, int childID)
+	{
+		if (!Caller->IsValid() || !Target->IsValid() || (Caller->GetID() != Target->GetID()))
+			return false;
+
+		return true;
+	}
+
+	void PushActions(GameObject *Caller, Actor *Target, int ChildID)
+	{
+		if(Caller->HasName(NAME_CONTROLPANEL)) //= fire station 1
+		{
+			ActorList l1 = Game::GetActors(VO_SPAWN02);
+			ActorList l2 = Game::GetActors(VO_MOVETO01);
+		}
+		if(Caller->HasName(NAME_CONTROLPANEL2)) //= fire station 2
+		{
+			ActorList l1 = Game::GetActors(VO_SPAWN03);
+			ActorList l2 = Game::GetActors(VO_MOVETO02);
+		}
+		if(l1.GetNumActors() > 0)
+			Vector Spawn = l1.GetActor(0)->GetPosition();
+
+		if(l2.GetNumActors() > 0)
+			Vector MoveTo = l2.GetActor(0)->GetPosition();
+
+		Person p = Game::CreatePerson(OBJ_DEPUTYCHIEF, UNNAMED);
+		if (Game::FindFreePosition(&p, Spawn))
+		{
+			p.SetUpgradeLevel(3);
+			Game::FindFreePosition(&p, Spawn);
+			p.SetPosition(Spawn);
+			p.PushActionMove(ACTION_NEWLIST, MoveTo);
+		}
 	}
 };
 
@@ -1303,6 +1371,10 @@ object DummyCallCrew : CommandScript
 			Person p = Game::CreatePerson(OBJ_EMT_STRETCHER, UNNAMED);
 		else if (ChildID == 8)
 			Person p = Game::CreatePerson(OBJ_EMS_CAPTAIN, UNNAMED);
+		else if (ChildID == 9)
+			Person p = Game::CreatePerson(OBJ_INVESTIGATORFF, UNNAMED);
+		else if (ChildID == 10)
+			Person p = Game::CreatePerson(OBJ_DEPUTYCHIEF, UNNAMED);
 		else
 			return;
 

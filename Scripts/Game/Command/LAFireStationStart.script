@@ -17,6 +17,7 @@ const char NAME_FIRESTATION2[]			= "fire_station2";
 const char NAME_FIRESTATION2_ROOF[]		= "fire_station2_roof";
 const char NAME_CONTROLPANEL[]			= "fire_station_controlpanel";
 const char NAME_CONTROLPANEL2[]			= "fire_station_controlpanel2";
+const char NAME_ADMINPANEL[]			= "admin_controlpanel_fs1";
 
 const char OBJ_DEPUTYCHIEFEXPLORER[] = "mod:Prototypes/Vehicles/02 RC Fire Department/deputy_chief_explorer.e4p";
 const char OBJ_FIREINVESTIGATION[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_investigation_car.e4p";
@@ -193,7 +194,7 @@ object VcmdStart : CommandScript
 			m.UpdatePlacement();
 			m.SetMaxPassengers(2);
 			m.SetSpeed(12.0f);
-			m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 4, false);
+			m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 10, false);
 		}
 		ActorList l7 = Game::GetActors(VO_AMBULANCE01);
 		for(int i=0; i < l7.GetNumActors(); i++)
@@ -400,7 +401,7 @@ object VcmdStart : CommandScript
 			m.UpdatePlacement();
 			m.SetMaxPassengers(2);
 			m.SetSpeed(12.0f);
-			m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 8, false);
+			m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 9, false);
 		}
 		System::Log("Fire stations activated!");
 	}

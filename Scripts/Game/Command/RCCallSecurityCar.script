@@ -1,7 +1,7 @@
 //******************************************************************************************
 // #Version 1.2#
 //
-// 		Includes: Backup command for police units.
+// 		Includes: Backup command for Disney security units.
 //
 //	- PcmdCallSecurityCar
 //
@@ -35,23 +35,12 @@ const char VO_SPAWN_ALLR[] 			= "spawn_allr";
 const char VO_SPAWN_POLICE01R[] 		= "spawn_police1r";
 const char VO_SPAWN_POLICE02R[] 		= "spawn_police2r";
 
-			const char OBJ_OFFICER_M[]			= "mod:Prototypes/Persons/03 LA Police/lapd_officer_m.e4p";
-			const char OBJ_OFFICER_LASD[]			= "mod:Prototypes/Persons/03 LA Police/lasd_officer.e4p";
-			const char OBJ_OFFICER_CHP[]			= "mod:Prototypes/Persons/03 LA Police/chp_officer.e4p";
-			const char OBJ_TRAFFIC_OFFICER_LASD[]		= "mod:Prototypes/Persons/03 LA Police/lasd_traffic_officer.e4p";
-			const char OBJ_TRAFFIC_OFFICER_CHP[]		= "mod:Prototypes/Persons/03 LA Police/chp_traffic_officer.e4p";
-
 const char OBJ_BATTALION_CHIEF[]		= "mod:Prototypes/Persons/02 LA Fire Department/battalion_chief.e4p";
 const char OBJ_EMS_CAPTAIN[]			= "mod:Prototypes/Persons/01 LA Ambulance/ems_paramedic_captain.e4p";
 const char OBJ_INVESTIGATORFF[]				= "mod:Prototypes/Persons/02 RC Fire Department/fire_investigator.e4p";
 const char OBJ_DISNEY_SECURITY_M[]			= "mod:Prototypes/Persons/03 RC Police/Disney_Security_Male.e4p";
 
 const char PROTO_SECURITY_EXPLORER[]			= "mod:Prototypes/Persons/03 RC Police/Disney_Security_Explorer.e4p";
-
-			const char PROTO_CV_LAPD[] 			= "mod:Prototypes/Vehicles/03 LA Police/cv_lapd.e4p";
-			const char PROTO_CV_CHP[] 			= "mod:Prototypes/Vehicles/03 LA Police/cv_chp.e4p";
-			const char PROTO_CV_LASD[] 			= "mod:Prototypes/Vehicles/03 LA Police/cv_lasd.e4p";
-			const char PROTO_CHARGER_LAPD[] 		= "mod:Prototypes/Vehicles/03 LA Police/dodge_charger_lapd.e4p";
 
 const char UNNAMED[] 				= "Unnamed";
 

@@ -987,16 +987,14 @@ object PcmdCallTower : CommandScript
 			return;
 		}
 
-		System::Log("Buy light force engine");
-		bool BuyAerialOnly = true;
+		System::Log("Buy ladder truck");
 		int Money = Mission::GetMoneyLeft();
 		if (Money <= 4000)
 		{
 			Mission::PlayHint(HINT_NOLADDER);
 			return;
 		}
-		if (BuyAerialOnly)
-			int NewMoney = Money - 4000;
+		int NewMoney = Money - 4000;
 		Mission::SetMoney(NewMoney);
 
 		Vehicle n;

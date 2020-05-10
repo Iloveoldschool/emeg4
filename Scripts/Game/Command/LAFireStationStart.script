@@ -193,7 +193,7 @@ object VcmdStart : CommandScript
 			m.UpdatePlacement();
 			m.SetMaxPassengers(2);
 			m.SetSpeed(12.0f);
-			m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 4, false);
+			m.PushActionExecuteCommand(ACTION_NEWLIST, DUMMY_CALLCREW, Caller, 10, false);
 		}
 		ActorList l7 = Game::GetActors(VO_AMBULANCE01);
 		for(int i=0; i < l7.GetNumActors(); i++)

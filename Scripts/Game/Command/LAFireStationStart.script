@@ -17,6 +17,7 @@ const char NAME_FIRESTATION2[]			= "fire_station2";
 const char NAME_FIRESTATION2_ROOF[]		= "fire_station2_roof";
 const char NAME_CONTROLPANEL[]			= "fire_station_controlpanel";
 const char NAME_CONTROLPANEL2[]			= "fire_station_controlpanel2";
+const char NAME_ADMINPANEL[]			= "admin_controlpanel_fs1";
 
 const char OBJ_DEPUTYCHIEFEXPLORER[] = "mod:Prototypes/Vehicles/02 RC Fire Department/deputy_chief_explorer.e4p";
 const char OBJ_FIREINVESTIGATION[] = "mod:Prototypes/Vehicles/02 RC Fire Department/fire_investigation_car.e4p";

@@ -116,7 +116,7 @@ object PcmdCallSecurityCar : CommandScript
 		for (int i = 0; i < patrolCars.GetNumVehicles(); i++)
 		{
 			Vehicle *aCar = patrolCars.GetVehicle(i);
-			if (StrCompare(aCar->GetPrototypeFileName(), OBJ_SECURITY_EXPLORER) == 0 && aCar->GetPlayerMP() == Caller->GetPlayerMP() && !aCar->IsCurrentAnimation("Getoff") && (aCar->HasCommand(CMD_STANDBY_OFF) || aCar->HasCommand(DUMMY_PATROL) ||  aCar->IsCollidingWithVirtualObject(VO_PARK01) || aCar->IsCollidingWithVirtualObject(VO_PARK02) || aCar->IsCollidingWithVirtualObject(VO_PARK03)))
+			if (StrCompare(aCar->GetPrototypeFileName(), PROTO_SECURITY_EXPLORER) == 0 && aCar->GetPlayerMP() == Caller->GetPlayerMP() && !aCar->IsCurrentAnimation("Getoff") && (aCar->HasCommand(CMD_STANDBY_OFF) || aCar->HasCommand(DUMMY_PATROL) ||  aCar->IsCollidingWithVirtualObject(VO_PARK01) || aCar->IsCollidingWithVirtualObject(VO_PARK02) || aCar->IsCollidingWithVirtualObject(VO_PARK03)))
 			{
 				float distCurrCar = Math::dist(CmdPos.x, CmdPos.y, aCar->GetPosition().x, aCar->GetPosition().y);
 				if (distCurrCar < bestCar || bestCar == 0.)

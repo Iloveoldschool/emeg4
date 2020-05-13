@@ -1026,8 +1026,8 @@ object PcmdCallTower : CommandScript
 		if (!n.HasCommand(DUMMY_HASSIREN) && n.HasCommand(CMD_AUTOSIREN_OFF) && !Input::LShiftPressed() && !Input::RShiftPressed())
 			Game::ExecuteCommand(CMD_SIREN, &n, &n);
 
-		if (BuyAerialOnly)
-			Mission::PlayHint(HINT_LADDERBOUGHT);
+
+		Mission::PlayHint(HINT_LADDERBOUGHT);
 		}
 };
 

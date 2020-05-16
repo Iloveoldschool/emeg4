@@ -8,7 +8,7 @@
 [NUMMUSCLEANIMS=0]
 [NUMMUSCLEFRAMES=0]
 
-SRF, dodge_charger_chp, 0, 0, 0, dodge_charger_chp.dds, 517, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0
+SRF, dodge_charger_fhp, 0, 0, 0, dodge_charger_fhp.dds, 517, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0
 D, 249, -37, 1481, 188, 14, 172, 548, 79, 0, 0, 0, 0
 D, 567, 128, 835, 252, -3, 39, 554, 100, 0, 0, 0, 0
 D, 549, 197, -291, 255, 0, -16, 556, 136, 0, 0, 0, 0

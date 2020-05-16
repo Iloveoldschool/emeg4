@@ -39,6 +39,7 @@ const char PROTO_RESCUE21[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_21
 const char PROTO_RESCUE31[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_31.e4p";
 
 const char PROTO_SECURITY_EXPLORER[]			= "mod:Prototypes/Vehicles/03 RC Police/Disney_Security_Explorer.e4p";
+const char PROTO_CHARGER_FHP[] = "mod:Prototypes/Vehicles/03 RC Police/fhp_charger.e4p";
 
 const char PROTO_ENGINE01[] = "mod:Prototypes/Vehicles/02 LA Fire Department/fire_engine1.e4p";
 const char PROTO_ENGINE02[] = "mod:Prototypes/Vehicles/02 LA Fire Department/fire_engine2.e4p";
@@ -206,6 +207,7 @@ object VcmdSiren : CommandScript
 				}
  			}
  			else if (StrCompare(v.GetPrototypeFileName(), PROTO_MOTORCYCLE) == 0 ||
+			StrCompare(v.GetPrototypeFileName(), PROTO_CHARGER_FHP) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_CV_LAPD) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_CV_LAPD2) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_CV_LAPD3) == 0 ||

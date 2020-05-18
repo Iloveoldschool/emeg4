@@ -38,8 +38,10 @@ const char PROTO_RESCUE12[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_12
 const char PROTO_RESCUE21[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_21.e4p";
 const char PROTO_RESCUE31[] = "mod:Prototypes/Vehicles/01 RC Ambulance/rescue_31.e4p";
 
-const char PROTO_SECURITY_EXPLORER[]			= "mod:Prototypes/Vehicles/03 RC Police/Disney_Security_Explorer.e4p";
-const char PROTO_CHARGER_FHP[] = "mod:Prototypes/Vehicles/03 RC Police/fhp_charger.e4p";
+const char PROTO_SECURITY_EXPLORER[]	= "mod:Prototypes/Vehicles/03 RC Police/Disney_Security_Explorer.e4p";
+const char PROTO_OC_EXPLORER[] 				= "mod:Prototypes/Vehicles/03 RC Police/orange_county_explorer.e4p";
+const char PROTO_OC_IMPALA[] 					= "mod:Prototypes/Vehicles/03 RC Police/orange_county_impala.e4p";
+const char PROTO_CHARGER_FHP[] 				= "mod:Prototypes/Vehicles/03 RC Police/fhp_charger.e4p";
 
 const char PROTO_ENGINE01[] = "mod:Prototypes/Vehicles/02 LA Fire Department/fire_engine1.e4p";
 const char PROTO_ENGINE02[] = "mod:Prototypes/Vehicles/02 LA Fire Department/fire_engine2.e4p";
@@ -209,18 +211,12 @@ object VcmdSiren : CommandScript
  			else if (StrCompare(v.GetPrototypeFileName(), PROTO_MOTORCYCLE) == 0 ||
 			StrCompare(v.GetPrototypeFileName(), PROTO_CHARGER_FHP) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_CV_LAPD) == 0 ||
- 			StrCompare(v.GetPrototypeFileName(), PROTO_CV_LAPD2) == 0 ||
- 			StrCompare(v.GetPrototypeFileName(), PROTO_CV_LAPD3) == 0 ||
+ 			StrCompare(v.GetPrototypeFileName(), PROTO_OC_EXPLORER) == 0 ||
+ 			StrCompare(v.GetPrototypeFileName(), PROTO_OC_IMPALA) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_CV_LAPD_ST) == 0 ||
-			StrCompare(v.GetPrototypeFileName(), PROTO_CV_LAPD_K9) == 0 ||
-			StrCompare(v.GetPrototypeFileName(), PROTO_CV_LAAP) == 0 ||
- 			StrCompare(v.GetPrototypeFileName(), PROTO_CV_LAPP) == 0 ||
-  			StrCompare(v.GetPrototypeFileName(), PROTO_CV_UMPC) == 0 ||
+  		StrCompare(v.GetPrototypeFileName(), PROTO_CV_UMPC) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_CV_CHP) == 0 ||
- 			StrCompare(v.GetPrototypeFileName(), PROTO_CV_CHP2) == 0 ||
- 			StrCompare(v.GetPrototypeFileName(), PROTO_CV_LASD) == 0 ||
- 			StrCompare(v.GetPrototypeFileName(), PROTO_CHARGER_LAPD) == 0 ||
- 			StrCompare(v.GetPrototypeFileName(), PROTO_CHARGER_CHP) == 0)
+ 			StrCompare(v.GetPrototypeFileName(), PROTO_CV_LASD) == 0)
  			{
 				int random = Math::rand()%2;
 				if (random == 0)

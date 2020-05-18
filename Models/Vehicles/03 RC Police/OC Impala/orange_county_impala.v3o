@@ -8,9 +8,9 @@
 [NUMMUSCLEANIMS=0]
 [NUMMUSCLEFRAMES=0]
 
-SRF, Body, 0, 0, 0, lapd_impala.dds, 517, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0
-SRF, Interior, 0, 0, 0, lapd_impalaint.dds, 517, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0
-SRF, Extras, 0, 0, 0, lapd_impalaextras.dds, 517, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0
+SRF, Body, 0, 0, 0, orange_county_impala.dds, 517, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0
+SRF, Interior, 0, 0, 0, orange_county_impalaint.dds, 517, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0
+SRF, Extras, 0, 0, 0, orange_county_impalaextras.dds, 517, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0
 SRF, arjent, 0, 0, 0, arjent.dds, 517, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0
 D, 11911, -23, 2460, 256, 0, 0, 797, 759, 0, 0, 0, 0
 D, 11911, -23, 2841, 249, 0, 57, 797, 736, 0, 0, 0, 0

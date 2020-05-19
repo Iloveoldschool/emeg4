@@ -42,6 +42,8 @@
   <vehicle prototype="mod:Prototypes/Vehicles/03 RC Police/orange_county_explorer.e4p" count="1" />
   <vehicle prototype="mod:Prototypes/Vehicles/03 RC Police/orange_county_explorer02.e4p" count="1" />
   <vehicle prototype="mod:Prototypes/Vehicles/03 RC Police/orange_county_explorer03.e4p" count="1" />
+  <vehicle prototype="mod:Prototypes/Vehicles/03 RC Police/orange_county_impapa.e4p" count="1" />
+  <vehicle prototype="mod:Prototypes/Vehicles/03 RC Police/orange_county_impala_slicktop.e4p" count="1" />
   <vehicle prototype="mod:Prototypes/Vehicles/03 RC Police/orange_county_charger_slicktop.e4p" count="1" />
   <vehicle prototype="mod:Prototypes/Vehicles/03 RC Police/fhp_charger.e4p" count="1" />
   <vehicle prototype="mod:Prototypes/Vehicles/03 LA Police/motorcycle_lapd.e4p" count="2" />

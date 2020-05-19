@@ -46,6 +46,7 @@ const char PROTO_OC_EXPLORER02[] 				= "mod:Prototypes/Vehicles/03 RC Police/ora
 const char PROTO_OC_EXPLORER03[] 				= "mod:Prototypes/Vehicles/03 RC Police/orange_county_explorer03.e4p";
 const char PROTO_OC_CHARGER_SLICKTOP[] 					= "mod:Prototypes/Vehicles/03 RC Police/orange_county_charger_slicktop.e4p";
 const char PROTO_OC_IMPALA[] 					= "mod:Prototypes/Vehicles/03 RC Police/orange_county_impala.e4p";
+const char PROTO_OC_IMPALA_SLICKTOP[] 					= "mod:Prototypes/Vehicles/03 RC Police/orange_county_impala_slicktop.e4p";
 const char PROTO_CHARGER_FHP[] 				= "mod:Prototypes/Vehicles/03 RC Police/fhp_charger.e4p";
 
 const char PROTO_ENGINE01[] = "mod:Prototypes/Vehicles/02 LA Fire Department/fire_engine1.e4p";
@@ -223,6 +224,7 @@ object VcmdSiren : CommandScript
 			StrCompare(v.GetPrototypeFileName(), PROTO_OC_EXPLORER03) == 0 ||
 			StrCompare(v.GetPrototypeFileName(), PROTO_OC_CHARGER_SLICKTOP) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_OC_IMPALA) == 0 ||
+			StrCompare(v.GetPrototypeFileName(), PROTO_OC_IMPALA_SLICKTOP) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_CV_LAPD_ST) == 0 ||
   		StrCompare(v.GetPrototypeFileName(), PROTO_CV_UMPC) == 0 ||
  			StrCompare(v.GetPrototypeFileName(), PROTO_CV_CHP) == 0 ||

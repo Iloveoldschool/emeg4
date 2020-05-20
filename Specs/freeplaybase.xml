@@ -50,6 +50,8 @@
 	<vehicle prototype="mod:Prototypes/Vehicles/03 LA Police/cv_umpc.e4p" count="2" />
 	<vehicle prototype="mod:Prototypes/Vehicles/03 LA Police/lasd_van.e4p" count="1" />
 	<vehicle prototype="mod:Prototypes/Vehicles/03 LA Police/rescue_truck01_lapd.e4p" count="1" />
+  <vehicle prototype="mod:Prototypes/Vehicles/03 LA Police/rescue_truck02_lapd.e4p" count="1" />
+  <vehicle prototype="mod:Prototypes/Vehicles/03 LA Police/swat_armoured_vehicle.e4p" count="1" />
 	<vehicle prototype="mod:Prototypes/Vehicles/03 LA Police/suv_bomb_squad.e4p" count="1" />
 	<vehicle prototype="mod:Prototypes/Vehicles/03 LA Police/as350_lapd.e4p" count="1" />
 	<vehicle prototype="mod:Prototypes/Vehicles/03 LA Police/getawaycar.e4p" count="0" />

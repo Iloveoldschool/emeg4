@@ -3,20 +3,29 @@ A modification for emergency 4 based around the Reedy Creek Improvement District
 
 The `master` branch will contain the latest stable build, and is the best version to download to play. If you wish, you can download the `Dev`, or any other branch where the latest features will be created. But content here will be very work in progress and may break part of the game, so do so at your own risk.
 
+###### Warning: *Do NOT download the 'zip' of this mod directly from github. It will NOT work in game, and will cause a game crash when loading the mod.*
+
 ### License
 All work can be re-distributed and re-released in your own modification without contacting the mod author. djchill must be credited whenever mod files are used.
 
 ### Screenshots
 For more, check the "02 Screenshots" folder above.
 
-### How to play
-Click "clone or download" in the top right of this page to download the latest version to your PC. If you have git installed on your device, you can constantly fetch the latest version of this mod. Otherwise you can download a zip of the entire modification.
-If you download a zip file, extract it to your emergency 4 mods folder. The path of this folder will look something like this: `D:\SteamLibrary\steamapps\common\911 First Responders\Mods`
+### How to play this mod
+To download the latest version of this mod, follow the following steps:
+1. Click "clone or download" in the top right of this page.
+2. Click "open in desktop"
+3. If you don't have github desktop installed, you'll be redirected to a download page. Download, open and go through the setup. (note you don't need to make a github account, you can skip this step.)
+4. [Follow this guide to clone the mod](https://help.github.com/en/desktop/contributing-to-projects/cloning-a-repository-from-github-to-github-desktop), making sure to choose your mods folder as the local location on your computer. The folders path will be something like `D:\SteamLibrary\steamapps\common\911 First Responders\Mods`.
+5. Once downloaded, open Emergency 4 and enjoy!
+
+**Note:** If you want to stay constantly up to date and have the same files for multiplayer gameplay, then be sure to open github desktop and "fetch" the latest updates for the `master` branch.
+
+###### Warning: *Do NOT download the 'zip' of this mod directly from github. It will NOT work in game, and will cause a game crash when loading the mod.*
 
 ### Changelog
 #### v1.0
-* Added Event: Car crash #16 outside building site.
-* Added Event: Hazmat Car crash #17 in industrial area.
+
 
 ### Private Roadmap (for now)
 https://trello.com/b/Hf6xCZG9/rcid-modding
@@ -30,6 +39,6 @@ Anybody who wants to help out can do so, either by submitting bug and feature re
 ## Credits
 As such this mod contains content made by:
 
-Hoppah (Los Angeles Mod v2.1), JoseOu (LAPD Ford CV LED lightbar Submod V2.0), Ubisoft (Chevrolet impala model), EA Games (Ford Explorer model), BMA (admin commands)
+Hoppah (Los Angeles Mod v2.1), JoseOu (LAPD Ford CV LED lightbar Submod V2.0), Ubisoft (Chevrolet impala model), EA Games (Ford Explorer model), BMA (base script for admin commands)
 
 Crediting the orignal author of work is really important. If you spot something you've made and have been missed off this was not deliberate! If you have any questions, want to update the credits or want to reach out, please raise a "Credits update" issue in the github repository for the mod.

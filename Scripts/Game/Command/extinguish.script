@@ -16,6 +16,7 @@ object Extinguish : CommandScript
 	{
 		SetValidTargets(ACTOR_OBJECT | ACTOR_VEHICLE | ACTOR_HOUSE | ACTOR_OPEN_HOUSE);
 		SetRestrictions(RESTRICT_BURNING);
+		SetPriority(260);
 		SetKeepAsCurrentCommand(true);
 		SetPossibleCallers(ACTOR_PERSON | ACTOR_VEHICLE);
 		SetPossibleEquipment(EQUIP_FIRE_EXTINGUISHER | EQUIP_FIREHOSE);
@@ -58,23 +59,23 @@ object Extinguish : CommandScript
 					return false;
 				if (p.GetEnteredCarID() == Target->GetID())
 					return false;
-				
+
 				if (p.GetEnteredCarTargetID() != -1 && !o.IsBurningInside())
 					return false;
-				else 
+				else
 				if (p.GetEnteredCarTargetID() == -1 && !o.IsBurningOutside())
 					return false;
-				
+
 				if (!p.CheckDLKExtinguishDistance(Target))
 					return false;
-				
+
 				return true;
 			}
 			if (p.GetEnteredCarID() != -1)
 				return false;
 		}
 		useDLKlogic = false;
-			
+
 		if (Caller->GetType() == ACTOR_VEHICLE || Caller->GetEquipment()==EQUIP_FIRE_EXTINGUISHER || Caller->GetEquipment()== EQUIP_FIREHOSE)
 		{
 			if (Caller->GetEquipment() == EQUIP_FIREHOSE && Caller->GetFirehoseID() == 0)
@@ -92,37 +93,47 @@ object Extinguish : CommandScript
 			if (p.GetEnteredCarTargetID() == -1)
 			{
 				Caller->PushActionTurnBase(ACTION_NEWLIST, Target);
-				Caller->PushActionCannonExtinguish(ACTION_APPEND, Target, 40.f, false);
+				Caller->PushActionCannonExtinguish(ACTION_APPEND, Target, 25.f, false);
 			}
 			else
-				Caller->PushActionCannonExtinguish(ACTION_NEWLIST, Target, 40.f, false);
+				Caller->PushActionCannonExtinguish(ACTION_NEWLIST, Target, 25.f, false);
 			return;
 		}
 
 		if (Caller->GetType() == ACTOR_VEHICLE)
 		{
 			Vehicle v(Caller);
-
 			float Energy;
-			if(v.GetVehicleType() == VT_FIREFIGHTERS_TLF)
-			{
-				if (v.HasCommand(DUMMY_HOSESON))
-					Energy = 15.0f;
-				else if (StrCompare(v.GetPrototypeFileName(), "mod:Prototypes/Vehicles/02 LA Fire Department/water_tender.e4p") == 0)
-					Energy = 28.0f;
-				else
-					Energy = 25.0f;
-			}
-			else if(v.GetVehicleType() == VT_FIREFIGHTERS_FLB)
+			if(v.GetVehicleType()==VT_FIREFIGHTERS_TLF)
+				Energy = 25.0f;
+			else
+			if(v.GetVehicleType()==VT_FIREFIGHTERS_FLB)
 				Energy = 30.0f;
-			else if(v.GetVehicleType() == VT_FIREFIGHTERS_LPF)
-				Energy = 27.0f;
+			else
+			if(v.GetVehicleType()==VT_FIREFIGHTERS_LPF)
+				Energy = 25.0f;
 			else
 				Energy = 70.0f;
 
 			GameObject o(Target);
-			if (!v.CheckExtinguishDistance(o))
+			if (v.IsCurrentAnimation("activate"))
 			{
+				int UnitID = v.GetID();
+				GameObjectList l1 = Game::GetGameObjectsWithPrefix("engine_water_cannon");
+				for(int i = 0; i < l1.GetNumObjects(); i++)
+				{
+					if (l1.GetObject(i)->GetType() == ACTOR_VEHICLE)
+					{
+						Vehicle obj(l1.GetObject(i));
+						if (obj.GetUserData() == UnitID && obj.CheckExtinguishDistance(o) && obj.GetVehicleType()==VT_FIREFIGHTERS_TLF)
+							obj.PushActionExtinguish(ACTION_NEWLIST, Target, 30.0f);
+					}
+				}
+			}
+			else if (!v.CheckExtinguishDistance(o))
+			{
+				if (v.HasCommand("VcmdRotateLightmast"))
+					return;
 				Caller->PushActionMove(ACTION_NEWLIST, Target, TARGET_EXTINGUISH);
 				Caller->PushActionExtinguish(ACTION_APPEND, Target, Energy);
 			}
@@ -144,49 +155,7 @@ object Extinguish : CommandScript
 				Caller->PushActionTurnTo(ACTION_APPEND, TargetPos);
 			}
 
-			float Energy;
-			if (Caller->GetEquipment() == EQUIP_FIREHOSE)
-			{
-				GameObject hydrant = Caller->GetHydrant();
-				if (hydrant.HasName("wye"))
-					Energy = 15.0f;
-				else
-				{
-					int STR;
-					GameObject hydrant = Caller->GetHydrant();
-					Vehicle v(&hydrant);
-					if (!v.HasCommand("MoveTo"))
-					{
-						int UnitID = v.GetUserData();
-						VehicleList list(VT_FIREFIGHTERS_RW, VT_FIREFIGHTERS_TLF);
-						for(int i = 0; i < list.GetNumVehicles(); i++)
-						{
-							if (list.GetVehicle(i)->GetUserData() == UnitID)
-							{
-								Vehicle c = list.GetVehicle(i);
-								if (c.HasCommand("VcmdWaterOff"))
-									STR = 0.75;
-								else
-									STR = 1;
-							}
-						}
-					}
-					if (v.HasCommand("VcmdWaterOff"))
-						STR = 0.75;
-					else
-						STR = 1;	
-					if (v.GetNumUsedConnectors() == 1)
-						Energy = 25.0f * STR;
-					else if (v.GetNumUsedConnectors() == 2)
-						Energy = 22.5f * STR;
-					else if (v.GetNumUsedConnectors() == 3)
-						Energy = 20.f * STR;
-					else
-						Energy = 17.5f * STR;					
-				}			
-			}
-			else if (Caller->GetEquipment() == EQUIP_FIRE_EXTINGUISHER)
-				Energy = 12.5f;
+			float Energy = (Caller->GetEquipment()==EQUIP_FIREHOSE) ? 20.0f : 12.5f;
 			Caller->PushActionExtinguish(ACTION_APPEND, Target, Energy);
 		}
 	}

@@ -41,6 +41,8 @@ const char OBJ_INVESTIGATORFF[]				= "mod:Prototypes/Persons/02 RC Fire Departme
 const char OBJ_DISNEY_SECURITY_M[]			= "mod:Prototypes/Persons/03 RC Police/Disney_Security_Male.e4p";
 
 const char PROTO_SECURITY_EXPLORER[]			= "mod:Prototypes/Vehicles/03 RC Police/Disney_Security_Explorer.e4p";
+const char PROTO_SECURITY_EXPLORER02[]			= "mod:Prototypes/Vehicles/03 RC Police/Disney_Security_Explorer02.e4p";
+const char PROTO_SECURITY_EXPLORER03[]			= "mod:Prototypes/Vehicles/03 RC Police/Disney_Security_Explorer03.e4p";
 
 const char UNNAMED[] 				= "Unnamed";
 
@@ -116,7 +118,7 @@ object PcmdCallSecurityCar : CommandScript
 		for (int i = 0; i < patrolCars.GetNumVehicles(); i++)
 		{
 			Vehicle *aCar = patrolCars.GetVehicle(i);
-			if (StrCompare(aCar->GetPrototypeFileName(), PROTO_SECURITY_EXPLORER) == 0 && aCar->GetPlayerMP() == Caller->GetPlayerMP() && !aCar->IsCurrentAnimation("Getoff") && (aCar->HasCommand(CMD_STANDBY_OFF) || aCar->HasCommand(DUMMY_PATROL) ||  aCar->IsCollidingWithVirtualObject(VO_PARK01) || aCar->IsCollidingWithVirtualObject(VO_PARK02) || aCar->IsCollidingWithVirtualObject(VO_PARK03)))
+			if ((StrCompare(aCar->GetPrototypeFileName(), PROTO_SECURITY_EXPLORER) == 0 || StrCompare(aCar->GetPrototypeFileName(), PROTO_SECURITY_EXPLORER02) == 0 || StrCompare(aCar->GetPrototypeFileName(), PROTO_SECURITY_EXPLORER03) == 0) && aCar->GetPlayerMP() == Caller->GetPlayerMP() && !aCar->IsCurrentAnimation("Getoff") && (aCar->HasCommand(CMD_STANDBY_OFF) || aCar->HasCommand(DUMMY_PATROL) ||  aCar->IsCollidingWithVirtualObject(VO_PARK01) || aCar->IsCollidingWithVirtualObject(VO_PARK02) || aCar->IsCollidingWithVirtualObject(VO_PARK03)))
 			{
 				float distCurrCar = Math::dist(CmdPos.x, CmdPos.y, aCar->GetPosition().x, aCar->GetPosition().y);
 				if (distCurrCar < bestCar || bestCar == 0.)

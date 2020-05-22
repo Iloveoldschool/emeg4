@@ -7,7 +7,7 @@
 //
 //		Script by Hoppah
 //		Thanks to Bass-Ti for his help
-//		
+//
 //		Usage of this script in other mods is NOT allowed without permission of Hoppah
 //
 //******************************************************************************************
@@ -37,17 +37,18 @@ const char VO_SPAWN_POLICE02[] 			= "spawn_police2";
 const char VO_SPAWN_ALLR[] 			= "spawn_allr";
 const char VO_SPAWN_POLICE01R[] 		= "spawn_police1r";
 const char VO_SPAWN_POLICE02R[] 		= "spawn_police2r";
-const char OBJ_OFFICER_M[]			= "mod:Prototypes/Persons/03 LA Police/lapd_officer_m.e4p";
 const char OBJ_OFFICER_LASD[]			= "mod:Prototypes/Persons/03 LA Police/lasd_officer.e4p";
 const char OBJ_OFFICER_CHP[]			= "mod:Prototypes/Persons/03 LA Police/chp_officer.e4p";
 const char OBJ_TRAFFIC_OFFICER_LASD[]		= "mod:Prototypes/Persons/03 LA Police/lasd_traffic_officer.e4p";
 const char OBJ_TRAFFIC_OFFICER_CHP[]		= "mod:Prototypes/Persons/03 LA Police/chp_traffic_officer.e4p";
 const char OBJ_BATTALION_CHIEF[]		= "mod:Prototypes/Persons/02 LA Fire Department/battalion_chief.e4p";
 const char OBJ_EMS_CAPTAIN[]			= "mod:Prototypes/Persons/01 LA Ambulance/ems_paramedic_captain.e4p";
-const char PROTO_CV_LAPD[] 			= "mod:Prototypes/Vehicles/03 LA Police/cv_lapd.e4p";
-const char PROTO_CV_CHP[] 			= "mod:Prototypes/Vehicles/03 LA Police/cv_chp.e4p";
-const char PROTO_CV_LASD[] 			= "mod:Prototypes/Vehicles/03 LA Police/cv_lasd.e4p";
-const char PROTO_CHARGER_LAPD[] 		= "mod:Prototypes/Vehicles/03 LA Police/dodge_charger_lapd.e4p";
+const char PROTO_OC_EXPLORER[] 			= "mod:Prototypes/Vehicles/03 RC Police/orange_county_explorer.e4p";
+const char PROTO_OC_EXPLORER02[] 			= "mod:Prototypes/Vehicles/03 RC Police/orange_county_explorer02.e4p";
+const char PROTO_OC_EXPLORER03[] 			= "mod:Prototypes/Vehicles/03 RC Police/orange_county_explorer03.e4p";
+const char PROTO_FHP_CHARGER[] 			= "mod:Prototypes/Vehicles/03 RC Police/fhp_charger.e4p";
+const char PROTO_OC_IMPALA_SLICKTOP[] 			= "mod:Prototypes/Vehicles/03 RC Police/orange_county_impala_slicktop.e4p";
+const char PROTO_OC_CHARGER_SLICKTOP[] 		= "mod:Prototypes/Vehicles/03 RC Police/orange_county_charger_slicktop.e4p";
 const char UNNAMED[] 				= "Unnamed";
 
 object PcmdCallPatrolCar : CommandScript
@@ -71,7 +72,7 @@ object PcmdCallPatrolCar : CommandScript
 			return false;
 
 		Person p(Caller);
-		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1)) 
+		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1))
 			return false;
 
 		if (p.IsCurrentAction("EActionTreatPerson"))
@@ -92,7 +93,7 @@ object PcmdCallPatrolCar : CommandScript
 			return false;
 
 		Person p(Caller);
-		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1)) 
+		if(p.IsValid() && (p.IsLinkedWithPerson() || p.IsCarryingPerson() || p.IsEquipped() || p.IsPulling() || p.GetFirehoseID()!=0 || p.GetEnteredCarID() != -1))
 			return false;
 
 		if (p.IsCurrentAction("EActionTreatPerson"))
@@ -119,13 +120,13 @@ object PcmdCallPatrolCar : CommandScript
 		Vehicle *theCar = NULL;
 		float bestCar = 0.;
 		VehicleList patrolCars(VT_POLICE_MTW, VT_POLICE_STW);
-		for (int i = 0; i < patrolCars.GetNumVehicles(); i++) 
+		for (int i = 0; i < patrolCars.GetNumVehicles(); i++)
 		{
 			Vehicle *aCar = patrolCars.GetVehicle(i);
 			if (aCar->GetPlayerMP() == Caller->GetPlayerMP() && !aCar->IsCurrentAnimation("Getoff") && (aCar->HasCommand(CMD_STANDBY_OFF) || aCar->HasCommand(DUMMY_PATROL) ||  aCar->IsCollidingWithVirtualObject(VO_PARK01) || aCar->IsCollidingWithVirtualObject(VO_PARK02) || aCar->IsCollidingWithVirtualObject(VO_PARK03)))
 			{
 				float distCurrCar = Math::dist(CmdPos.x, CmdPos.y, aCar->GetPosition().x, aCar->GetPosition().y);
-				if (distCurrCar < bestCar || bestCar == 0.) 
+				if (distCurrCar < bestCar || bestCar == 0.)
 				{
 					theCar = aCar;
 					bestCar = distCurrCar;
@@ -146,7 +147,7 @@ object PcmdCallPatrolCar : CommandScript
 				theCar->RemoveCommand(CMD_STANDBY_OFF);
 				theCar->AssignCommand(CMD_STANDBY_ON);
 			}
-			if (theCar->HasCommand(CMD_WARNINGLIGHTS_OFF)) 
+			if (theCar->HasCommand(CMD_WARNINGLIGHTS_OFF))
 			{
 				theCar->EnableBlinker(BLT_NONE);
 				theCar->RemoveCommand(CMD_WARNINGLIGHTS_OFF);
@@ -199,11 +200,11 @@ object PcmdCallPatrolCar : CommandScript
 					Spawn = l3.GetActor(0)->GetPosition();
 					Rotate = l6.GetActor(0)->GetPosition();
 				}
-           			n = Game::CreateVehicle(PROTO_CHARGER_LAPD, UNNAMED);
+           			n = Game::CreateVehicle(PROTO_OC_CHARGER_SLICKTOP, UNNAMED);
 				n.SetSpeed(14.0f);
-				p1 = Game::CreatePerson(OBJ_OFFICER_M, UNNAMED);
-				p2 = Game::CreatePerson(OBJ_OFFICER_M, UNNAMED);
-			} 
+				p1 = Game::CreatePerson(OBJ_OFFICER_LASD, UNNAMED);
+				p2 = Game::CreatePerson(OBJ_OFFICER_LASD, UNNAMED);
+			}
 			else if(StrCompare(p.GetPrototypeFileName(), OBJ_OFFICER_LASD) == 0 || StrCompare(p.GetPrototypeFileName(), OBJ_TRAFFIC_OFFICER_LASD) == 0)
 			{
 				if(l1.GetNumActors() == 0 && l3.GetNumActors() > 0)
@@ -211,7 +212,7 @@ object PcmdCallPatrolCar : CommandScript
 					Spawn = l3.GetActor(0)->GetPosition();
 					Rotate = l6.GetActor(0)->GetPosition();
 				}
-        			n = Game::CreateVehicle(PROTO_CV_LASD, UNNAMED);
+        			n = Game::CreateVehicle(PROTO_OC_IMPALA_SLICKTOP, UNNAMED);
 				n.SetSpeed(12.0f);
 				p1 = Game::CreatePerson(OBJ_OFFICER_LASD, UNNAMED);
 				p2 = Game::CreatePerson(OBJ_OFFICER_LASD, UNNAMED);
@@ -223,7 +224,7 @@ object PcmdCallPatrolCar : CommandScript
 					Spawn = l3.GetActor(0)->GetPosition();
 					Rotate = l6.GetActor(0)->GetPosition();
 				}
-        			n = Game::CreateVehicle(PROTO_CV_CHP, UNNAMED);
+        			n = Game::CreateVehicle(PROTO_FHP_CHARGER, UNNAMED);
 				n.SetSpeed(12.0f);
 				p1 = Game::CreatePerson(OBJ_OFFICER_CHP, UNNAMED);
 				p2 = Game::CreatePerson(OBJ_OFFICER_CHP, UNNAMED);
@@ -235,10 +236,10 @@ object PcmdCallPatrolCar : CommandScript
 					Spawn = l2.GetActor(0)->GetPosition();
 					Rotate = l5.GetActor(0)->GetPosition();
 				}
-           			n = Game::CreateVehicle(PROTO_CV_LAPD, UNNAMED);
+           			n = Game::CreateVehicle(PROTO_OC_EXPLORER, UNNAMED);
 				n.SetSpeed(12.0f);
-				p1 = Game::CreatePerson(OBJ_OFFICER_M, UNNAMED);
-				p2 = Game::CreatePerson(OBJ_OFFICER_M, UNNAMED);
+				p1 = Game::CreatePerson(OBJ_OFFICER_LASD, UNNAMED);
+				p2 = Game::CreatePerson(OBJ_OFFICER_LASD, UNNAMED);
 			}
 			n.SetPlayerMP(Caller->GetPlayerMP());
 			p1.SetPlayerMP(Caller->GetPlayerMP());
@@ -265,7 +266,7 @@ object PcmdCallPatrolCar : CommandScript
 
 			if (!n.HasCommand(DUMMY_HASSIREN) && n.HasCommand(CMD_AUTOSIREN_OFF) && !Input::LShiftPressed() && !Input::RShiftPressed())
 				Game::ExecuteCommand(CMD_SIREN, &n, &n);
-	
+
 			Mission::PlayHint(HINT_PATROLCARBOUGHT);
 		}
 	}
